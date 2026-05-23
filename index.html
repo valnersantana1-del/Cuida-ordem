@@ -2676,10 +2676,68 @@
         window.onload = inicializarApp;
 
         // Registrar Service Worker (PWA)
+        // ── CHAVE PÚBLICA VAPID ──────────────────────────────────────────────
+        // Gere suas chaves em: https://vapidkeys.com ou via web-push CLI
+        // npx web-push generate-vapid-keys
+        const VAPID_PUBLIC_KEY = 'BMoS6uF_9XzsoPhy3LhDdUZ_1-q4VO_C18u6-8wOe82-q3twM0Mhis2LMm7YC-X35b_RYpz3oEovRTphhtK2_KU';
+
+        function urlBase64ToUint8Array(base64String) {
+            const padding = '='.repeat((4 - base64String.length % 4) % 4);
+            const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+            const rawData = atob(base64);
+            return Uint8Array.from([...rawData].map(c => c.charCodeAt(0)));
+        }
+
+        async function registrarPushNotifications(registration) {
+            try {
+                // Verifica se já existe uma subscrição ativa
+                const existente = await registration.pushManager.getSubscription();
+                if (existente) {
+                    console.log('Push já subscrito:', existente.endpoint);
+                    return existente;
+                }
+
+                // Solicita permissão ao usuário se ainda não foi concedida
+                const permissao = await Notification.requestPermission();
+                if (permissao !== 'granted') {
+                    console.warn('Permissão de notificação negada pelo usuário.');
+                    return null;
+                }
+
+                // Faz a subscrição usando a chave VAPID pública
+                const subscription = await registration.pushManager.subscribe({
+                    userVisibleOnly: true,
+                    applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY)
+                });
+
+                console.log('Push subscrito com sucesso:', JSON.stringify(subscription));
+                // Aqui você enviaria `subscription` ao seu servidor backend para armazenar
+                // Ex: await fetch('/api/save-subscription', { method: 'POST', body: JSON.stringify(subscription) });
+                return subscription;
+
+            } catch (err) {
+                console.warn('Erro ao registrar push notifications:', err);
+                return null;
+            }
+        }
+
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('SW registrado:', reg.scope))
+                    .then(async reg => {
+                        console.log('SW registrado:', reg.scope);
+                        // Aguarda o SW estar ativo antes de subscrever ao push
+                        if (reg.installing) {
+                            await new Promise(resolve => {
+                                reg.installing.addEventListener('statechange', e => {
+                                    if (e.target.state === 'activated') resolve();
+                                });
+                            });
+                        }
+                        if ('PushManager' in window) {
+                            await registrarPushNotifications(reg);
+                        }
+                    })
                     .catch(err => console.warn('SW falhou:', err));
             });
         }
