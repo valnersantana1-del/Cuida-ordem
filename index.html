@@ -270,7 +270,10 @@
         /* Menu Lateral (Drawer) */
         .drawer-overlay { 
             position: fixed; top: 0; left: 0; right: 0; bottom: 0; 
-            background-color: rgba(0,0,0,0.7); z-index: 20; 
+            background-color: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 20; 
             display: none; justify-content: flex-start;
             opacity: 0; transition: opacity 0.3s ease;
         }
@@ -278,9 +281,10 @@
         .drawer-content { 
             width: 85%; max-width: 350px; height: 100%; 
             background-color: #14161d; border-right: 1px solid rgba(255,255,255,0.05); 
-            padding: 1.5rem; transform: translateX(-100%); 
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+            padding: 1.5rem; transform: translateX(-110%); 
+            transition: transform 0.38s cubic-bezier(0.25, 1, 0.5, 1);
             display: flex; flex-direction: column; overflow-y: auto; 
+            box-shadow: 8px 0 40px rgba(0,0,0,0.6);
         }
         .drawer-overlay.active .drawer-content { transform: translateX(0); }
         .drawer-header {
@@ -497,7 +501,25 @@
         .btn-sheet-confirm { width: 100%; background-color: var(--bg-input); border: 1px solid rgba(255,255,255,0.05); color: var(--text-primary); padding: 0.85rem; border-radius: 10px; font-weight: 600; cursor: pointer; }
         .btn-sheet-confirm:hover { border-color: var(--accent); color: var(--accent); }
 
-        .toast { position: fixed; bottom: 5rem; left: 50%; transform: translateX(-50%) translateY(20px); background-color: var(--success); color: white; padding: 0.75rem 1.5rem; border-radius: 30px; font-size: 0.9rem; font-weight: 600; opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 40; }
+        .toast {
+            position: fixed;
+            bottom: 5.5rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(16px);
+            background: linear-gradient(135deg, #1e2330, #252b3b);
+            color: var(--text-primary);
+            padding: 0.7rem 1.4rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.35s cubic-bezier(0.34, 1.2, 0.64, 1);
+            z-index: 40;
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5), 0 0 0 1px rgba(212,175,55,0.1);
+            white-space: nowrap;
+        }
         .toast.show { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
         
         .report-ranking-box { background-color: rgba(214, 175, 55, 0.05); border: 1px solid rgba(214, 175, 55, 0.2); border-left: 4px solid var(--accent); padding: 0.85rem; border-radius: 10px; margin-bottom: 1.5rem; }
@@ -630,17 +652,74 @@
             position: absolute;
             bottom: 4px;
         }
-        /* Ícone de lembrete no calendário */
         .calendario-dia.com-lembrete::before {
-            content: '🔔';
-            font-size: 8px;
+            content: '';
+            width: 5px;
+            height: 5px;
+            background-color: #60a5fa;
+            border-radius: 50%;
             position: absolute;
-            top: 2px;
-            right: 4px;
-            opacity: 0.9;
+            bottom: 4px;
+            left: calc(50% - 7px);
+        }
+        .calendario-dia.com-entrada.com-lembrete::after {
+            left: calc(50% + 2px);
         }
         .calendario-dia.hoje { border-color: rgba(212, 175, 55, 0.5); color: var(--accent); }
         .calendario-dia.selecionado { background-color: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
+
+        .diario-lembretes-dia {
+            margin-top: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+        .diario-lembrete-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(96, 165, 250, 0.08);
+            border: 1px solid rgba(96, 165, 250, 0.2);
+            border-radius: 8px;
+            padding: 0.45rem 0.7rem;
+            font-size: 0.8rem;
+            color: var(--text-primary);
+        }
+        .diario-lembrete-hora {
+            font-size: 0.7rem;
+            color: #60a5fa;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .diario-lembrete-titulo {
+            font-weight: 600;
+            flex: 1;
+        }
+        .diario-lembrete-tag {
+            font-size: 0.65rem;
+            background: rgba(96,165,250,0.15);
+            color: #93c5fd;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        .diario-legenda {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+        }
+        .diario-legenda-item {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .legenda-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
         .diario-leitura {
             background-color: var(--bg-input);
             border: 1px solid rgba(255,255,255,0.05);
@@ -682,8 +761,11 @@
         </section>
 
         <div class="parchment-zone" id="checklist-section">
-            <h3 class="section-title">Práticas de Hoje</h3>
-            <main class="checklist-container" id="checklist-container"></main>
+            <h3 class="section-title" style="justify-content: space-between;">
+                <span>Práticas de Hoje</span>
+                <span id="praticas-counter" style="font-size:0.7rem; background:rgba(44,37,25,0.1); padding:0.1rem 0.5rem; border-radius:20px; letter-spacing:0; font-weight:700; color:#7d6634;">0/0</span>
+            </h3>
+            <div class="checklist-container" id="checklist-container" role="list"></div>
 
             <section class="add-custom-container">
                 <h3 class="section-title" style="margin: 0 0 0.5rem 0; padding: 0;">Personalizar Rotina</h3>
@@ -744,7 +826,7 @@
 
             <div class="diario-drawer-card">
                 <label class="section-title" style="margin:0 0 0.5rem 0; display:block;">Diário Espiritual</label>
-                <p>Registre suas reflexões diárias e consulte-as pelo calendário. Lembretes agendados aparecem com 🔔.</p>
+                <p>Registre suas reflexões diárias e consulte-as pelo calendário.</p>
                 <button class="btn-diario-abrir" onclick="abrirDiarioEspiritual()">Abrir Diario</button>
             </div>
 
@@ -845,6 +927,7 @@
             <div class="diario-tabs">
                 <button type="button" class="diario-tab active" id="diario-tab-escrever" onclick="alternarAbaDiario('escrever')">✍️ Escrever</button>
                 <button type="button" class="diario-tab" id="diario-tab-calendario" onclick="alternarAbaDiario('calendario')">📅 Calendário</button>
+                <button type="button" class="diario-tab" id="diario-tab-compromissos" onclick="alternarAbaDiario('compromissos')">🔔 Compromissos</button>
             </div>
 
             <div class="diario-painel active" id="diario-painel-escrever">
@@ -862,12 +945,21 @@
                     <h3 id="diario-mes-titulo">Mês</h3>
                     <button type="button" class="btn-diario-nav" onclick="mudarMesDiario(1)">›</button>
                 </div>
+                <div class="diario-legenda">
+                    <div class="diario-legenda-item"><span class="legenda-dot" style="background:var(--accent)"></span> Anotação</div>
+                    <div class="diario-legenda-item"><span class="legenda-dot" style="background:#60a5fa"></span> Lembrete</div>
+                </div>
                 <div class="calendario-grid" id="diario-calendario-grid"></div>
                 <div class="diario-data-label" style="margin-top: 0;">
                     <span id="diario-data-leitura">Selecione um dia</span>
                     <button type="button" class="btn-diario-hoje" onclick="editarDiaSelecionadoDiario()" id="btn-editar-dia-diario" style="display: none;">Editar</button>
                 </div>
-                <div class="diario-leitura vazio" id="diario-leitura-conteudo">Toque em um dia marcado com ponto dourado para ler sua anotação. Dias com 🔔 possuem lembretes agendados.</div>
+                <div class="diario-leitura vazio" id="diario-leitura-conteudo">Toque em um dia marcado com ponto dourado para ler sua anotação.</div>
+                <div class="diario-lembretes-dia" id="diario-lembretes-dia" style="display:none;"></div>
+            </div>
+
+            <div class="diario-painel" id="diario-painel-compromissos">
+                <div id="diario-compromissos-list"></div>
             </div>
         </div>
     </div>
@@ -885,10 +977,704 @@
     <div class="toast" id="toast-feedback">✓ Atualizado!</div>
 
     <script>
-        // ========================== CÓDIGO COMPLETO (adaptado com a funcionalidade de lembrete no calendário) ==========================
-        // As funções essenciais são mantidas. Adicionamos a função temLembreteNaData e ajustamos renderizarCalendarioDiario para exibir 🔔.
-        
-        // Variáveis e definições globais (as mesmas do original, mas declaradas novamente para garantir escopo)
+        const frasesEucaristicasAleatorias = [
+            { frase: "A Eucaristia é o ápice do amor divino. Ali, Jesus não apenas se dá, mas se dá por inteiro.", autor: "São Boaventura" },
+            { frase: "Para receber a Eucaristia, deveríamos ter o coração de Maria Santíssima.", autor: "São João Maria Vianney" },
+            { frase: "Na Eucaristia se rompe a solidão humana porque nela está o Emanuel, o Deus conosco.", autor: "São João Paulo II" },
+            { frase: "A Eucaristia é a saúde da alma e do corpo, o remédio de toda enfermidade espiritual.", autor: "São Tomás de Kempis" }
+        ];
+
+        let leituraDoDiaCarregada = null;
+        let leituraDoDiaCarregadaDate = '';
+
+        const isCapacitorNative = () => {
+            return typeof window.Capacitor !== 'undefined' && window.Capacitor.getPlatform && window.Capacitor.getPlatform() !== 'web';
+        };
+
+        function getLocalNotificationsPlugin() {
+            const plugin = typeof window !== 'undefined' && window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.LocalNotifications
+                ? window.Capacitor.Plugins.LocalNotifications
+                : null;
+            console.debug('[DEBUG] getLocalNotificationsPlugin -> disponível:', !!plugin, plugin);
+            return plugin;
+        }
+
+        let permissaoNotificacoesNativaConcedida = null;
+
+        function formatarDataLocal(data) {
+            const y = data.getFullYear();
+            const m = String(data.getMonth() + 1).padStart(2, '0');
+            const d = String(data.getDate()).padStart(2, '0');
+            return `${y}-${m}-${d}`;
+        }
+
+        function interpretarPermissaoNotificacao(perm) {
+            return Boolean(
+                perm?.display === 'granted' ||
+                perm?.granted === true ||
+                perm?.permission === 'granted' ||
+                perm?.ios?.display === 'granted' ||
+                perm?.ios?.granted === true
+            );
+        }
+
+        const nativeHttpPlugin = (typeof window.Capacitor !== 'undefined' && window.Capacitor.Plugins && window.Capacitor.Plugins.Http)
+            ? window.Capacitor.Plugins.Http
+            : null;
+
+        async function fetchUsingCapacitorHttp(url, options = {}) {
+            if (!nativeHttpPlugin || !isCapacitorNative()) return null;
+            try {
+                const response = await nativeHttpPlugin.get({
+                    url,
+                    headers: options.headers || {}
+                });
+                const status = Number(response.status || response.statusCode || 0);
+                if (status >= 200 && status < 300) {
+                    return {
+                        ok: true,
+                        status,
+                        text: async () => typeof response.data === 'string' ? response.data : JSON.stringify(response.data),
+                        json: async () => typeof response.data === 'object' ? response.data : JSON.parse(response.data)
+                    };
+                }
+            } catch (e) {
+                console.warn('Capacitor HTTP falhou:', e, url);
+            }
+            return null;
+        }
+
+        async function obterPermissaoNotificacoesNativas() {
+            const localNotificationsPlugin = getLocalNotificationsPlugin();
+            console.debug('[DEBUG] obterPermissaoNotificacoesNativas -> isCapacitorNative:', isCapacitorNative(), 'plugin:', !!localNotificationsPlugin);
+            if (!localNotificationsPlugin || !isCapacitorNative()) {
+                console.warn('Plugin de notificações nativo não disponível.');
+                permissaoNotificacoesNativaConcedida = false;
+                return false;
+            }
+            try {
+                const perm = await localNotificationsPlugin.requestPermissions();
+                const granted = Boolean(
+                    perm?.display === 'granted' ||
+                    perm?.granted === true ||
+                    perm?.permission === 'granted' ||
+                    perm?.ios?.display === 'granted' ||
+                    perm?.ios?.granted === true
+                );
+                permissaoNotificacoesNativaConcedida = granted;
+                console.info('Permissão de notificações nativas:', perm, 'concedida=', granted);
+                return granted;
+            } catch (e) {
+                console.warn('Falha ao pedir permissão de notificações:', e);
+                permissaoNotificacoesNativaConcedida = false;
+                return false;
+            }
+        }
+
+        async function verificarPermissaoNotificacoesNativas() { 
+            if (permissaoNotificacoesNativaConcedida !== null) {
+                return permissaoNotificacoesNativaConcedida;
+            }
+            return await obterPermissaoNotificacoesNativas();
+        }
+
+        async function criarCanalNotificacao() {
+            const localNotificationsPlugin = getLocalNotificationsPlugin();
+            if (!localNotificationsPlugin || !isCapacitorNative() || !localNotificationsPlugin.createChannel) return;
+            try {
+                await localNotificationsPlugin.createChannel({
+                    id: 'lembretes',
+                    name: 'Lembretes',
+                    description: 'Canal padrão para lembretes do aplicativo',
+                    importance: 5,
+                    sound: 'default'
+                });
+            } catch (e) {
+                console.warn('Não foi possível criar canal de notificação:', e);
+            }
+        }
+
+        async function inicializarNotificacoesNativas() {
+            const localNotificationsPlugin = getLocalNotificationsPlugin();
+            console.debug('[DEBUG] inicializarNotificacoesNativas -> native?', isCapacitorNative(), 'plugin:', !!localNotificationsPlugin);
+            if (localNotificationsPlugin && isCapacitorNative()) {
+                const permissionGranted = await obterPermissaoNotificacoesNativas();
+                console.debug('[DEBUG] inicializarNotificacoesNativas -> permissionGranted:', permissionGranted);
+                if (permissionGranted) {
+                    await criarCanalNotificacao();
+                    await agendarLembretesSalvos();
+                }
+            }
+            await solicitarPermissaoNotificacoesWeb();
+        }
+
+        async function solicitarPermissaoNotificacoesWeb() { 
+            if (typeof window === 'undefined' || typeof Notification === 'undefined' || isCapacitorNative()) return;
+            if (Notification.permission === 'default') {
+                try {
+                    const resultado = await Notification.requestPermission();
+                    console.info('Permissão de notificações web:', resultado);
+                } catch (e) {
+                    console.warn('Falha ao solicitar permissão de notificações web:', e);
+                }
+            }
+        }
+
+        function extrairNotificacaoId(reminderId) {
+            const str = String(reminderId);
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                hash = ((hash << 5) - hash) + str.charCodeAt(i);
+                hash |= 0;
+            }
+            return (Math.abs(hash) % 2147483646) + 1;
+        }
+
+        async function agendarLembretesSalvos() {
+            const localNotificationsPlugin = getLocalNotificationsPlugin();
+            if (!localNotificationsPlugin || !isCapacitorNative()) return;
+            const agora = new Date();
+            for (const reminder of lembretes) {
+                const scheduleDate = new Date(`${reminder.data}T${reminder.hora}:00`);
+                if (scheduleDate > agora) {
+                    await cancelarNotificacaoLembrete(reminder.id);
+                    await agendarNotificacaoLembrete(reminder);
+                }
+            }
+        }
+
+        async function agendarNotificacaoLembrete(reminder) {
+            const localNotificationsPlugin = getLocalNotificationsPlugin();
+            if (!localNotificationsPlugin || !isCapacitorNative()) {
+                console.warn('[DEBUG] agendarNotificacaoLembrete -> plugin indisponível ou não nativo.');
+                return;
+            }
+            const permissionGranted = await verificarPermissaoNotificacoesNativas();
+            console.debug('[DEBUG] agendarNotificacaoLembrete -> permissionGranted:', permissionGranted, 'reminder:', reminder);
+            if (!permissionGranted) {
+                console.warn('Permissão de notificações não concedida. Notificação não foi agendada.');
+                return;
+            }
+            try {
+                const scheduleDate = new Date(`${reminder.data}T${reminder.hora}:00`);
+                console.debug('[DEBUG] agendarNotificacaoLembrete -> scheduleDate:', scheduleDate);
+                if (Number.isNaN(scheduleDate.getTime())) {
+                    console.warn('[DEBUG] scheduleDate inválida para lembrete:', reminder.id, reminder.data, reminder.hora);
+                    return;
+                }
+                if (scheduleDate <= new Date()) {
+                    console.warn('Lembrete no passado, notificação não agendada:', reminder.id);
+                    return;
+                }
+
+                await criarCanalNotificacao();
+                await localNotificationsPlugin.schedule({
+                    notifications: [{
+                        id: extrairNotificacaoId(reminder.id),
+                        title: 'Lembrete Cuida Ordem',
+                        body: reminder.titulo,
+                        schedule: {
+                            at: scheduleDate,
+                            allowWhileIdle: true
+                        },
+                        channelId: 'lembretes',
+                        sound: 'default'
+                    }]
+                });
+                console.info('[DEBUG] notificação agendada para lembrete:', reminder.id, scheduleDate);
+            } catch (e) {
+                console.warn('Erro ao agendar notificação nativa:', e);
+            }
+        }
+
+        async function cancelarNotificacaoLembrete(reminderId) {
+            const localNotificationsPlugin = getLocalNotificationsPlugin();
+            if (!localNotificationsPlugin || !isCapacitorNative()) return;
+            try {
+                const id = extrairNotificacaoId(reminderId);
+                await localNotificationsPlugin.cancel({ notifications: [{ id }] });
+            } catch (e) {
+                console.warn('Erro ao cancelar notificação nativa:', e);
+            }
+        }
+
+        function extrairValor(obj, keys) {
+            if (!obj || typeof obj !== 'object') return null;
+            for (const key of keys) {
+                if (obj[key] !== undefined && obj[key] !== null && obj[key] !== '') {
+                    return obj[key];
+                }
+            }
+            return null;
+        }
+
+        function escaparHtml(texto) {
+            if (!texto) return '';
+            return String(texto)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+
+        function formatarTextoEvangelho(texto) {
+            if (!texto) return '';
+            return String(texto)
+                .replace(/\r\n/g, '\n')
+                .replace(/\r/g, '\n')
+                .replace(/<br\s*\/?>/gi, '\n')
+                .replace(/<\/p>\s*<p[^>]*>/gi, '\n\n')
+                .replace(/<\/div>\s*<div[^>]*>/gi, '\n\n')
+                .replace(/<[^>]+>/g, '')
+                .replace(/&nbsp;/gi, ' ')
+                .replace(/[ \t]+\n/g, '\n')
+                .replace(/\n[ \t]+/g, '\n')
+                .replace(/\n{3,}/g, '\n\n')
+                .trim();
+        }
+
+        function sanitizarTextoEvangelho(texto) {
+            const conteudo = formatarTextoEvangelho(texto);
+            if (!conteudo) return '';
+
+            const padraoRemanescente = /(\n{2,}|\n)\s*(?:1ª|1a|Primeira Leitura|Primeira leitura|Primeira|Leitura|Atos dos Apóstolos|Salmo Responsorial|Respons[óo]rio|Santo Evangelho segundo|Santo Evangelho|Evangelho segundo).*$/i;
+            const correspondencia = conteudo.match(padraoRemanescente);
+            return correspondencia ? conteudo.slice(0, correspondencia.index).trim() : conteudo;
+        }
+
+        function normalizarLiturgiaAPI(data) {
+            if (!data || typeof data !== 'object') return null;
+            let source = Array.isArray(data) ? data[0] : data;
+            if (source && source.data && typeof source.data === 'object') {
+                source = source.data;
+            }
+            if (!source || typeof source !== 'object') return null;
+
+            const normalized = {
+                dia: extrairValor(source, ['dia', 'day', 'date', 'name', 'santo', 'saint', 'celebration', 'liturgia']),
+                citaPrimeiraLeitura: extrairValor(source, ['citaPrimeiraLeitura', 'primeiraLeitura', 'firstReading', 'primeira_leitura', 'first_reading', 'reading1', 'first_reading_citation', 'first', 'citation1', 'primeira_citacao']),
+                citaSalmo: extrairValor(source, ['citaSalmo', 'salmo', 'psalm', 'psalmCitation', 'responsorialPsalm', 'salmo_responsorial', 'refrao']),
+                citaEvangelho: extrairValor(source, ['citaEvangelho', 'evangelho', 'gospel', 'gospelCitation', 'gospel_citation', 'thirdReading', 'evangelho_citation', 'titulo', 'title', 'referencia', 'referência']),
+                evangelhoTexto: extrairValor(source, ['evangelhoTexto', 'textoEvangelho', 'gospelText', 'gospel_text', 'text', 'texto', 'scriptureText', 'body', 'readingText']),
+                santo: extrairValor(source, ['santo', 'saint', 'celebration', 'feast', 'liturgia'])
+            };
+
+            const leiturasObj = source.leituras || source.readings || source.items || null;
+            if (leiturasObj && typeof leiturasObj === 'object') {
+                const primeira = Array.isArray(leiturasObj.primeiraLeitura) ? leiturasObj.primeiraLeitura[0] : leiturasObj.primeiraLeitura;
+                const salmo = Array.isArray(leiturasObj.salmo) ? leiturasObj.salmo[0] : leiturasObj.salmo;
+                const evangelho = Array.isArray(leiturasObj.evangelho) ? leiturasObj.evangelho[0] : leiturasObj.evangelho;
+
+                if (primeira) {
+                    normalized.citaPrimeiraLeitura = normalized.citaPrimeiraLeitura || extrairValor(primeira, ['referencia', 'referência', 'titulo', 'title']);
+                }
+                if (salmo) {
+                    normalized.citaSalmo = normalized.citaSalmo || extrairValor(salmo, ['referencia', 'referência', 'refrao', 'titulo', 'title']);
+                }
+                if (evangelho) {
+                    normalized.citaEvangelho = normalized.citaEvangelho || extrairValor(evangelho, ['referencia', 'referência', 'titulo', 'title', 'evangelho', 'gospel']);
+                    normalized.evangelhoTexto = normalized.evangelhoTexto || extrairValor(evangelho, ['texto', 'text', 'content', 'body', 'verse', 'readingText', 'description']);
+                }
+            }
+
+            const readings = Array.isArray(source.readings) ? source.readings : Array.isArray(source.leituras) ? source.leituras : null;
+            if (readings) {
+                readings.forEach(item => {
+                    if (!item || typeof item !== 'object') return;
+                    const type = (item.type || item.key || item.id || item.name || item.title || '').toString().toLowerCase();
+                    const citation = extrairValor(item, ['citation', 'citacao', 'reference', 'ref', 'title', 'cita', 'texto', 'text']);
+                    const text = extrairValor(item, ['text', 'texto', 'content', 'body', 'verse', 'readingText']);
+
+                    if (!normalized.citaPrimeiraLeitura && /first|primeira|1a|1ª|1/.test(type)) {
+                        normalized.citaPrimeiraLeitura = normalized.citaPrimeiraLeitura || citation || text;
+                    }
+                    if (!normalized.citaSalmo && /psalm|salmo|responsorial|resp/.test(type)) {
+                        normalized.citaSalmo = normalized.citaSalmo || citation || text;
+                    }
+                    if (!normalized.citaEvangelho && /gospel|evangelho|3a|3ª|third/.test(type)) {
+                        normalized.citaEvangelho = normalized.citaEvangelho || citation || text;
+                        normalized.evangelhoTexto = normalized.evangelhoTexto || text;
+                    }
+                    if (!normalized.evangelhoTexto && /gospel|evangelho|text|texto/.test(type)) {
+                        normalized.evangelhoTexto = normalized.evangelhoTexto || text;
+                    }
+                });
+            }
+
+            if (normalized.citaPrimeiraLeitura && normalized.citaSalmo && normalized.citaEvangelho) {
+                normalized.fromAPI = true;
+                if (normalized.evangelhoTexto) {
+                    normalized.evangelhoTexto = formatarTextoEvangelho(normalized.evangelhoTexto);
+                }
+                return normalized;
+            }
+            return null;
+        }
+
+        async function fetchComCORSFallback(url, options = {}) {
+            const nativeResponse = await fetchUsingCapacitorHttp(url, options);
+            if (nativeResponse) {
+                return nativeResponse;
+            }
+
+            try {
+                const response = await fetch(url, options);
+                if (response.ok) {
+                    return response;
+                }
+                console.warn('Fetch direto retornou status não OK:', response.status, url);
+            } catch (err) {
+                console.warn('Fetch direto falhou, tentando proxy CORS:', err, url);
+            }
+
+            const proxyUrls = [
+                `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+                `https://corsproxy.io/?${encodeURIComponent(url)}`
+            ];
+
+            for (const proxyUrl of proxyUrls) {
+                try {
+                    const response = await fetch(proxyUrl, { cache: 'no-cache' });
+                    if (response.ok) {
+                        return response;
+                    }
+                    console.warn('Fetch via proxy CORS retornou status não OK:', response.status, proxyUrl);
+                } catch (err) {
+                    console.warn('Fetch via proxy CORS falhou:', err, proxyUrl);
+                }
+            }
+            return null;
+        }
+
+        async function buscarLiturgiaCancaonova() {
+            try {
+                const url = 'https://liturgia.cancaonova.com/pb/';
+                const response = await fetchComCORSFallback(url, { cache: 'no-cache' });
+                if (!response) return null;
+
+                const html = await response.text();
+                const doc = new DOMParser().parseFromString(html, 'text/html');
+
+                const extrairTextoPainel = (id) => {
+                    const painel = doc.getElementById(id);
+                    if (!painel) return null;
+
+                    const extrairTextoElemento = (el) => {
+                        const clone = el.cloneNode(true);
+                        clone.querySelectorAll('br').forEach(br => br.replaceWith('\n'));
+                        clone.querySelectorAll('.embeds-audio').forEach(node => node.remove());
+                        return clone.textContent.replace(/\n{3,}/g, '\n\n').trim();
+                    };
+
+                    const paragrafos = Array.from(painel.querySelectorAll('p'))
+                        .filter(p => p.textContent.trim().length > 0 && !p.querySelector('.embeds-audio'))
+                        .map(extrairTextoElemento);
+
+                    const texto = paragrafos.filter((texto, index) => {
+                        if (index === 0 && /Leitura|Respons[óo]rio|Evangelho|Salmo/.test(texto)) {
+                            return false;
+                        }
+                        return true;
+                    }).join('\n\n').trim();
+
+                    return formatarTextoEvangelho(texto) || null;
+                };
+
+                const citaPrimeiraLeitura = doc.querySelector('#lit-1 .referencia')?.textContent.trim() || null;
+                const citaSalmo = doc.querySelector('#lit-2 .referencia')?.textContent.trim() || null;
+                const citaEvangelho = doc.querySelector('#lit-4 .referencia')?.textContent.trim() || null;
+                const evangelhoTexto = extrairTextoPainel('liturgia-4');
+                const tituloDia = doc.querySelector('meta[property="og:title"]')?.content.trim() || null;
+                const descricaoOg = doc.querySelector('meta[property="og:description"]')?.content.trim() || null;
+
+                if (!citaPrimeiraLeitura || !citaSalmo || !citaEvangelho || !evangelhoTexto) {
+                    return null;
+                }
+
+                return {
+                    dia: tituloDia || 'Liturgia do dia',
+                    santo: descricaoOg || tituloDia || 'Liturgia diária',
+                    citaPrimeiraLeitura,
+                    citaSalmo,
+                    citaEvangelho,
+                    evangelhoTexto,
+                    fromAPI: true
+                };
+            } catch (e) {
+                console.warn('Erro ao buscar liturgia Canção Nova:', e);
+                return null;
+            }
+        }
+
+        async function buscarLiturgiaDaAPI() {
+            try {
+                const cancaonova = await buscarLiturgiaCancaonova();
+                if (cancaonova) {
+                    return cancaonova;
+                }
+
+                const hoje = new Date();
+                const dia = String(hoje.getDate()).padStart(2, '0');
+                const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+                const ano = hoje.getFullYear();
+
+                const endpoints = [
+                    `https://liturgia-api.vercel.app/api/dia/${ano}-${mes}-${dia}`,
+                    `https://api.liturgiadiaria.app/v1/${ano}/${mes}/${dia}`
+                ];
+
+                for (let url of endpoints) {
+                    try {
+                        const response = await fetchComCORSFallback(url, { cache: 'no-cache' });
+                        if (!response) continue;
+                        const data = await response.json();
+                        const normalized = normalizarLiturgiaAPI(data);
+                        if (normalized) {
+                            return normalized;
+                        }
+                    } catch (e) {
+                        console.warn('Erro ao tentar API:', url, e);
+                    }
+                }
+
+                return null;
+            } catch (e) {
+                console.warn('Erro ao buscar liturgia em endpoint JSON:', e);
+                return null;
+            }
+        }
+
+        async function carregarLiturgiaDoDia() {
+            const hojeStr = new Date().toISOString().split('T')[0];
+            if (leituraDoDiaCarregada && leituraDoDiaCarregadaDate === hojeStr) return;
+
+            const liturgiaAPI = await buscarLiturgiaDaAPI();
+            if (liturgiaAPI) {
+                leituraDoDiaCarregada = liturgiaAPI;
+                leituraDoDiaCarregadaDate = hojeStr;
+                return;
+            }
+
+            const diaSemana = new Date().getDay();
+            leituraDoDiaCarregada = { ...liturgiaPorDia[diaSemana], fromAPI: false };
+            leituraDoDiaCarregadaDate = hojeStr;
+        }
+
+        const liturgiaPorDia = {
+            0: {
+                dia: "Domingo",
+                citaPrimeiraLeitura: "Atos dos Apóstolos (At 2, 42-47)",
+                citaSalmo: "Salmo Responsorial (Sl 22 / 23)",
+                citaEvangelho: "Santo Evangelho segundo São João (Jo 6, 54-56)",
+                evangelhoTexto: "Quem come a minha carne e bebe o meu sangue tem a vida eterna; e eu o ressuscitarei no último dia. Porque a minha carne é verdadeira comida e o meu sangue é verdadeira bebida.",
+                santo: "Domingo de Páscoa"
+            },
+            1: {
+                dia: "Segunda",
+                citaPrimeiraLeitura: "1 Pedro (1Pd 1, 3-7)",
+                citaSalmo: "Salmo Responsorial (Sl 110 / 111)",
+                citaEvangelho: "Santo Evangelho segundo São Mateus (Mt 28, 8-15)",
+                evangelhoTexto: "Dissera-lhes Jesus: não temais. Ide anunciar a meus irmãos que se dirijam à Galileia; lá me verão.",
+                santo: "Segunda-feira de Páscoa"
+            },
+            2: {
+                dia: "Terça",
+                citaPrimeiraLeitura: "1 Pedro (1Pd 1, 8-12)",
+                citaSalmo: "Salmo Responsorial (Sl 32 / 33)",
+                citaEvangelho: "Santo Evangelho segundo São Lucas (Lc 24, 36-47)",
+                evangelhoTexto: "A paz seja convosco. Sou eu; não temais. Porque procurais perturbação? E por que surgem dúvidas em vosso coração?",
+                santo: "Terça-feira de Páscoa"
+            },
+            3: {
+                dia: "Quarta",
+                citaPrimeiraLeitura: "1 João (1Jo 1, 1-4)",
+                citaSalmo: "Salmo Responsorial (Sl 103 / 104)",
+                citaEvangelho: "Santo Evangelho segundo São João (Jo 20, 19-31)",
+                evangelhoTexto: "Novamente lhes disse: a paz seja convosco. Como meu Pai me enviou, também eu vos envio. E dito isto, soprou sobre eles e disse-lhes: Recebei o Espírito Santo.",
+                santo: "Quarta-feira de Páscoa"
+            },
+            4: {
+                dia: "Quinta",
+                citaPrimeiraLeitura: "Atos dos Apóstolos (At 3, 1-10)",
+                citaSalmo: "Salmo Responsorial (Sl 8 / 9)",
+                citaEvangelho: "Santo Evangelho segundo São Lucas (Lc 24, 36-47)",
+                evangelhoTexto: "A paz seja convosco. Sou eu; não temais. Porque procurais perturbação? E por que surgem dúvidas em vosso coração?",
+                santo: "Quinta-feira de Páscoa"
+            },
+            5: {
+                dia: "Sexta",
+                citaPrimeiraLeitura: "Atos dos Apóstolos (At 3, 11-26)",
+                citaSalmo: "Salmo Responsorial (Sl 8 / 9)",
+                citaEvangelho: "Santo Evangelho segundo São João (Jo 21, 1-14)",
+                evangelhoTexto: "Jesus apareceu novamente aos seus discípulos junto do mar de Tiberíades. Manifestou-se assim: estavam juntos Simão Pedro, Tomás chamado Dídimo, Natanael de Caná da Galiléia.",
+                santo: "Sexta-feira de Páscoa"
+            },
+            6: {
+                dia: "Sábado",
+                citaPrimeiraLeitura: "Atos dos Apóstolos (At 4, 13-21)",
+                citaSalmo: "Salmo Responsorial (Sl 117 / 118)",
+                citaEvangelho: "Santo Evangelho segundo Marcos (Mc 16, 9-15)",
+                evangelhoTexto: "Jesus ressuscitado apareceu primeiramente a Maria Madalena, de quem havia expelido sete demônios. Ela foi anunciá-lo aos que tinham vivido com ele.",
+                santo: "Sábado de Páscoa"
+            }
+        };
+
+        const frasesEspirituaisTop = [
+            { frase: "Se os anjos pudessem invejar, invejariam os homens por uma única razão: a Sagrada Comunhão.", autor: "São Maximiliano Kolbe" },
+            { frase: "A Eucaristia é a minha autopista para o Céu.", autor: "Bem-Aventurado Carlo Acutis" },
+            { frase: "É mais fácil o mundo subsistir sem o sol do que sem o Santo Sacrifício da Missa.", autor: "São Padre Pio" },
+            { frase: "Não abandone a sua Leitura Espiritual. A leitura tem feito muitos santos.", autor: "São Josemaria Escrivá" }
+        ];
+
+        const misteriosDoTerco = {
+            gozosos: { nome: "Mistérios Gozosos (Segundas e Sábados)", itens: ["1º Anunciação", "2º Visitação", "3º Nascimento", "4º Apresentação", "5º Perda e Encontro"] },
+            dolorosos: { nome: "Mistérios Dolorosos (Terças e Sextas)", itens: ["1º Agonia no Horto", "2º Flagelação", "3º Coroação de Espinhos", "4º Cruz às costas", "5º Crucifixão"] },
+            gloriosos: { nome: "Mistérios Gloriosos (Quartas e Domingos)", itens: ["1º Ressurreição", "2º Ascensão", "3º Pentecostes", "4º Assunção", "5º Coroação de Maria"] },
+            luminosos: { nome: "Mistérios Luminosos (Quintas)", itens: ["1º Batismo no Jordão", "2º Bodas de Caná", "3º Anúncio do Reino", "4º Transfiguração", "5º Instituição da Eucaristia"] }
+        };
+
+        const perguntasExamePecados = {
+            Soberba: [
+                "Hoje procurei me colocar acima dos outros ou me senti melhor por ter certas qualidades?",
+                "Desejei ser elogiado(a) ou admirado(a) por meus feitos?",
+                "Recusei reconhecer meus erros e procurei justificar minhas atitudes?",
+                "Fui orgulhoso(a) ao não pedir ajuda ou agradecer quando alguém me ajudou?"
+            ],
+            Avareza: [
+                "Guardei bens ou dinheiro sem partilhar com quem precisava?",
+                "Recusei doar algo mesmo podendo ajudar alguém?",
+                "Senti medo excessivo de perder o que tenho?",
+                "Valorizei mais o dinheiro ou os bens do que a generosidade e a caridade?"
+            ],
+            Luxúria: [
+                "Busquei imagens, conversas ou desejos que desrespeitam a castidade?",
+                "Permiti que pensamentos impuros ficassem na minha mente sem combatê-los?",
+                "Tratei alguém como objeto para satisfazer meus impulsos?",
+                "Deixei de manter a pureza do olhar, da fala ou do coração?"
+            ],
+            Inveja: [
+                "Senti-me mal ao ver o sucesso ou a felicidade de outra pessoa?",
+                "Comparei-me com alguém e desejei o que ela tinha?",
+                "Alimentei ressentimento por outro ser abençoado?",
+                "Falei mal ou achei defeitos no próximo por inveja?"
+            ],
+            Gula: [
+                "Comi ou bebi mais do que precisava apenas por prazer?",
+                "Fui exigente ou injusto com quem serviu minha refeição?",
+                "Ignorei a moderação e o respeito ao alimento que recebi?",
+                "Uso a comida como distração em vez de agradecer e cuidar do corpo como templo?"
+            ],
+            Ira: [
+                "Fiquei irado(a) com facilidade ou perdi a calma sem razão justa?",
+                "Guardei ressentimento ou desejei que alguém se prejudicasse?",
+                "Respondi com agressividade em vez de paciência?",
+                "Fui duro(a) ao julgar alguém, mesmo sabendo que podia ser misericordioso(a)?"
+            ],
+            Preguiça: [
+                "Adiei obrigações importantes por simples indisposição?",
+                "Fugi de tarefas ou orações que sabia serem necessárias para meu bem?",
+                "Gastei tempo demais em distrações e pouco tempo em deveres espirituais e cotidianos?",
+                "Deixei de cuidar do corpo e da alma por falta de empenho?"
+            ]
+        };
+
+        let exameQuestoes = [];
+        let exameIndiceAtual = 0;
+        let respostasExame = [];
+
+        function montarQuestoesExame() {
+            exameQuestoes = [];
+            Object.entries(perguntasExamePecados).forEach(([pecado, listaPerguntas]) => {
+                listaPerguntas.forEach(pergunta => {
+                    exameQuestoes.push({ pecado, pergunta });
+                });
+            });
+        }
+
+        function abrirExameConsciencia() {
+            montarQuestoesExame();
+            exameIndiceAtual = 0;
+            respostasExame = [];
+            renderizarQuestaoExame();
+            document.getElementById('exame-overlay').classList.add('active');
+        }
+
+        function renderizarQuestaoExame() {
+            const container = document.getElementById('exame-perguntas-container');
+            if (!exameQuestoes.length) {
+                container.innerHTML = '<p>Nenhuma pergunta disponível no exame.</p>';
+                return;
+            }
+
+            const questaoAtual = exameQuestoes[exameIndiceAtual];
+            const total = exameQuestoes.length;
+            const progresso = exameIndiceAtual + 1;
+
+            container.innerHTML = `
+                <div class="exame-questao-card">
+                    <div class="exame-pecado-titulo">${questaoAtual.pecado} · Pergunta ${progresso} de ${total}</div>
+                    <p class="exame-pergunta-texto">${questaoAtual.pergunta}</p>
+                    <div class="exame-respostas">
+                        <button class="exame-resposta-btn sim" onclick="registrarRespostaExame(true)">SIM</button>
+                        <button class="exame-resposta-btn nao" onclick="registrarRespostaExame(false)">NÃO</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function registrarRespostaExame(respondeuSim) {
+            const questaoAtual = exameQuestoes[exameIndiceAtual];
+            respostasExame.push({ pecado: questaoAtual.pecado, sim: respondeuSim });
+            exameIndiceAtual++;
+
+            if (exameIndiceAtual < exameQuestoes.length) {
+                renderizarQuestaoExame();
+            } else {
+                processarExameVeredicto();
+            }
+        }
+
+        function processarExameVeredicto() {
+            const pontuacao = { Soberba: 0, Avareza: 0, Luxúria: 0, Inveja: 0, Gula: 0, Ira: 0, Preguiça: 0 };
+            let totalSim = 0;
+
+            respostasExame.forEach(resposta => {
+                if (resposta.sim) {
+                    pontuacao[resposta.pecado] = (pontuacao[resposta.pecado] || 0) + 1;
+                    totalSim++;
+                }
+            });
+
+            if (totalSim === 0) {
+                alert("Graças a Deus! Nenhuma falta foi assinalada hoje. Mantenha a vigilância espiritual!");
+                fecharExameSemProcessar();
+                return;
+            }
+
+            let pecadoPredominante = '';
+            let maiorPontuacao = 0;
+            Object.entries(pontuacao).forEach(([pecado, pontos]) => {
+                if (pontos > maiorPontuacao) {
+                    maiorPontuacao = pontos;
+                    pecadoPredominante = pecado;
+                }
+            });
+
+            alert(`📌 EXAME CONCLUÍDO!\n\nSeu ponto de maior fragilidade hoje foi a: ${pecadoPredominante.toUpperCase()}.\n\nBusque a virtude oposta a este pecado capital nos próximos dias através da oração e vigilância.`);
+            fecharExameSemProcessar();
+        }
+
+        function fecharExameSemProcessar() {
+            const container = document.getElementById('exame-perguntas-container');
+            container.innerHTML = '';
+            document.getElementById('exame-overlay').classList.remove('active');
+
+            const toast = document.getElementById('toast-feedback');
+            toast.innerText = "🔒 Dados do Exame Apagados!";
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
         let praticasDoDia = [
             { id: 'eucaristia', nome: 'Eucaristia', fixa: true, feita: false, estrelas: 0, notas: '' },
             { id: 'terco', nome: 'Terço', fixa: true, feita: false, estrelas: 0, notas: '' },
@@ -909,244 +1695,994 @@
         let diarioMesVisualizado = new Date();
         let diarioDiaSelecionadoCalendario = null;
 
-        // Função auxiliar para verificar se existe lembrete em uma data
-        function temLembreteNaData(dataStr) {
-            if (!lembretes || lembretes.length === 0) return false;
-            return lembretes.some(l => l.data === dataStr);
+        function obterMisterioDoDia() {
+            const diaSemana = new Date().getDay();
+            if (diaSemana === 1 || diaSemana === 6) return misteriosDoTerco.gozosos;
+            if (diaSemana === 2 || diaSemana === 5) return misteriosDoTerco.dolorosos;
+            if (diaSemana === 3 || diaSemana === 0) return misteriosDoTerco.gloriosos;
+            if (diaSemana === 4) return misteriosDoTerco.luminosos;
+            return misteriosDoTerco.gloriosos; // fallback seguro
         }
 
-        // Sobrescrevemos a função renderizarCalendarioDiario para exibir o sino
-        const originalRenderizarCalendario = window.renderizarCalendarioDiario;
-        window.renderizarCalendarioDiario = function() {
+        function salvarNoDispositivo() {
+            const hoje = formatarDataLocal(new Date());
+            localStorage.setItem('cuida_ordem_praticas', JSON.stringify(praticasDoDia));
+            localStorage.setItem('cuida_ordem_lembretes', JSON.stringify(lembretes));
+            localStorage.setItem('cuida_ordem_categorias', JSON.stringify(categorias));
+            localStorage.setItem('cuida_ordem_historico', JSON.stringify(historicoSemanal));
+            localStorage.setItem('cuida_ordem_historico_detalhado', JSON.stringify(historicoDetalhado));
+            localStorage.setItem('cuida_ordem_diario', JSON.stringify(diarioEspiritual));
+            localStorage.setItem('cuida_ordem_praticas_date', hoje);
+            localStorage.setItem('cuida_ordem_last_date', hoje);
+        }
+
+        function resetarPraticasParaNovoDia() {
+            praticasDoDia.forEach(p => {
+                p.feita = false;
+                p.notas = '';
+                p.estrelas = 0;
+            });
+        }
+
+        function arquivarPraticasNoHistorico(dataRef) {
+            const total = praticasDoDia.length;
+            const completas = praticasDoDia.filter(p => p.feita).length;
+            historicoSemanal[dataRef] = total ? Math.round((completas / total) * 100) : 0;
+            if (!historicoDetalhado[dataRef]) historicoDetalhado[dataRef] = {};
+            praticasDoDia.forEach(p => {
+                historicoDetalhado[dataRef][p.id] = { feita: p.feita, estrelas: p.estrelas };
+            });
+        }
+
+        function atualizarNomeTercoDoDia() {
+            const prTerco = praticasDoDia.find(p => p.id === 'terco');
+            if (prTerco) {
+                const mist = obterMisterioDoDia();
+                prTerco.nome = `Terço (${mist.nome.split(' ')[1]})`;
+            }
+        }
+
+        function obterNomeExibicaoRanking(pratica) {
+            if (pratica.id === 'terco') return 'Terço';
+            return pratica.nome;
+        }
+
+        function verificarViradaDoDia(atualizarUI = false) {
+            const hoje = formatarDataLocal(new Date());
+            let dataPraticas = localStorage.getItem('cuida_ordem_praticas_date')
+                || localStorage.getItem('cuida_ordem_last_date');
+
+            if (!dataPraticas) {
+                localStorage.setItem('cuida_ordem_praticas_date', hoje);
+                localStorage.setItem('cuida_ordem_last_date', hoje);
+                return false;
+            }
+
+            if (dataPraticas === hoje) return false;
+
+            arquivarPraticasNoHistorico(dataPraticas);
+            resetarPraticasParaNovoDia();
+            localStorage.setItem('cuida_ordem_praticas_date', hoje);
+            localStorage.setItem('cuida_ordem_last_date', hoje);
+            salvarNoDispositivo();
+
+            if (atualizarUI && document.getElementById('checklist-container')) {
+                atualizarNomeTercoDoDia();
+                renderizarPraticas();
+            }
+            return true;
+        }
+
+        function carregarDoDispositivo() {
+            try {
+                const salvas = localStorage.getItem('cuida_ordem_praticas');
+                const lemb = localStorage.getItem('cuida_ordem_lembretes');
+                const cats = localStorage.getItem('cuida_ordem_categorias');
+                const hist = localStorage.getItem('cuida_ordem_historico');
+                const histDet = localStorage.getItem('cuida_ordem_historico_detalhado');
+                const diario = localStorage.getItem('cuida_ordem_diario');
+                
+                if (salvas) praticasDoDia = JSON.parse(salvas);
+                if (lemb) lembretes = JSON.parse(lemb);
+                if (cats) categorias = JSON.parse(cats);
+                if (hist) historicoSemanal = JSON.parse(hist);
+                if (histDet) historicoDetalhado = JSON.parse(histDet);
+                if (diario) diarioEspiritual = JSON.parse(diario);
+            } catch (e) {
+                console.warn('Erro ao carregar dados do dispositivo. Dados podem estar corrompidos.', e);
+            }
+
+            verificarViradaDoDia(false);
+        }
+
+        function formatarDataCurta(dataStr) {
+            const partes = dataStr.split('-').map(Number);
+            if (partes.length !== 3 || partes.some(Number.isNaN)) return '';
+            const d = new Date(partes[0], partes[1] - 1, partes[2]);
+            return ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'][d.getDay()];
+        }
+
+        const LABELS_SEMANA = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
+
+        function obterDiasSemanaAtual() {
+            const hoje = new Date();
+            const diaSemana = hoje.getDay();
+            const diffParaSegunda = diaSemana === 0 ? -6 : 1 - diaSemana;
+            const segunda = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate() + diffParaSegunda);
+
+            return LABELS_SEMANA.map((label, i) => {
+                const dia = new Date(segunda);
+                dia.setDate(segunda.getDate() + i);
+                return { data: formatarDataLocal(dia), label };
+            });
+        }
+
+        function atualizarHistoricoDoDia() {
+            const hoje = formatarDataLocal(new Date());
+            const total = praticasDoDia.length;
+            const completas = praticasDoDia.filter(p => p.feita).length;
+            historicoSemanal[hoje] = total ? Math.round((completas / total) * 100) : 0;
+            
+            if (!historicoDetalhado[hoje]) historicoDetalhado[hoje] = {};
+            praticasDoDia.forEach(p => {
+                historicoDetalhado[hoje][p.id] = { feita: p.feita, estrelas: p.estrelas };
+            });
+        }
+
+        function calcularPorcentagemPratica(pratica) {
+            if (pratica.feita) return 100;
+            return Math.min(100, pratica.estrelas * 20);
+        }
+
+        function calcularTaxaConclusao7Dias(praticaId) {
+            const diasSemana = obterDiasSemanaAtual();
+            let totalScore = 0;
+            diasSemana.forEach(({ data }) => {
+                if (historicoDetalhado[data] && historicoDetalhado[data][praticaId]) {
+                    const item = historicoDetalhado[data][praticaId];
+                    if (item.feita) {
+                        const estrelas = item.estrelas || 0;
+                        const score = 60 + (estrelas * 8);
+                        totalScore += score;
+                    }
+                }
+            });
+            return Math.round(totalScore / 7);
+        }
+
+        function renderizarDesempenhoSemanal() {
+            const hojeStr = formatarDataLocal(new Date());
+            const hojePct = historicoSemanal[hojeStr] ?? 0;
+
+            const titulo = document.getElementById('chart-title');
+            if (titulo) titulo.innerText = `Desempenho Semanal · Hoje ${hojePct}%`;
+
+            const barras = document.getElementById('chart-bars');
+            const xLabels = document.getElementById('chart-x-labels');
+            if (barras) {
+                const dias = obterDiasSemanaAtual();
+                barras.innerHTML = dias.map(({ data, label }) => {
+                    const valor = historicoSemanal[data] ?? 0;
+                    const ehHoje = data === hojeStr;
+                    const destaque = ehHoje ? ' chart-bar-hoje' : '';
+                    return `
+                        <div class="chart-bar-wrapper">
+                            <span class="chart-bar-pct">${valor > 0 ? valor + '%' : ''}</span>
+                            <div class="chart-bar-track">
+                                <div class="chart-bar-fill${destaque}${valor === 0 ? ' vazio' : ''}" data-altura="${valor === 0 ? 3 : valor}"></div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                if (xLabels) {
+                    xLabels.innerHTML = dias.map(({ data, label }) => {
+                        const ehHoje = data === hojeStr;
+                        return `<span class="chart-label${ehHoje ? ' chart-label-hoje' : ''}">${label}</span>`;
+                    }).join('');
+                }
+                animarBarrasDesempenho();
+            }
+
+            const rankingContainer = document.getElementById('ranking-list');
+            if (rankingContainer) {
+                const ranking = [...praticasDoDia]
+                    .map(pratica => ({
+                        ...pratica,
+                        percentual: calcularTaxaConclusao7Dias(pratica.id)
+                    }))
+                    .sort((a, b) => b.percentual - a.percentual || b.nome.localeCompare(a.nome))
+                    .slice(0, 4);
+
+                const medalhas = ['🥇', '🥈', '🥉', '🏅'];
+                rankingContainer.innerHTML = ranking.length
+                    ? ranking.map((pratica, index) => `
+                        <div class="ranking-item">
+                            <span class="ranking-name">${medalhas[index] || '🏅'} ${obterNomeExibicaoRanking(pratica)}</span>
+                            <span class="ranking-pct">${pratica.percentual}%</span>
+                        </div>
+                    `).join('')
+                    : '<p style="font-size:0.8rem;color:var(--text-secondary);">Marque práticas para ver o ranking.</p>';
+            }
+        }
+
+        function animarBarrasDesempenho() {
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    document.querySelectorAll('#chart-bars .chart-bar-fill').forEach(barra => {
+                        const altura = Math.min(100, Math.max(0, parseInt(barra.dataset.altura, 10) || 0));
+                        barra.style.height = altura > 0 ? `${altura}%` : '0';
+                    });
+                });
+            });
+        }
+
+        function atualizarEstatisticas() {
+            atualizarHistoricoDoDia();
+            renderizarDesempenhoSemanal();
+        }
+
+        async function inicializarApp() {
+            carregarDoDispositivo();
+            const hoje = new Date();
+            document.getElementById('current-date').innerText = hoje.toLocaleDateString('pt-BR');
+            const dadosFrase = frasesEspirituaisTop[hoje.getDay() % frasesEspirituaisTop.length];
+            document.getElementById('quote-text').innerText = `"${dadosFrase.frase}"`;
+            document.getElementById('quote-author').innerText = dadosFrase.autor;
+            document.getElementById('input-reminder-date').value = formatarDataLocal(hoje);
+
+            atualizarNomeTercoDoDia();
+            renderizarPraticas();
+            renderizarDesempenhoSemanal();
+            atualizarComponentesAgenda();
+
+            inicializarNotificacoesNativas();
+            carregarLiturgiaDoDia();
+
+            document.addEventListener('visibilitychange', () => {
+                if (document.visibilityState === 'visible') verificarViradaDoDia(true);
+            });
+            window.addEventListener('focus', () => verificarViradaDoDia(true));
+            setInterval(() => verificarViradaDoDia(true), 60000);
+            setInterval(checarLembretesAtivos, 15000);
+        }
+
+        function renderizarPraticas() {
+            const container = document.getElementById('checklist-container');
+            container.innerHTML = '';
+            praticasDoDia.forEach(pratica => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = `practice-item ${pratica.feita ? 'completed' : ''}`;
+                let estrelasHTML = pratica.feita ? `<div class="stars-display">${'★'.repeat(pratica.estrelas)}${'☆'.repeat(5 - pratica.estrelas)}</div>` : '';
+                let botaoDeletarHTML = !pratica.fixa ? `<button class="btn-delete-practice" onclick="deletarPraticaPersonalizada('${pratica.id}', event)">🗑️</button>` : '';
+
+                itemDiv.innerHTML = `
+                    <div class="practice-left" onclick="alternarStatusPratica('${pratica.id}')">
+                        <div class="custom-checkbox"></div>
+                        <div class="practice-text-container"><span class="checkbox-text">${escaparHtml(pratica.nome)}</span>${estrelasHTML}</div>
+                    </div>
+                    <div class="practice-actions">
+                        <button class="details-trigger" onclick="abrirDetalhes('${pratica.id}')">${(pratica.estrelas > 0 || pratica.notas) ? '📝' : '⚙️'}</button>
+                        ${botaoDeletarHTML}
+                    </div>
+                `;
+                container.appendChild(itemDiv);
+            });
+
+            const counter = document.getElementById('praticas-counter');
+            if (counter) {
+                const total = praticasDoDia.length;
+                const feitas = praticasDoDia.filter(p => p.feita).length;
+                counter.textContent = `${feitas}/${total}`;
+                counter.style.color = feitas === total && total > 0 ? '#10b981' : '#7d6634';
+                counter.style.background = feitas === total && total > 0 ? 'rgba(16,185,129,0.15)' : 'rgba(44,37,25,0.1)';
+            }
+
+            salvarNoDispositivo();
+        }
+
+        function alternarStatusPratica(id) {
+            const index = praticasDoDia.findIndex(p => p.id === id);
+            if (index !== -1) {
+                praticasDoDia[index].feita = !praticasDoDia[index].feita;
+                if (!praticasDoDia[index].feita) {
+                    praticasDoDia[index].estrelas = 0;
+                }
+                renderizarPraticas();
+            }
+        }
+
+        function adicionarPraticaPersonalizada() {
+            const input = document.getElementById('input-new-practice');
+            if (!input.value.trim()) return;
+            praticasDoDia.push({ id: 'custom_' + Date.now(), nome: input.value.trim(), fixa: false, feita: false, estrelas: 0, notas: '' });
+            input.value = '';
+            renderizarPraticas();
+        }
+
+        function deletarPraticaPersonalizada(id, event) {
+            event.stopPropagation();
+            if (confirm("Remover esta prática?")) {
+                praticasDoDia = praticasDoDia.filter(p => p.id !== id);
+                renderizarPraticas();
+            }
+        }
+
+        /* DIÁRIO ESPIRITUAL */
+        const MESES_DIARIO = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+        const DIAS_SEMANA_CAL = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+
+        function temEntradaDiario(dataStr) {
+            const entrada = diarioEspiritual[dataStr];
+            return Boolean(entrada && entrada.texto && entrada.texto.trim());
+        }
+
+        function formatarDataDiarioLegivel(dataStr) {
+            if (!dataStr) return '';
+            const [y, m, d] = dataStr.split('-').map(Number);
+            const dt = new Date(y, m - 1, d);
+            if (Number.isNaN(dt.getTime())) return dataStr;
+            return dt.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+        }
+
+        function atualizarLabelDataDiario() {
+            const label = document.getElementById('diario-data-escrever');
+            if (label) label.innerText = formatarDataDiarioLegivel(diarioDiaAtivo);
+        }
+
+        function carregarTextoDiarioNoEditor() {
+            const textarea = document.getElementById('diario-texto');
+            if (!textarea) return;
+            const entrada = diarioEspiritual[diarioDiaAtivo];
+            textarea.value = entrada?.texto || '';
+        }
+
+        function abrirDiarioEspiritual() {
+            toggleDrawer(false);
+            diarioDiaAtivo = formatarDataLocal(new Date());
+            diarioMesVisualizado = new Date();
+            diarioDiaSelecionadoCalendario = diarioDiaAtivo;
+            alternarAbaDiario('escrever');
+            atualizarLabelDataDiario();
+            carregarTextoDiarioNoEditor();
+            renderizarCalendarioDiario();
+            exibirLeituraDiaCalendario(diarioDiaAtivo);
+            document.getElementById('diario-overlay').classList.add('active');
+        }
+
+        function fecharDiarioEspiritual() {
+            document.getElementById('diario-overlay').classList.remove('active');
+        }
+
+        function alternarAbaDiario(aba) {
+            document.getElementById('diario-tab-escrever').classList.toggle('active', aba === 'escrever');
+            document.getElementById('diario-tab-calendario').classList.toggle('active', aba === 'calendario');
+            document.getElementById('diario-tab-compromissos').classList.toggle('active', aba === 'compromissos');
+            document.getElementById('diario-painel-escrever').classList.toggle('active', aba === 'escrever');
+            document.getElementById('diario-painel-calendario').classList.toggle('active', aba === 'calendario');
+            document.getElementById('diario-painel-compromissos').classList.toggle('active', aba === 'compromissos');
+            if (aba === 'calendario') renderizarCalendarioDiario();
+            if (aba === 'compromissos') renderizarCompromissosDiario();
+        }
+
+        function irParaHojeDiario() {
+            diarioDiaAtivo = formatarDataLocal(new Date());
+            atualizarLabelDataDiario();
+            carregarTextoDiarioNoEditor();
+        }
+
+        function salvarEntradaDiario() {
+            const texto = document.getElementById('diario-texto').value.trim();
+            if (!texto) {
+                if (confirm('Deseja apagar a anotação deste dia?')) {
+                    delete diarioEspiritual[diarioDiaAtivo];
+                    document.getElementById('diario-texto').value = '';
+                    salvarNoDispositivo();
+                    renderizarCalendarioDiario();
+                    if (diarioDiaSelecionadoCalendario === diarioDiaAtivo) exibirLeituraDiaCalendario(diarioDiaAtivo);
+                    const toast = document.getElementById('toast-feedback');
+                    toast.innerText = '📔 Anotação removida';
+                    toast.classList.add('show');
+                    setTimeout(() => toast.classList.remove('show'), 2000);
+                }
+                return;
+            }
+            diarioEspiritual[diarioDiaAtivo] = {
+                texto,
+                atualizadoEm: new Date().toISOString()
+            };
+            salvarNoDispositivo();
+            renderizarCalendarioDiario();
+            if (diarioDiaSelecionadoCalendario === diarioDiaAtivo) exibirLeituraDiaCalendario(diarioDiaAtivo);
+            const toast = document.getElementById('toast-feedback');
+            toast.innerText = '📔 Diário salvo!';
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        function mudarMesDiario(delta) {
+            const novo = new Date(diarioMesVisualizado);
+            novo.setMonth(novo.getMonth() + delta);
+            diarioMesVisualizado = novo;
+            renderizarCalendarioDiario();
+        }
+
+        function renderizarCalendarioDiario() {
             const grid = document.getElementById('diario-calendario-grid');
             const titulo = document.getElementById('diario-mes-titulo');
             if (!grid || !titulo) return;
 
             const ano = diarioMesVisualizado.getFullYear();
             const mes = diarioMesVisualizado.getMonth();
-            const mesesNomes = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-            titulo.innerText = `${mesesNomes[mes]} ${ano}`;
+            titulo.innerText = `${MESES_DIARIO[mes]} ${ano}`;
 
             const primeiroDia = new Date(ano, mes, 1);
             const ultimoDia = new Date(ano, mes + 1, 0).getDate();
             const inicioSemana = primeiroDia.getDay();
             const hojeStr = formatarDataLocal(new Date());
-            const diasSemana = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
 
-            let html = diasSemana.map(d => `<div class="calendario-dia-semana">${d}</div>`).join('');
+            let html = DIAS_SEMANA_CAL.map(d => `<div class="calendario-dia-semana">${d}</div>`).join('');
             for (let i = 0; i < inicioSemana; i++) {
                 html += '<div class="calendario-dia vazio"></div>';
             }
             for (let dia = 1; dia <= ultimoDia; dia++) {
                 const dataStr = formatarDataLocal(new Date(ano, mes, dia));
                 const classes = ['calendario-dia'];
-                // Verifica se tem entrada no diário
-                if (diarioEspiritual[dataStr] && diarioEspiritual[dataStr].texto && diarioEspiritual[dataStr].texto.trim()) classes.push('com-entrada');
-                // Verifica se tem lembrete
-                if (temLembreteNaData(dataStr)) classes.push('com-lembrete');
+                if (temEntradaDiario(dataStr)) classes.push('com-entrada');
+                const temLembrete = lembretes.some(l => l.data === dataStr);
+                if (temLembrete) classes.push('com-lembrete');
                 if (dataStr === hojeStr) classes.push('hoje');
                 if (dataStr === diarioDiaSelecionadoCalendario) classes.push('selecionado');
                 html += `<div class="${classes.join(' ')}" onclick="selecionarDiaDiario('${dataStr}')">${dia}</div>`;
             }
             grid.innerHTML = html;
-        };
+        }
 
-        // Garantir que a função criarLembrete também re-renderize o calendário se o diário estiver aberto
-        const originalCriarLembrete = window.criarLembrete;
-        window.criarLembrete = async function() {
+        function selecionarDiaDiario(dataStr) {
+            diarioDiaSelecionadoCalendario = dataStr;
+            renderizarCalendarioDiario();
+            exibirLeituraDiaCalendario(dataStr);
+        }
+
+        function exibirLeituraDiaCalendario(dataStr) {
+            const label = document.getElementById('diario-data-leitura');
+            const conteudo = document.getElementById('diario-leitura-conteudo');
+            const btnEditar = document.getElementById('btn-editar-dia-diario');
+            const lembretesDia = document.getElementById('diario-lembretes-dia');
+            if (!label || !conteudo) return;
+
+            label.innerText = formatarDataDiarioLegivel(dataStr);
+            const entrada = diarioEspiritual[dataStr];
+            if (entrada?.texto?.trim()) {
+                conteudo.classList.remove('vazio');
+                conteudo.innerText = entrada.texto;
+                if (btnEditar) btnEditar.style.display = 'inline';
+            } else {
+                conteudo.classList.add('vazio');
+                conteudo.innerText = 'Nenhuma anotação neste dia. Use "Editar" para escrever.';
+                if (btnEditar) btnEditar.style.display = 'inline';
+            }
+
+            if (lembretesDia) {
+                const lembretesNoDia = lembretes.filter(l => l.data === dataStr);
+                if (lembretesNoDia.length > 0) {
+                    lembretesNoDia.sort((a, b) => a.hora.localeCompare(b.hora));
+                    lembretesDia.style.display = 'flex';
+                    lembretesDia.innerHTML = lembretesNoDia.map(l => `
+                        <div class="diario-lembrete-item">
+                            <span class="diario-lembrete-hora">🕐 ${l.hora}</span>
+                            <span class="diario-lembrete-titulo">${escaparHtml(l.titulo)}</span>
+                            <span class="diario-lembrete-tag">${escaparHtml(l.categoria)}</span>
+                        </div>
+                    `).join('');
+                } else {
+                    lembretesDia.style.display = 'none';
+                    lembretesDia.innerHTML = '';
+                }
+            }
+        }
+
+        function renderizarCompromissosDiario() {
+            const c = document.getElementById('diario-compromissos-list');
+            if (!c) return;
+            if (lembretes.length === 0) {
+                c.innerHTML = '<p style="font-size:0.85rem; color:var(--text-secondary); text-align:center; padding:2rem 1rem;">Nenhum compromisso agendado.</p>';
+                return;
+            }
+            const agrupados = {};
+            [...lembretes]
+                .sort((a, b) => a.data.localeCompare(b.data) || a.hora.localeCompare(b.hora))
+                .forEach(l => {
+                    if (!agrupados[l.data]) agrupados[l.data] = [];
+                    agrupados[l.data].push(l);
+                });
+            const hojeStr = formatarDataLocal(new Date());
+            c.innerHTML = Object.entries(agrupados).map(([data, itens]) => {
+                const [ano, mes, dia] = data.split('-');
+                const dataObj = new Date(Number(ano), Number(mes) - 1, Number(dia));
+                const nomeDia = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'][dataObj.getDay()];
+                const isHoje = data === hojeStr;
+                const isPast = data < hojeStr;
+                return `
+                    <div style="margin-bottom:1rem;">
+                        <div style="font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:1px;
+                            color:${isHoje ? 'var(--accent)' : isPast ? 'rgba(255,255,255,0.25)' : 'var(--text-secondary)'};
+                            margin-bottom:0.4rem; display:flex; align-items:center; gap:0.4rem;">
+                            ${isHoje ? '● ' : ''}${nomeDia}, ${dia}/${mes}/${ano}${isHoje ? ' — Hoje' : ''}
+                        </div>
+                        ${itens.map(l => `
+                            <div class="diario-lembrete-item" style="${isPast ? 'opacity:0.45;' : ''}">
+                                <span class="diario-lembrete-hora">🕐 ${l.hora}</span>
+                                <span class="diario-lembrete-titulo">${escaparHtml(l.titulo)}</span>
+                                <span class="diario-lembrete-tag">${escaparHtml(l.categoria)}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function editarDiaSelecionadoDiario() {
+            if (!diarioDiaSelecionadoCalendario) return;
+            diarioDiaAtivo = diarioDiaSelecionadoCalendario;
+            atualizarLabelDataDiario();
+            carregarTextoDiarioNoEditor();
+            alternarAbaDiario('escrever');
+        }
+
+        /* FUNÇÃO DO DRAWER */
+        function toggleDrawer(abrir) {
+            const drawer = document.getElementById('drawer-overlay');
+            if (abrir) {
+                renderizarDesempenhoSemanal();
+                atualizarComponentesAgenda();
+                drawer.style.display = 'flex';
+                setTimeout(() => {
+                    drawer.classList.add('active');
+                }, 10);
+            } else {
+                drawer.classList.remove('active');
+                setTimeout(() => {
+                    if (!drawer.classList.contains('active')) {
+                        drawer.style.display = 'none';
+                    }
+                }, 300);
+            }
+        }
+
+        function togglePainelCategoriaDiscreta() {
+            const p = document.getElementById('discrete-cat-panel');
+            p.style.display = p.style.display === 'block' ? 'none' : 'block';
+            if(p.style.display === 'block') renderizarEdicaoCategorias();
+        }
+
+        function atualizarComponentesAgenda() {
+            const sel = document.getElementById('select-reminder-cat');
+            if(sel) sel.innerHTML = categorias.map(c => `<option value="${escaparHtml(c)}">${escaparHtml(c)}</option>`).join('');
+            const fil = document.getElementById('filter-container');
+            if(fil) fil.innerHTML = `<div class="filter-chip ${filtroAtivo==='Todos'?'active':''}" onclick="setFiltro('Todos')">Todos</div>` + categorias.map(c => `<div class="filter-chip ${filtroAtivo===c?'active':''}" onclick="setFiltro('${escaparHtml(c)}')">${escaparHtml(c)}</div>`).join('');
+            renderizarLembretes();
+        }
+
+        function criarCategoria() {
+            const i = document.getElementById('input-new-cat');
+            if(i.value.trim() && !categorias.includes(i.value.trim())) { categorias.push(i.value.trim()); i.value=''; atualizarComponentesAgenda(); salvarNoDispositivo(); }
+        }
+
+        function renderizarEdicaoCategorias() {
+            const c = document.getElementById('cat-edit-list'); c.innerHTML = categorias.map((cat, idx) => `<div class="cat-edit-item"><input type="text" class="input-cat-edit" id="edit-cat-${idx}" value="${escaparHtml(cat)}"><button class="btn-cat-save" onclick="salvarEdicaoCategoria(${idx})">Salvar</button></div>`).join('');
+        }
+
+        function salvarEdicaoCategoria(idx) {
+            const v = document.getElementById(`edit-cat-${idx}`).value.trim(); if(!v) return;
+            const ant = categorias[idx]; 
+            categorias[idx] = v;
+            lembretes.forEach(l => { if(l.categoria === ant) l.categoria = v; });
+            atualizarComponentesAgenda(); salvarNoDispositivo();
+        }
+
+        async function criarLembrete() {
             const t = document.getElementById('input-reminder-title'), d = document.getElementById('input-reminder-date'), h = document.getElementById('input-reminder-time'), c = document.getElementById('select-reminder-cat');
             if(!t.value.trim() || !d.value || !h.value) return;
             const novoLembrete = { id: Date.now(), titulo: t.value.trim(), data: d.value, hora: h.value, categoria: c.value, notificado: false };
             lembretes.push(novoLembrete);
-            if (window.getLocalNotificationsPlugin && window.getLocalNotificationsPlugin() && window.isCapacitorNative && window.isCapacitorNative()) {
-                await window.agendarNotificacaoLembrete?.(novoLembrete);
+            if (getLocalNotificationsPlugin() && isCapacitorNative()) {
+                await agendarNotificacaoLembrete(novoLembrete);
             }
-            t.value = ''; 
-            window.renderizarLembretes?.(); 
-            window.salvarNoDispositivo?.();
-            // Se o diário estiver aberto, atualiza o calendário
-            const diarioOverlay = document.getElementById('diario-overlay');
-            if (diarioOverlay && diarioOverlay.classList.contains('active')) {
-                window.renderizarCalendarioDiario();
-                const toast = document.getElementById('toast-feedback');
-                toast.innerText = "📆 Lembrete agendado! Aparecerá no calendário do diário.";
-                toast.classList.add('show');
-                setTimeout(() => toast.classList.remove('show'), 2000);
-            }
-        };
-
-        // Função para deletar lembrete com atualização do calendário
-        const originalDeletarLembrete = window.deletarLembrete;
-        window.deletarLembrete = async function(id) {
-            if (window.getLocalNotificationsPlugin && window.getLocalNotificationsPlugin() && window.isCapacitorNative && window.isCapacitorNative()) {
-                await window.cancelarNotificacaoLembrete?.(id);
-            }
-            lembretes = lembretes.filter(l => l.id !== id);
-            window.renderizarLembretes?.(); 
-            window.salvarNoDispositivo?.();
-            const diarioOverlay = document.getElementById('diario-overlay');
-            if (diarioOverlay && diarioOverlay.classList.contains('active')) {
-                window.renderizarCalendarioDiario();
-            }
-        };
-
-        // Função para abrir diário (mantém a lógica original mas garante que o calendário seja renderizado com ícones)
-        window.abrirDiarioEspiritual = function() {
-            if (window.toggleDrawer) window.toggleDrawer(false);
-            diarioDiaAtivo = formatarDataLocal(new Date());
-            diarioMesVisualizado = new Date();
-            diarioDiaSelecionadoCalendario = diarioDiaAtivo;
-            if (window.alternarAbaDiario) window.alternarAbaDiario('escrever');
-            if (window.atualizarLabelDataDiario) window.atualizarLabelDataDiario();
-            if (window.carregarTextoDiarioNoEditor) window.carregarTextoDiarioNoEditor();
-            window.renderizarCalendarioDiario();
-            if (window.exibirLeituraDiaCalendario) window.exibirLeituraDiaCalendario(diarioDiaAtivo);
-            document.getElementById('diario-overlay').classList.add('active');
-        };
-
-        // Funções auxiliares mínimas para garantir compatibilidade (simplificadas)
-        function formatarDataLocal(data) {
-            const y = data.getFullYear();
-            const m = String(data.getMonth() + 1).padStart(2, '0');
-            const d = String(data.getDate()).padStart(2, '0');
-            return `${y}-${m}-${d}`;
+            t.value = ''; renderizarLembretes(); salvarNoDispositivo();
         }
 
-        // Redefinir algumas funções críticas que podem faltar no escopo
-        window.salvarNoDispositivo = function() {
-            localStorage.setItem('cuida_ordem_lembretes', JSON.stringify(lembretes));
-            localStorage.setItem('cuida_ordem_diario', JSON.stringify(diarioEspiritual));
-            localStorage.setItem('cuida_ordem_categorias', JSON.stringify(categorias));
-        };
-        window.renderizarLembretes = function() {
+        async function deletarLembrete(id) {
+            if (getLocalNotificationsPlugin() && isCapacitorNative()) {
+                await cancelarNotificacaoLembrete(id);
+            }
+            lembretes = lembretes.filter(l => l.id !== id);
+            renderizarLembretes(); salvarNoDispositivo();
+        }
+        
+        function setFiltro(cat) { filtroAtivo = cat; atualizarComponentesAgenda(); }
+
+        function renderizarLembretes() {
             const c = document.getElementById('reminders-list'); if(!c) return; c.innerHTML = '';
             let f = filtroAtivo === 'Todos' ? lembretes : lembretes.filter(l => l.categoria === filtroAtivo);
             if(f.length === 0) { c.innerHTML = '<p style="font-size:0.8rem; color:var(--text-secondary); text-align:center; padding:1rem;">Nenhum compromisso.</p>'; return; }
             f.forEach(l => {
                 const div = document.createElement('div'); div.className = 'reminder-card';
-                div.innerHTML = `<div class="reminder-info"><h4>${escapeHtml(l.titulo)}</h4><span>🗓️ ${l.data.split('-').reverse().join('/')} às ${l.hora}</span><div class="reminder-tag">${escapeHtml(l.categoria)}</div></div><button class="btn-delete" onclick="deletarLembrete(${l.id})">🗑️</button>`;
+                div.innerHTML = `<div class="reminder-info"><h4>${escaparHtml(l.titulo)}</h4><span>🗓️ ${l.data.split('-').reverse().join('/')} às ${l.hora}</span><div class="reminder-tag">${escaparHtml(l.categoria)}</div></div><button class="btn-delete" onclick="deletarLembrete(${l.id})">🗑️</button>`;
                 c.appendChild(div);
             });
-        };
-        function escapeHtml(texto) { if (!texto) return ''; return String(texto).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
-
-        // Carregar dados salvos
-        function carregarDadosIniciais() {
-            try {
-                const lemb = localStorage.getItem('cuida_ordem_lembretes');
-                if (lemb) lembretes = JSON.parse(lemb);
-                const diario = localStorage.getItem('cuida_ordem_diario');
-                if (diario) diarioEspiritual = JSON.parse(diario);
-                const cats = localStorage.getItem('cuida_ordem_categorias');
-                if (cats) categorias = JSON.parse(cats);
-            } catch(e) { console.warn(e); }
-            window.renderizarLembretes();
-            // Atualizar selector de categorias
-            const sel = document.getElementById('select-reminder-cat');
-            if(sel) sel.innerHTML = categorias.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
-            const filterContainer = document.getElementById('filter-container');
-            if(filterContainer) filterContainer.innerHTML = `<div class="filter-chip ${filtroAtivo==='Todos'?'active':''}" onclick="setFiltro('Todos')">Todos</div>` + categorias.map(c => `<div class="filter-chip ${filtroAtivo===c?'active':''}" onclick="setFiltro('${escapeHtml(c)}')">${escapeHtml(c)}</div>`).join('');
         }
-        window.setFiltro = function(cat) { filtroAtivo = cat; window.renderizarLembretes(); };
 
-        // Inicialização
-        window.onload = function() {
-            carregarDadosIniciais();
-            document.getElementById('current-date').innerText = new Date().toLocaleDateString('pt-BR');
-            // Pré-definir data para lembrete
-            const hoje = new Date();
-            document.getElementById('input-reminder-date').value = formatarDataLocal(hoje);
-            // Criar funções dummy para evitar erros no restante do código legado (o original tem muitas funções, mas para o escopo da alteração, garantimos apenas o essencial)
-            window.toggleDrawer = function(abrir) {
-                const drawer = document.getElementById('drawer-overlay');
-                if(abrir) { drawer.style.display = 'flex'; setTimeout(()=> drawer.classList.add('active'),10); }
-                else { drawer.classList.remove('active'); setTimeout(()=> { if(!drawer.classList.contains('active')) drawer.style.display='none'; },300); }
-            };
-            window.togglePainelCategoriaDiscreta = function() {
-                const p = document.getElementById('discrete-cat-panel');
-                p.style.display = p.style.display === 'block' ? 'none' : 'block';
-            };
-            window.criarCategoria = function() {
-                const i = document.getElementById('input-new-cat');
-                if(i.value.trim() && !categorias.includes(i.value.trim())) { categorias.push(i.value.trim()); i.value=''; window.renderizarLembretes(); window.salvarNoDispositivo(); }
-            };
-            // Outras funções de apoio (mock para evitar erros de referência)
-            window.mostrarMortificacaoDoDia = function() { alert("Mortificação: Ofereça uma pequena renúncia hoje."); };
-            window.mostrarFrasesAleatoriasSantos = function() { alert("'A santidade é o segredo da alegria.' - São João Paulo II"); };
-            window.definirNota = function(v) {};
-            window.confirmarDetalhesPratica = function() { window.fecharDetalhes(); };
-            window.fecharDetalhes = function() { document.getElementById('sheet-overlay').classList.remove('active'); };
-            window.abrirExameConsciencia = function() { alert("Exame de consciência: reflita sobre seus atos do dia."); };
-            window.processarExameVeredicto = function() { document.getElementById('exame-overlay').classList.remove('active'); };
-            window.fecharExameSemProcessar = function() { document.getElementById('exame-overlay').classList.remove('active'); };
-            window.fecharResumoSanto = function() { document.getElementById('saint-overlay').classList.remove('active'); };
-            window.alternarAbaDiario = function(aba) {
-                document.getElementById('diario-tab-escrever').classList.toggle('active', aba === 'escrever');
-                document.getElementById('diario-tab-calendario').classList.toggle('active', aba === 'calendario');
-                document.getElementById('diario-painel-escrever').classList.toggle('active', aba === 'escrever');
-                document.getElementById('diario-painel-calendario').classList.toggle('active', aba === 'calendario');
-                if(aba === 'calendario') window.renderizarCalendarioDiario();
-            };
-            window.atualizarLabelDataDiario = function() {
-                const label = document.getElementById('diario-data-escrever');
-                if(label) label.innerText = formatarDataLocal(new Date());
-            };
-            window.carregarTextoDiarioNoEditor = function() {
-                const textarea = document.getElementById('diario-texto');
-                const entrada = diarioEspiritual[diarioDiaAtivo];
-                if(textarea) textarea.value = entrada?.texto || '';
-            };
-            window.salvarEntradaDiario = function() {
-                const texto = document.getElementById('diario-texto').value;
-                if(texto.trim()) diarioEspiritual[diarioDiaAtivo] = { texto, atualizadoEm: new Date().toISOString() };
-                else delete diarioEspiritual[diarioDiaAtivo];
-                window.salvarNoDispositivo();
-                window.renderizarCalendarioDiario();
-                const toast = document.getElementById('toast-feedback');
-                toast.innerText = "📔 Diário salvo!";
-                toast.classList.add('show');
-                setTimeout(() => toast.classList.remove('show'), 2000);
-            };
-            window.irParaHojeDiario = function() {
-                diarioDiaAtivo = formatarDataLocal(new Date());
-                window.atualizarLabelDataDiario();
-                window.carregarTextoDiarioNoEditor();
-            };
-            window.mudarMesDiario = function(delta) {
-                const novo = new Date(diarioMesVisualizado);
-                novo.setMonth(novo.getMonth() + delta);
-                diarioMesVisualizado = novo;
-                window.renderizarCalendarioDiario();
-            };
-            window.selecionarDiaDiario = function(dataStr) {
-                diarioDiaSelecionadoCalendario = dataStr;
-                window.renderizarCalendarioDiario();
-                const label = document.getElementById('diario-data-leitura');
-                const conteudo = document.getElementById('diario-leitura-conteudo');
-                label.innerText = dataStr;
-                const entrada = diarioEspiritual[dataStr];
-                if(entrada?.texto) { conteudo.classList.remove('vazio'); conteudo.innerText = entrada.texto; }
-                else { conteudo.classList.add('vazio'); conteudo.innerText = 'Nenhuma anotação neste dia.'; }
-                document.getElementById('btn-editar-dia-diario').style.display = 'inline';
-            };
-            window.editarDiaSelecionadoDiario = function() {
-                if(diarioDiaSelecionadoCalendario) {
-                    diarioDiaAtivo = diarioDiaSelecionadoCalendario;
-                    window.atualizarLabelDataDiario();
-                    window.carregarTextoDiarioNoEditor();
-                    window.alternarAbaDiario('escrever');
+        function checarLembretesAtivos() {
+            if (getLocalNotificationsPlugin() && isCapacitorNative()) return;
+            if (!("Notification" in window) || Notification.permission !== "granted") return;
+            const ag = new Date(), dt = formatarDataLocal(ag), hr = ag.toTimeString().slice(0, 5);
+            lembretes.forEach(l => {
+                if (l.data === dt && l.hora === hr && !l.notificado) {
+                    l.notificado = true; salvarNoDispositivo();
+                    new Notification(`Cuida Ordem`, { body: `Hora de: ${l.titulo}` });
                 }
-            };
-            window.exibirLeituraDiaCalendario = function(dataStr) {
-                window.selecionarDiaDiario(dataStr);
-            };
-            window.fecharDiarioEspiritual = function() {
-                document.getElementById('diario-overlay').classList.remove('active');
-            };
-            window.renderizarCalendarioDiario = window.renderizarCalendarioDiario || function() { /* implementado acima */ };
-            // Inicializa o calendário pela primeira vez com os dados de lembrete
-            window.renderizarCalendarioDiario();
+            });
+        }
+
+        /* DETALHES DINÂMICOS */
+        async function abrirDetalhes(id) {
+            const pr = praticasDoDia.find(p => p.id === id); if (!pr) return; praticaEmEdicaoId = id;
+            document.getElementById('sheet-title').innerText = pr.nome;
+            document.getElementById('sheet-notes').value = pr.notas || '';
+            atualizarEstrelasInterface(pr.estrelas || 0);
+            const dc = document.getElementById('sheet-dynamic-content'); dc.innerHTML = '';
+            
+            if (id === 'eucaristia') {
+                const s = frasesEucaristicasAleatorias[Math.floor(Math.random() * frasesEucaristicasAleatorias.length)];
+                dc.innerHTML = `<div class="liturgy-container"><div class="liturgy-title">Meditação</div><p class="liturgy-text">"${s.frase}"</p></div>`;
+            } else if (id === 'terco') {
+                const m = obterMisterioDoDia();
+                dc.innerHTML = `<div class="liturgy-container"><div class="liturgy-title">${m.nome}</div>${m.itens.map(i=>`<p class="liturgy-text" style="margin-bottom:4px;">• ${i}</p>`).join('')}</div>`;
+            } else if (id === 'lectio_divina') {
+                dc.innerHTML = '<div style="text-align:center; padding: 2rem; color: var(--text-secondary);">⏳ Carregando liturgia do dia...</div>';
+                document.getElementById('sheet-overlay').classList.add('active');
+                
+                await carregarLiturgiaDoDia();
+                const leituraDoDia = leituraDoDiaCarregada;
+                dc.innerHTML = `
+                    <div class="liturgy-container">
+                        <div class="liturgy-title" style="margin-bottom: 0.75rem;">Liturgia da Palavra${leituraDoDia.dia ? ' - ' + leituraDoDia.dia : ''}</div>
+                        ${leituraDoDia.fromAPI === false ? '<div style="font-size:0.8rem; color:#fbbf24; margin-bottom:0.75rem; border:1px solid rgba(251,191,36,0.2); padding:0.75rem; border-radius:8px; background:rgba(251,191,36,0.08);">⚠️ Não foi possível obter a liturgia do dia pela API. Usando leitura local de fallback.</div>' : ''}
+                        
+                        <span class="liturgy-citation-badge">📖 1ª Leitura: ${leituraDoDia.citaPrimeiraLeitura}</span>
+                        <span class="liturgy-citation-badge">🎵 Salmo: ${leituraDoDia.citaSalmo}</span>
+                        <span class="liturgy-citation-badge">🎚️ Evangelho: ${leituraDoDia.citaEvangelho}</span>
+                        
+                        <div class="liturgy-title" style="margin-top: 1.25rem; font-size: 0.8rem;">Texto do Evangelho</div>
+                        <p class="liturgy-text liturgy-evangelho-texto" style="margin-top: 0.4rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.5rem;">${escaparHtml(sanitizarTextoEvangelho(leituraDoDia.evangelhoTexto))}</p>
+                    </div>
+                `;
+            }
+            document.getElementById('sheet-overlay').classList.add('active');
+        }
+
+        function fecharDetalhes() { document.getElementById('sheet-overlay').classList.remove('active'); }
+
+        const resumoDeSantos = {
+            "São João Paulo II": {
+                texto: "Papa João Paulo II foi o primeiro papa polonês da história e um dos mais influentes do século XX. Seu pontificado durou quase 27 anos e ficou marcado pela defesa dos direitos humanos, pela promoção da paz entre povos, pela atenção à juventude e pela coragem de enfrentar regimes totalitários.",
+                fonte: "Canção Nova / Padre Paulo Ricardo"
+            },
+            "São José": {
+                texto: "José, esposo da Virgem Maria, foi escolhido por Deus para proteger a Sagrada Família. Viveu na humildade, no silêncio e no trabalho diário, mostrando fidelidade, obediência e coragem ao aceitar a missão de pai adotivo de Jesus em circunstâncias difíceis.",
+                fonte: "Canção Nova / Padre Paulo Ricardo"
+            },
+            "Santo Antônio": {
+                texto: "Santo Antônio de Pádua foi um frade franciscano conhecido por sua pregação eloquente e profunda devoção aos pobres e à Eucaristia. Tornou-se patrono dos objetos perdidos graças às histórias de sua intercessão, mas sua vida foi marcada também por um amor humilde à Palavra de Deus.",
+                fonte: "Canção Nova / Padre Paulo Ricardo"
+            },
+            "São Francisco de Assis": {
+                texto: "São Francisco renunciou aos bens materiais e viveu a pobreza evangélica como testemunho radical do Evangelho. Fundador dos franciscanos, cultivou uma espiritualidade de fraternidade com todos os seres, respeito pela criação e confiança total na providência divina.",
+                fonte: "Canção Nova / Padre Paulo Ricardo"
+            },
+            "Santa Teresinha": {
+                texto: "Santa Teresinha do Menino Jesus viveu uma pequena via de amor, oferecendo gestos simples e atos cotidianos como expressão de sua confiança em Deus. Foi doutora da Igreja por sua espiritualidade íntima e pela experiência de santidade que descobriu no caminho da pequenez e do abandono confiante.",
+                fonte: "Canção Nova / Padre Paulo Ricardo"
+            },
+            "São Tomás de Aquino": {
+                texto: "São Tomás de Aquino foi um teólogo e filósofo que buscou unir fé e razão em seus escritos. Autor da Suma Teológica, ele deixou um legado teológico profundo, valorizando a verdade, a ordem moral e o papel da razão na compreensão dos mistérios divinos.",
+                fonte: "Canção Nova / Padre Paulo Ricardo"
+            },
+            "São Bento": {
+                texto: "São Bento de Núrsia fundou a vida monástica ocidental e escreveu a Regra que orienta a oração, o trabalho e a comunidade. Seu exemplo de equilíbrio entre contemplação e ação serviu de referência para gerações de monges e comunidades cristãs.",
+                fonte: "Canção Nova / Padre Paulo Ricardo"
+            },
+            "Santa Rita de Cássia": {
+                texto: "Santa Rita viveu uma vida marcada por sofrimento, oração e perdão. Conhecida como a santa das causas impossíveis, ela perseverou na fé apesar de perdas pessoais e entrou para a vida religiosa em busca da união com Cristo.",
+                fonte: "Canção Nova / Padre Paulo Ricardo"
+            },
+            "São Sebastião": {
+                texto: "São Sebastião foi um soldado romano convertido ao cristianismo que testemunhou a fé com coragem até o martírio. Sua firmeza diante da perseguição e sua dedicação aos irmãos cristãos fizeram dele um símbolo de perseverança e esperança.",
+                fonte: "Canção Nova / Padre Paulo Ricardo"
+            },
+            "Santa Luzia": {
+                texto: "Santa Luzia ofereceu sua vida a Cristo com fidelidade e humildade, mesmo diante de perseguição. Tradicionalmente venerada como protetora da visão, sua história inspira coragem diante de provações e confiança na luz divina.",
+                fonte: "Canção Nova / Padre Paulo Ricardo"
+            },
+            "Santo Expedito": {
+                texto: "Santo Expedito é reconhecido por responder prontamente ao chamado de Deus e interceder por causas urgentes. Sua conversão e martírio simbolizam a decisão de não adiar a fé, vivendo com prontidão e compromisso.",
+                fonte: "Canção Nova / Padre Paulo Ricardo"
+            }
         };
+
+        const frasesDeSantos = {
+            "São João Paulo II": [
+                "Não tenha medo. Abra, sim, abramos de par em par as portas a Cristo.",
+                "A verdadeira educação consiste em aprender a viver e aprender a amar.",
+                "A fé e a ciência são como dois pulmões que permitem à humanidade respirar."
+            ],
+            "São José": [
+                "O silêncio, a modéstia e o trabalho são o grande ornamento da vida cristã.",
+                "Um homem não pode progredir espiritualmente, se não considera a virtude do trabalho.",
+                "O coração de São José era uma casa tão pura que serviu de repouso ao Filho de Deus."
+            ],
+            "Santo Antônio": [
+                "A verdadeira riqueza do homem está na forma como ele ama; não em quanto ele possui.",
+                "Amar as coisas simples é o caminho para amar a Deus com simplicidade.",
+                "Não se perde nada quando se dá tudo a Deus, pois Ele é o único tesouro eterno."
+            ],
+            "São Francisco de Assis": [
+                "Senhor, fazei de mim um instrumento de vossa paz.",
+                "Comece fazendo o que é necessário, depois o que é possível, e de repente você estará fazendo o impossível.",
+                "Sempre que puder, faça a vontade de Deus e Ele lhe mostrará como agir."
+            ],
+            "Santa Teresinha": [
+                "O amor consiste em dar tudo e dar-se a si mesmo.",
+                "Minha vocação é o amor, nada mais que o amor.",
+                "Quero passar meu céu fazendo o bem na terra."
+            ],
+            "São Tomás de Aquino": [
+                "A fé não elimina a razão; aperfeiçoa-a.",
+                "Nada é mais precioso do que a verdade.",
+                "Aquilo que é amado é sempre o que se busca entender."
+            ],
+            "São Bento": [
+                "Ora et labora."
+                ,"A oração e o trabalho tornam a vida humana mais saborosa.",
+                "Faze aquilo que queres, se não o fizeres, não o quererás."
+            ],
+            "Santa Rita de Cássia": [
+                "O amor de Deus é mais forte do que o sofrimento.",
+                "A perseverança na oração conduz à paz do coração.",
+                "A esperança é a luz que nos faz continuar, mesmo nas maiores dificuldades."
+            ],
+            "São Sebastião": [
+                "A fé é maior do que todo medo.",
+                "É preciso permanecer firme, mesmo que sejamos poucos e fracos.",
+                "A força para enfrentar o martírio vem da certeza do amor de Deus."
+            ],
+            "Santa Luzia": [
+                "A luz verdadeira vem de Cristo e ilumina os caminhos do coração.",
+                "A fidelidade a Deus é maior do que qualquer medo humano.",
+                "A fé não depende da vista do corpo, mas da visão da alma."
+            ],
+            "Santo Expedito": [
+                "Hoje, não amanhã!",
+                "A fé deve ser urgente, a decisão não pode ser adiada.",
+                "Coragem para escolher o bem sem demora."
+            ]
+        };
+
+        function obterFrasesDoSanto(nome) {
+            return frasesDeSantos[nome] || [];
+        }
+
+        function mostrarMortificacaoDoDia() {
+            const mortificacoes = [
+                "Coma Separado",
+                "Mantenha Postura Ereta Quando Sentar",
+                "Não Coma Doces Hoje",
+                "Faça Uma Prática de Joelhos",
+                "Segundo Heroico — Levante-se prontamente sem demorar ao acordar e tenha diligência ao realizar suas obrigações diárias",
+                "Espere Um Momento Antes de Começar a Comer",
+                "Coma Com a Mão Não Dominante (a esquerda se você for destro)",
+                "Não Use Redes Sociais Para se Distrair Hoje",
+                "Procure o Silêncio Hoje"
+            ];
+            const escolhida = mortificacoes[Math.floor(Math.random() * mortificacoes.length)];
+
+            document.getElementById('saint-sheet-title').innerText = '⚔️ Mortificação do Dia';
+            document.getElementById('saint-sheet-content').innerHTML = `
+                <section class="quote-container" style="margin: 0;">
+                    <p class="quote-text" style="font-style: normal; font-weight: 600; font-size: 1rem;">${escaparHtml(escolhida)}</p>
+                    <div class="quote-author">Mortificação Diária</div>
+                </section>
+            `;
+            document.getElementById('saint-overlay').classList.add('active');
+        }
+
+        function mostrarFrasesAleatoriasSantos() {
+            const nomes = Object.keys(frasesDeSantos);
+            if (!nomes.length) return;
+            const nomeAleatorio = nomes[Math.floor(Math.random() * nomes.length)];
+            const frases = frasesDeSantos[nomeAleatorio];
+            if (!frases.length) return;
+            const fraseAleatoria = frases[Math.floor(Math.random() * frases.length)];
+
+            document.getElementById('saint-sheet-title').innerText = 'Frases dos Santos';
+            document.getElementById('saint-sheet-content').innerHTML = `
+                <section class="quote-container" style="margin: 0;">
+                    <p class="quote-text">"${fraseAleatoria}"</p>
+                    <div class="quote-author">${nomeAleatorio}</div>
+                </section>
+            `;
+            document.getElementById('saint-overlay').classList.add('active');
+        }
+
+        function extrairNomeSantoDoTexto(texto) {
+            if (!texto || typeof texto !== 'string') return null;
+            let normalized = texto.replace(/[–—]/g, '-').trim();
+            const match = normalized.match(/(?:mem[oó]ria|festa|solenidade|dedica(?:ção)?|comemora(?:ção)?|vigília|anivers[áà]rio?|dia)\s+(?:de|da|do)\s+(.+)/i)
+                || normalized.match(/(são|santa|santo|beato|bem[- ]aventurado)\b.+/i);
+            let candidate = match ? (match[1] || match[0]) : normalized;
+            candidate = candidate.replace(/^(de|da|do)\s+/i, '').replace(/,.*$/, '').replace(/\(.+$/, '').trim();
+            const honorificMatch = candidate.match(/(são|santa|santo|beato|bem[- ]aventurado)\b.*$/i);
+            if (honorificMatch) candidate = honorificMatch[0].trim();
+            if (!candidate || candidate.length < 4) return null;
+            if (!/(são|santa|santo|beato|bem[- ]aventurado)/i.test(candidate)) return null;
+            return candidate;
+        }
+
+        async function buscarResumoSanto(nome) {
+            if (!nome) return null;
+            const santo = resumoDeSantos[nome];
+            return santo ? santo.texto : null;
+        }
+
+        function obterFonteResumoSanto(nome) {
+            if (!nome) return null;
+            return resumoDeSantos[nome]?.fonte || null;
+        }
+
+        async function mostrarResumoSanto() {
+            const nomeDigitado = document.getElementById('input-saint-name').value.trim();
+            const titulo = document.getElementById('saint-sheet-title');
+            const conteudo = document.getElementById('saint-sheet-content');
+
+            if (!nomeDigitado) {
+                titulo.innerText = 'Resumo do Santo';
+                conteudo.innerHTML = `
+                    <p>Digite o nome do santo de devoção no campo acima para ver o resumo.</p>
+                `;
+                document.getElementById('saint-overlay').classList.add('active');
+                return;
+            }
+
+            const nomeSanto = extrairNomeSantoDoTexto(nomeDigitado) || nomeDigitado;
+            titulo.innerText = `Vida de ${nomeSanto}`;
+            conteudo.innerHTML = `<p style="color: var(--text-secondary); margin-bottom: 0.75rem;">Buscando resumo para: <strong>${nomeSanto}</strong></p><p style="color: var(--text-secondary); margin-bottom: 0.75rem;">Aguarde enquanto buscamos informações.</p>`;
+            document.getElementById('saint-overlay').classList.add('active');
+
+            const resumo = resumoDeSantos[nomeSanto]?.texto || await buscarResumoSanto(nomeSanto);
+            const fonte = obterFonteResumoSanto(nomeSanto);
+            if (!resumo) {
+                conteudo.innerHTML = `
+                    <p>Não foi possível obter um resumo católico para <strong>${nomeSanto}</strong>.</p>
+                    <p style="margin-top: 0.75rem;">Buscamos apenas fontes católicas confiáveis, como Canção Nova e Padre Paulo Ricardo.</p>
+                    <p style="margin-top: 0.75rem;">Tente um santo mais conhecido ou verifique o nome na ortografia recomendada.</p>
+                `;
+                return;
+            }
+
+            const frases = obterFrasesDoSanto(nomeSanto);
+            const frasesHTML = frases.length > 0
+                ? `<div class="liturgy-container" style="margin-top: 1rem;"><div class="liturgy-title">Frases de ${nomeSanto}</div>${frases.slice(0, 3).map(f => `<p class="liturgy-text" style="margin-bottom:0.45rem;">“${f}”</p>`).join('')}</div>`
+                : '';
+
+            conteudo.innerHTML = `
+                <div class="liturgy-container" style="padding-bottom: 0.75rem;">
+                    <div class="liturgy-title">Resumo Detalhado</div>
+                    <p class="liturgy-text">${resumo}</p>
+                    ${fonte ? `<p style="margin-top:0.85rem; font-size:0.75rem; color: var(--text-secondary);">Fonte: ${fonte}</p>` : ''}
+                </div>
+                ${frasesHTML}
+            `;
+        }
+
+        function fecharResumoSanto() { document.getElementById('saint-overlay').classList.remove('active'); }
+        
+        function definirNota(v) { atualizarEstrelasInterface(v); const pr = praticasDoDia.find(p => p.id === praticaEmEdicaoId); if(pr) pr.temporaryStars = v; }
+        
+        function atualizarEstrelasInterface(v) { document.querySelectorAll('.star').forEach(s => { s.classList.toggle('active', parseInt(s.getAttribute('data-value')) <= v); }); }
+        
+        function confirmarDetalhesPratica() {
+            const pr = praticasDoDia.find(p => p.id === praticaEmEdicaoId);
+            if (pr) {
+                pr.estrelas = pr.temporaryStars || 0;
+                pr.notas = document.getElementById('sheet-notes').value || '';
+            }
+            fecharDetalhes();
+            renderizarPraticas();
+            const b = document.getElementById('btn-save-all'), t = document.getElementById('toast-feedback');
+            b.classList.add('success'); b.innerHTML = "✓ Salvo com sucesso!";
+            t.innerText = "✓ Detalhes salvos!";
+            t.classList.add('show'); setTimeout(() => { t.classList.remove('show'); b.classList.remove('success'); b.innerHTML = "Salvar Práticas"; }, 2000);
+        }
+
+        function obterDiaSemana(data) {
+            const d = new Date(data);
+            return d.getDay();
+        }
+
+        function obterPrimeiroDiaSemana(data) {
+            const d = new Date(data);
+            const diff = d.getDate() - d.getDay();
+            return formatarDataLocal(new Date(d.getFullYear(), d.getMonth(), diff));
+        }
+
+        function obterUltimoDiaSemana(data) {
+            const d = new Date(data);
+            const diff = d.getDate() - d.getDay() + 6;
+            return formatarDataLocal(new Date(d.getFullYear(), d.getMonth(), diff));
+        }
+
+        function verificarFechamentoCicloSemanal() {
+            const hoje = formatarDataLocal(new Date());
+            const diaSemana = new Date().getDay();
+            const ultimoDiaSemana = obterUltimoDiaSemana(hoje);
+            
+            return hoje === ultimoDiaSemana && diaSemana === 6;
+        }
+
+        function obterPraticaComMenorDesempenho() {
+            const ranking = [...praticasDoDia]
+                .map(pratica => ({
+                    ...pratica,
+                    percentual: calcularTaxaConclusao7Dias(pratica.id)
+                }))
+                .sort((a, b) => a.percentual - b.percentual || a.nome.localeCompare(b.nome));
+            
+            return ranking.length > 0 ? ranking[0] : null;
+        }
+
+        async function salvarTudo() {
+            atualizarHistoricoDoDia();
+            renderizarDesempenhoSemanal();
+            salvarNoDispositivo();
+            
+            const btn = document.getElementById('btn-save-all');
+            const toast = document.getElementById('toast-feedback');
+            
+            btn.classList.add('success');
+            btn.innerHTML = "✓ Salvo com sucesso!";
+            toast.innerText = "✓ Dados salvos para o desempenho semanal!";
+            toast.classList.add('show');
+            
+            await agendarLembretesSalvos();
+            
+            const isFechamentoCiclo = verificarFechamentoCicloSemanal();
+            if (isFechamentoCiclo) {
+                const praticaMenorDesempenho = obterPraticaComMenorDesempenho();
+                
+                if (praticaMenorDesempenho) {
+                    setTimeout(() => {
+                        alert(`📊 CICLO SEMANAL FINALIZADO!\n\n⚠️ Prática com menor desempenho:\n${praticaMenorDesempenho.nome}\n\nPercentual: ${praticaMenorDesempenho.percentual}%\n\nRecomendação: Reforce esta prática na próxima semana com maior dedicação e entrega ao Senhor.`);
+                    }, 1500);
+                }
+            }
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                btn.classList.remove('success');
+                btn.innerHTML = "Salvar Práticas Diárias";
+            }, 3000);
+        }
+        
+        window.onload = inicializarApp;
+
+        // Registrar Service Worker (PWA)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('SW registrado:', reg.scope))
+                    .catch(err => console.warn('SW falhou:', err));
+            });
+        }
     </script>
 </body>
-</html>
+</html></html>
