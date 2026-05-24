@@ -818,6 +818,31 @@
             animation: pulse 1.5s infinite;
         }
         @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+        /* Feedback */
+        .feedback-textarea {
+            width: 100%;
+            min-height: 120px;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            padding: 0.85rem;
+            resize: none;
+            font-family: inherit;
+            line-height: 1.5;
+            margin-bottom: 0.75rem;
+            transition: border-color 0.2s;
+        }
+        .feedback-textarea:focus { outline: none; border-color: rgba(212,175,55,0.4); }
+        .feedback-char-count {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            text-align: right;
+            margin-top: -0.5rem;
+            margin-bottom: 0.75rem;
+        }
     </style>
 </head>
 <body>
@@ -956,6 +981,10 @@
                     <span>Novidades & Atualizações</span>
                     <span class="novidades-badge" id="novidades-badge" style="display:none;">novo</span>
                 </button>
+                <button type="button" class="btn-novidades-discreta" onclick="abrirFeedback()">
+                    <span>💬</span>
+                    <span>Enviar Feedback</span>
+                </button>
             </div>
         </div>
     </div>
@@ -970,6 +999,30 @@
             <div id="novidades-conteudo">
                 <p class="novidades-loading">Carregando atualizações...</p>
             </div>
+        </div>
+    </div>
+
+    <!-- Modal de Feedback -->
+    <div class="bottom-sheet-overlay" id="feedback-overlay" onclick="fecharFeedback()">
+        <div class="bottom-sheet" onclick="event.stopPropagation()" style="background-color: #14161d;">
+            <div class="sheet-header">
+                <h2 style="color: var(--accent);">💬 Enviar Feedback</h2>
+                <button type="button" class="sheet-close" onclick="fecharFeedback()">✕</button>
+            </div>
+            <p style="font-size:0.82rem; color:var(--text-secondary); margin-bottom:1rem; line-height:1.5;">
+                Sua mensagem vai direto para o desenvolvedor. Sugestões, problemas ou elogios são bem-vindos!
+            </p>
+            <textarea
+                class="feedback-textarea"
+                id="feedback-texto"
+                placeholder="Escreva seu feedback aqui..."
+                maxlength="500"
+                oninput="atualizarContadorFeedback()"
+            ></textarea>
+            <div class="feedback-char-count"><span id="feedback-count">0</span>/500</div>
+            <button type="button" class="btn-salvar-tudo" id="btn-enviar-feedback" style="padding:0.75rem;" onclick="enviarFeedback()">
+                Enviar Feedback
+            </button>
         </div>
     </div>
 
@@ -2882,6 +2935,64 @@
 
         function fecharNovidades() {
             document.getElementById('novidades-overlay').classList.remove('active');
+        }
+
+        // ────────────────────────────────────────────────────────────────────
+        // ── FEEDBACK ─────────────────────────────────────────────────────────
+        function abrirFeedback() {
+            toggleDrawer(false);
+            document.getElementById('feedback-texto').value = '';
+            document.getElementById('feedback-count').textContent = '0';
+            const btn = document.getElementById('btn-enviar-feedback');
+            btn.innerHTML = 'Enviar Feedback';
+            btn.disabled = false;
+            document.getElementById('feedback-overlay').classList.add('active');
+        }
+
+        function fecharFeedback() {
+            document.getElementById('feedback-overlay').classList.remove('active');
+        }
+
+        function atualizarContadorFeedback() {
+            const len = document.getElementById('feedback-texto').value.length;
+            document.getElementById('feedback-count').textContent = len;
+        }
+
+        async function enviarFeedback() {
+            const texto = document.getElementById('feedback-texto').value.trim();
+            if (!texto) {
+                alert('Por favor escreva algo antes de enviar.');
+                return;
+            }
+
+            const btn = document.getElementById('btn-enviar-feedback');
+            btn.disabled = true;
+            btn.innerHTML = 'Enviando...';
+
+            try {
+                const res = await fetch(`${SUPABASE_URL}/rest/v1/feedbacks`, {
+                    method: 'POST',
+                    headers: {
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                        'Content-Type': 'application/json',
+                        'Prefer': 'return=minimal'
+                    },
+                    body: JSON.stringify({ mensagem: texto })
+                });
+
+                if (res.ok) {
+                    btn.innerHTML = '✓ Enviado! Obrigado!';
+                    setTimeout(() => fecharFeedback(), 2000);
+                } else {
+                    throw new Error(`HTTP ${res.status}`);
+                }
+            } catch (e) {
+                console.warn('Erro ao enviar feedback:', e);
+                btn.disabled = false;
+                btn.innerHTML = 'Enviar Feedback';
+                alert('Não foi possível enviar. Verifique sua conexão e tente novamente.');
+            }
         }
 
         // ────────────────────────────────────────────────────────────────────
