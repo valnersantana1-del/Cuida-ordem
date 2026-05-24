@@ -2805,7 +2805,7 @@
             try {
                 const { data, error } = await supabaseClient
                     .from('avisos')
-                    .select('id, titulo, texto, created_at')
+                    .select('id, titulo, mensagem, created_at')
                     .order('created_at', { ascending: false })
                     .limit(20);
 
@@ -2873,7 +2873,7 @@
                                 <span class="novidades-item-titulo">${escaparHtml(n.titulo)}</span>
                                 <span class="novidades-item-data">${dataFormatada}</span>
                             </div>
-                            <p class="novidades-item-texto">${escaparHtml(n.texto)}</p>
+                            <p class="novidades-item-texto">${escaparHtml(n.mensagem)}</p>
                         </div>
                     `;
                 }).join('')
