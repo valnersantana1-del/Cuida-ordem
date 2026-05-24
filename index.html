@@ -750,7 +750,7 @@
 
     <div class="mobile-container">
         <header>
-            <button class="menu-hamburger" onclick="toggleDrawer(true)">☰</button>
+            <button type="button" class="menu-hamburger" aria-label="Abrir menu" onclick="toggleDrawer(true)">☰</button>
             <h1><span class="logo-cuida">Cuida</span> <span class="logo-divider">✦</span> <span class="logo-ordem">Ordem</span></h1>
             <div class="date-badge" id="current-date">--/--/----</div>
         </header>
@@ -771,14 +771,14 @@
                 <h3 class="section-title" style="margin: 0 0 0.5rem 0; padding: 0;">Personalizar Rotina</h3>
                 <div class="input-group">
                     <input type="text" class="input-custom" id="input-new-practice" placeholder="Ex: Jejum, Visita ao Santíssimo...">
-                    <button class="btn-add" onclick="adicionarPraticaPersonalizada()">+ Add</button>
+                    <button type="button" class="btn-add" onclick="adicionarPraticaPersonalizada()">+ Add</button>
                 </div>
             </section>
         </div>
 
         <div class="footer-actions">
-            <button class="btn-exame-consciencia" onclick="abrirExameConsciencia()">Exame de Consciência</button>
-            <button class="btn-salvar-tudo" id="btn-save-all" onclick="salvarTudo()">Salvar Práticas</button>
+            <button type="button" class="btn-exame-consciencia" onclick="abrirExameConsciencia()">Exame de Consciência</button>
+            <button type="button" class="btn-salvar-tudo" id="btn-save-all" onclick="salvarTudo()">Salvar Práticas</button>
         </div>
     </div>
 
@@ -827,7 +827,7 @@
             <div class="diario-drawer-card">
                 <label class="section-title" style="margin:0 0 0.5rem 0; display:block;">Diário Espiritual</label>
                 <p>Registre suas reflexões diárias e consulte-as pelo calendário.</p>
-                <button class="btn-diario-abrir" onclick="abrirDiarioEspiritual()">Abrir Diario</button>
+                <button type="button" class="btn-diario-abrir" onclick="abrirDiarioEspiritual()">Abrir Diario</button>
             </div>
 
             <div style="margin-bottom: 1rem;">
@@ -840,7 +840,7 @@
             <div style="margin-bottom: 1rem;">
                 <label class="section-title" style="margin:0 0 0.5rem 0; display:block;">Frases Dos Santos</label>
                 <div class="input-group" style="flex-direction: column; gap: 0.6rem; margin-bottom: 0.75rem;">
-                    <button class="btn-salvar-tudo" style="padding: 0.75rem; font-size: 0.9rem;" onclick="mostrarFrasesAleatoriasSantos()">Ver Frases</button>
+                    <button type="button" class="btn-salvar-tudo" style="padding: 0.75rem; font-size: 0.9rem;" onclick="mostrarFrasesAleatoriasSantos()">Ver Frases</button>
                 </div>
             </div>
 
@@ -854,13 +854,13 @@
                             <input type="time" class="input-custom" id="input-reminder-time" style="max-width: 100px;">
                         </div>
                         <select class="select-custom" id="select-reminder-cat"></select>
-                        <button class="btn-salvar-tudo" style="padding: 0.65rem; font-size: 0.9rem;" onclick="criarLembrete()">Agendar</button>
+                        <button type="button" class="btn-salvar-tudo" style="padding: 0.65rem; font-size: 0.9rem;" onclick="criarLembrete()">Agendar</button>
                     </div>
-                    <button class="discrete-cat-trigger" onclick="togglePainelCategoriaDiscreta()">⚙️ Configurar Categorias</button>
+                    <button type="button" class="discrete-cat-trigger" onclick="togglePainelCategoriaDiscreta()">⚙️ Configurar Categorias</button>
                     <div class="discrete-cat-panel" id="discrete-cat-panel">
                         <div class="input-group">
                             <input type="text" class="input-custom" style="padding: 0.5rem; width: auto;" id="input-new-cat" placeholder="Nova Categoria">
-                            <button class="btn-add" style="padding: 0 0.5rem; font-size: 0.8rem;" onclick="criarCategoria()">Criar</button>
+                            <button type="button" class="btn-add" style="padding: 0 0.5rem; font-size: 0.8rem;" onclick="criarCategoria()">Criar</button>
                         </div>
                         <div class="cat-edit-list" id="cat-edit-list"></div>
                     </div>
@@ -881,7 +881,7 @@
         <div class="bottom-sheet" onclick="event.stopPropagation()">
             <div class="sheet-header">
                 <h2 id="sheet-title">Detalhes</h2>
-                <button class="sheet-close" onclick="fecharDetalhes()">✕</button>
+                <button type="button" class="sheet-close" onclick="fecharDetalhes()">✕</button>
             </div>
             <div id="sheet-dynamic-content"></div>
             <label class="section-title" style="margin:0">Disposição Interior</label>
@@ -894,7 +894,7 @@
             </div>
             <label class="section-title" style="margin:0">Meditações / Diário Espiritual</label>
             <textarea class="textarea-notes" id="sheet-notes" placeholder="Digite suas reflexões aqui..."></textarea>
-            <button class="btn-sheet-confirm" onclick="confirmarDetalhesPratica()">Confirmar Detalhes</button>
+            <button type="button" class="btn-sheet-confirm" onclick="confirmarDetalhesPratica()">Confirmar Detalhes</button>
         </div>
     </div>
 
@@ -902,7 +902,7 @@
         <div class="bottom-sheet" onclick="event.stopPropagation()" style="background-color: #111318;">
             <div class="sheet-header">
                 <h2 style="color: #ef4444;">Exame de Consciência</h2>
-                <button class="sheet-close" onclick="fecharExameSemProcessar()">✕</button>
+                <button type="button" class="sheet-close" onclick="fecharExameSemProcessar()">✕</button>
             </div>
             
             <div class="exame-aviso-privacidade">
@@ -911,7 +911,7 @@
 
             <div id="exame-perguntas-container" style="max-height: 480px; overflow-y: auto; padding-right: 4px;"></div>
 
-            <button class="btn-salvar-tudo" style="background-color: #ef4444; color: white; margin-top: 1.5rem;" onclick="processarExameVeredicto()">
+            <button type="button" class="btn-salvar-tudo" style="background-color: #ef4444; color: white; margin-top: 1.5rem;" onclick="processarExameVeredicto()">
                 Finalizar Exame & Deletar Registro
             </button>
         </div>
@@ -921,7 +921,7 @@
         <div class="bottom-sheet" onclick="event.stopPropagation()" style="background-color: #14161d;">
             <div class="sheet-header">
                 <h2>Diário Espiritual</h2>
-                <button class="sheet-close" onclick="fecharDiarioEspiritual()">✕</button>
+                <button type="button" class="sheet-close" onclick="fecharDiarioEspiritual()">✕</button>
             </div>
 
             <div class="diario-tabs">
@@ -936,7 +936,7 @@
                     <button type="button" class="btn-diario-hoje" onclick="irParaHojeDiario()">Ir para hoje</button>
                 </div>
                 <textarea class="textarea-notes" id="diario-texto" style="height: 160px; margin-bottom: 0.75rem;" placeholder="O que Deus falou ao seu coração hoje? Gratidões, luta interior, graças recebidas..."></textarea>
-                <button class="btn-salvar-tudo" style="padding: 0.75rem;" onclick="salvarEntradaDiario()">Salvar anotação do dia</button>
+                <button type="button" class="btn-salvar-tudo" style="padding: 0.75rem;" onclick="salvarEntradaDiario()">Salvar anotação do dia</button>
             </div>
 
             <div class="diario-painel" id="diario-painel-calendario">
@@ -968,7 +968,7 @@
         <div class="bottom-sheet" onclick="event.stopPropagation()">
             <div class="sheet-header">
                 <h2 id="saint-sheet-title">Vida do Santo</h2>
-                <button class="sheet-close" onclick="fecharResumoSanto()">✕</button>
+                <button type="button" class="sheet-close" onclick="fecharResumoSanto()">✕</button>
             </div>
             <div id="saint-sheet-content" style="font-size: 0.95rem; line-height: 1.6; color: var(--text-primary);"></div>
         </div>
@@ -2326,7 +2326,7 @@
                    if ('serviceWorker' in navigator) {
                        navigator.serviceWorker.ready.then(function(registration) {
                            registration.showNotification('Cuida Ordem', {
-                               body: Hora de: ${l.titulo},
+                           body: `Hora de: ${l.titulo}`,
                                icon: '/icons/192.png'
                            });
                         });
@@ -2679,7 +2679,7 @@
             setTimeout(() => {
                 toast.classList.remove('show');
                 btn.classList.remove('success');
-                btn.innerHTML = "Salvar Práticas Diárias";
+                btn.innerHTML = "Salvar Práticas";
             }, 3000);
         }
         
@@ -2721,18 +2721,17 @@
                 });
 
                 console.log('Push subscrito com sucesso:', JSON.stringify(subscription));
-                // // Envia a subscription para o seu backend na Vercel
-                await fetch('/api/save-subscription', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ subscription: subscription }),
-                 });
-
-                 console.log('Assinatura salva no banco com sucesso!');
-                 return subscription;
-                // Ex: await fetch('/api/save-subscription', { method: 'POST', body: JSON.stringify(subscription) });
+                // Envia a subscription para o seu backend
+                try {
+                    await fetch('/api/save-subscription', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ subscription }),
+                    });
+                    console.log('Assinatura salva no banco com sucesso!');
+                } catch (fetchErr) {
+                    console.warn('Não foi possível salvar assinatura no servidor (endpoint pode não existir ainda):', fetchErr);
+                }
                 return subscription;
             } catch (err) {
                 console.warn('Erro ao registrar push notifications:', err);
@@ -2762,4 +2761,4 @@
         }
     </script>
 </body>
-</html></html>
+</html>
