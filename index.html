@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <style>
         :root {
@@ -744,6 +745,79 @@
             text-decoration: underline;
         }
         .btn-diario-hoje:hover { color: var(--accent); }
+
+        /* Botão discreto de Novidades */
+        .btn-novidades-discreta {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 0.72rem;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0.4rem 0.2rem;
+            opacity: 0.7;
+            transition: opacity 0.2s, color 0.2s;
+            width: 100%;
+            text-align: left;
+        }
+        .btn-novidades-discreta:hover { opacity: 1; color: var(--accent); }
+        .btn-novidades-discreta .novidades-badge {
+            background: var(--accent);
+            color: #1a1200;
+            font-size: 0.6rem;
+            font-weight: 800;
+            padding: 0.05rem 0.35rem;
+            border-radius: 20px;
+            line-height: 1.4;
+        }
+
+        /* Modal de Novidades */
+        .novidades-lista { display: flex; flex-direction: column; gap: 1rem; }
+        .novidades-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-left: 3px solid var(--accent);
+            border-radius: 10px;
+            padding: 0.85rem 1rem;
+        }
+        .novidades-item-topo {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.4rem;
+        }
+        .novidades-item-titulo {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .novidades-item-data {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+        .novidades-item-texto {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+        .novidades-empty {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            padding: 2rem 1rem;
+        }
+        .novidades-loading {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            padding: 2rem 1rem;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
     </style>
 </head>
 <body>
@@ -873,6 +947,28 @@
                     <label class="section-title" style="margin:0 0 0.5rem 0; display:block;">Compromissos Agendados</label>
                     <div id="reminders-list"></div>
                 </div>
+            </div>
+
+            <!-- Botão discreto de novidades no rodapé do drawer -->
+            <div style="margin-top: auto; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.04);">
+                <button type="button" class="btn-novidades-discreta" onclick="abrirNovidades()">
+                    <span>📋</span>
+                    <span>Novidades & Atualizações</span>
+                    <span class="novidades-badge" id="novidades-badge" style="display:none;">novo</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Novidades -->
+    <div class="bottom-sheet-overlay" id="novidades-overlay" onclick="fecharNovidades()">
+        <div class="bottom-sheet" onclick="event.stopPropagation()" style="background-color: #14161d;">
+            <div class="sheet-header">
+                <h2 style="color: var(--accent);">📋 Novidades</h2>
+                <button type="button" class="sheet-close" onclick="fecharNovidades()">✕</button>
+            </div>
+            <div id="novidades-conteudo">
+                <p class="novidades-loading">Carregando atualizações...</p>
             </div>
         </div>
     </div>
@@ -1937,6 +2033,8 @@
 
             inicializarNotificacoesNativas();
             carregarLiturgiaDoDia();
+            inicializarSupabase();
+            setTimeout(verificarNovidadesNaoLidas, 2000);
 
             document.addEventListener('visibilitychange', () => {
                 if (document.visibilityState === 'visible') verificarViradaDoDia(true);
@@ -2683,6 +2781,110 @@
             }, 3000);
         }
         
+        // ── SUPABASE — NOVIDADES & ATUALIZAÇÕES ─────────────────────────────
+        const SUPABASE_URL = 'https://qsdmfayaygufcbglchzi.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFzZG1mYXlheWd1ZmNiZ2xjaHppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1NjQ2MzEsImV4cCI6MjA5NTE0MDYzMX0.YQgqzWAP81QVN3JjOO3hAEYxLntynvPHQitwQO1J7ZM';
+
+        let supabaseClient = null;
+
+        function inicializarSupabase() {
+            try {
+                if (typeof window.supabase !== 'undefined') {
+                    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                    console.log('Supabase inicializado com sucesso.');
+                } else {
+                    console.warn('SDK do Supabase não carregado.');
+                }
+            } catch (e) {
+                console.warn('Erro ao inicializar Supabase:', e);
+            }
+        }
+
+        async function buscarNovidades() {
+            if (!supabaseClient) return null;
+            try {
+                const { data, error } = await supabaseClient
+                    .from('avisos')
+                    .select('id, titulo, texto, created_at')
+                    .order('created_at', { ascending: false })
+                    .limit(20);
+
+                if (error) {
+                    console.warn('Erro ao buscar novidades:', error.message);
+                    return null;
+                }
+                return data;
+            } catch (e) {
+                console.warn('Erro inesperado ao buscar novidades:', e);
+                return null;
+            }
+        }
+
+        async function verificarNovidadesNaoLidas() {
+            if (!supabaseClient) return;
+            try {
+                const ultimaLeitura = localStorage.getItem('cuida_ordem_novidades_lida') || '1970-01-01';
+                const { data, error } = await supabaseClient
+                    .from('avisos')
+                    .select('id')
+                    .gt('created_at', ultimaLeitura)
+                    .limit(1);
+
+                const badge = document.getElementById('novidades-badge');
+                if (badge && !error && data && data.length > 0) {
+                    badge.style.display = 'inline';
+                }
+            } catch (e) {
+                console.warn('Erro ao verificar novidades não lidas:', e);
+            }
+        }
+
+        async function abrirNovidades() {
+            toggleDrawer(false);
+            document.getElementById('novidades-overlay').classList.add('active');
+
+            // Marca como lido
+            localStorage.setItem('cuida_ordem_novidades_lida', new Date().toISOString());
+            const badge = document.getElementById('novidades-badge');
+            if (badge) badge.style.display = 'none';
+
+            const container = document.getElementById('novidades-conteudo');
+            container.innerHTML = '<p class="novidades-loading">Carregando atualizações...</p>';
+
+            const novidades = await buscarNovidades();
+
+            if (!novidades) {
+                container.innerHTML = '<p class="novidades-empty">Não foi possível carregar as atualizações. Verifique sua conexão.</p>';
+                return;
+            }
+
+            if (novidades.length === 0) {
+                container.innerHTML = '<p class="novidades-empty">Nenhuma atualização disponível ainda.</p>';
+                return;
+            }
+
+            container.innerHTML = `<div class="novidades-lista">${
+                novidades.map(n => {
+                    const data = new Date(n.created_at);
+                    const dataFormatada = data.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' });
+                    return `
+                        <div class="novidades-item">
+                            <div class="novidades-item-topo">
+                                <span class="novidades-item-titulo">${escaparHtml(n.titulo)}</span>
+                                <span class="novidades-item-data">${dataFormatada}</span>
+                            </div>
+                            <p class="novidades-item-texto">${escaparHtml(n.texto)}</p>
+                        </div>
+                    `;
+                }).join('')
+            }</div>`;
+        }
+
+        function fecharNovidades() {
+            document.getElementById('novidades-overlay').classList.remove('active');
+        }
+
+        // ────────────────────────────────────────────────────────────────────
         window.onload = inicializarApp;
 
         // Registrar Service Worker (PWA)
