@@ -2721,10 +2721,9 @@
                  });
 
                  console.log('Assinatura salva no banco com sucesso!');
-                 return subscription;Aqui você enviaria `subscription` ao seu servidor backend para armazenar
+                 return subscription;
                 // Ex: await fetch('/api/save-subscription', { method: 'POST', body: JSON.stringify(subscription) });
                 return subscription;
-
             } catch (err) {
                 console.warn('Erro ao registrar push notifications:', err);
                 return null;
