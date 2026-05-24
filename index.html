@@ -2313,27 +2313,27 @@
         }
 
        function checarLembretesAtivos() {
-    if (getLocalNotificationsPlugin() && isCapacitorNative()) return;
-    if (!("Notification" in window) || Notification.permission !== "granted") return;
+           if (getLocalNotificationsPlugin() && isCapacitorNative()) return;
+           if (!("Notification" in window) || Notification.permission !== "granted") return;
     
-    const ag = new Date(), dt = formatarDataLocal(ag), hr = ag.toTimeString().slice(0, 5);
+           const ag = new Date(), dt = formatarDataLocal(ag), hr = ag.toTimeString().slice(0, 5);
     
-    lembretes.forEach(l => {
-        if (l.data === dt && l.hora === hr && !l.notificado) {
-            l.notificado = true;
-            salvarNoDispositivo();
+           lembretes.forEach(l => {
+               if (l.data === dt && l.hora === hr && !l.notificado) {
+                   l.notificado = true;
+                   salvarNoDispositivo();
 
-            if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.ready.then(function(registration) {
-                    registration.showNotification('Cuida Ordem', {
-                        body: Hora de: ${l.titulo},
-                        icon: '/icons/192.png'
-                    });
-                });
-            }
+                   if ('serviceWorker' in navigator) {
+                       navigator.serviceWorker.ready.then(function(registration) {
+                           registration.showNotification('Cuida Ordem', {
+                               body: Hora de: ${l.titulo},
+                               icon: '/icons/192.png'
+                           });
+                        });
+                   }
+                }
+           }); 
         }
-    }); 
-}
         /* DETALHES DINÂMICOS */
         async function abrirDetalhes(id) {
             const pr = praticasDoDia.find(p => p.id === id); if (!pr) return; praticaEmEdicaoId = id;
