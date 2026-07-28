@@ -3,675 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Cuida Ordem - Práticas, Agenda & Liturgia</title>
+    <title>Cuidar Ordem - Práticas, Agenda & Liturgia</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Vercel Web Analytics -->
-    <script>
-      window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-    </script>
-    <script defer src="/_vercel/insights/script.js"></script>
-    
-    <style>
-        :root {
-            --bg-page-outer: #0f1012; 
-            --bg-main: #000000;       
-            --bg-card: #1b1e25;       
-            --bg-input: #252932;
-            --text-primary: #f3f4f6;
-            --text-secondary: #9ca3af;
-            --accent: #d4af37; 
-            --accent-dim: rgba(212, 175, 55, 0.1);
-            --success: #10b981;
-            --success-dim: rgba(16, 185, 129, 0.1);
-            --danger: #ef4444;
-            --danger-dim: rgba(239, 68, 68, 0.15);
-            --border: rgba(255, 255, 255, 0.05); 
-            --radius: 20px;
-
-            /* Cores Estilo Papel Antigo / Pergaminho */
-            --bg-parchment: #f4ecd8;
-            --bg-parchment-card: #eadebe;
-            --text-parchment-dark: #2c2519;
-            --text-parchment-sub: #5c503d;
-            --border-parchment: rgba(44, 37, 25, 0.12);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0; padding: 0;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body {
-            background-color: var(--bg-page-outer);
-            color: var(--text-primary);
-            display: flex; justify-content: center; align-items: start;
-            min-height: 100vh; padding: 1.5rem 1rem; overflow-x: hidden;
-        }
-
-        .mobile-container {
-            width: 100%; max-width: 410px;
-            background-color: var(--bg-main); min-height: 844px;
-            display: flex; flex-direction: column; position: relative;
-            padding-bottom: 140px;
-            border-radius: var(--radius);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.02);
-            overflow: hidden;
-        }
-
-        header {
-            padding: 1.5rem 1rem 0.75rem 1rem;
-            display: flex; align-items: center; justify-content: space-between;
-            position: relative;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.08);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.25);
-        }
-
-        .menu-hamburger {
-            background: none; border: none; color: var(--text-primary);
-            font-size: 1.5rem; cursor: pointer; padding: 0.25rem;
-        }
-
-        header h1 {
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--accent) 0%, #f5d98b 50%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            line-height: 1.4;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        .logo-cuida { font-weight: 400; font-size: 0.8rem; }
-        .logo-divider { font-size: 0.55rem; opacity: 0.5; line-height: 1.2; }
-        .logo-ordem { font-weight: 800; font-size: 1.05rem; }
-
-        header .date-badge {
-            font-size: 0.8rem; color: var(--accent); background-color: var(--accent-dim);
-            padding: 0.25rem 0.75rem; border-radius: 20px; font-weight: 600;
-        }
-
-        .quote-container {
-            background: linear-gradient(135deg, var(--bg-card), rgba(27, 30, 37, 0.6));
-            border-radius: 14px; padding: 1.2rem 1.2rem 1rem 1.2rem; margin: 1rem;
-            border: 1px solid var(--border); border-left: 3px solid var(--accent);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            position: relative;
-            overflow: hidden;
-        }
-        .quote-container::before {
-            content: '\201C';
-            position: absolute;
-            top: -0.6rem;
-            right: 0.75rem;
-            font-size: 5rem;
-            color: var(--accent);
-            opacity: 0.07;
-            font-family: Georgia, serif;
-            line-height: 1;
-            pointer-events: none;
-        }
-
-        .quote-text { font-style: italic; font-size: 0.9rem; line-height: 1.4; color: var(--text-primary); margin-bottom: 0.5rem; }
-        .quote-author { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); font-weight: 600; text-align: right; }
-
-        /* Área Central Estilo Manuscrito / Papel Antigo */
-        .parchment-zone {
-            background-color: var(--bg-parchment);
-            margin: 0 1rem 1.5rem 1rem;
-            padding: 1.25rem 0.85rem;
-            border-radius: 16px;
-            box-shadow: inset 0 0 20px rgba(44, 37, 25, 0.15), 0 8px 24px rgba(0,0,0,0.4);
-            border: 1px solid #dfd3b6;
-        }
-
-        .section-title {
-            font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px;
-            color: var(--text-secondary); margin: 0rem 1rem 0.5rem 1rem; font-weight: 700;
-            display: flex; align-items: center; gap: 0.5rem;
-        }
-        .section-title::before {
-            content: '';
-            display: inline-block;
-            width: 3px;
-            height: 0.7rem;
-            background: var(--accent);
-            border-radius: 2px;
-            opacity: 0.6;
-        }
-        
-        .parchment-zone .section-title {
-            color: var(--text-parchment-sub);
-            margin-left: 0.35rem;
-            font-weight: 700;
-        }
-
-        .checklist-container { display: flex; flex-direction: column; gap: 0.75rem; padding: 0 0.35rem; }
-        
-        .practice-item {
-            background-color: var(--bg-parchment-card); 
-            border: 1px solid var(--border-parchment);
-            padding: 1.1rem 1rem; border-radius: 12px; display: flex; align-items: center; justify-content: space-between;
-            box-shadow: 0 4px 10px rgba(44, 37, 25, 0.08); 
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .practice-item.completed {
-            border-color: rgba(16, 185, 129, 0.4);
-            background-color: rgba(16, 185, 129, 0.08);
-            transform: scale(0.97);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-
-        .practice-left { display: flex; align-items: center; cursor: pointer; flex-grow: 1; }
-        .practice-item input[type="checkbox"] { display: none; }
-        
-        .custom-checkbox {
-            width: 22px; height: 22px; border: 2px solid var(--text-parchment-sub);
-            border-radius: 7px; margin-right: 12px; display: flex; align-items: center; justify-content: center; 
-            transition: all 0.2s ease; flex-shrink: 0;
-        }
-
-        .practice-item.completed .custom-checkbox { 
-            background-color: #7d6634; 
-            border-color: #7d6634; 
-            transform: scale(1.05);
-        }
-        .practice-item.completed .custom-checkbox::after { 
-            content: '✓'; color: var(--bg-parchment); font-size: 0.9rem; font-weight: bold; 
-        }
-        
-        .practice-text-container { display: flex; flex-direction: column; }
-        .checkbox-text { font-size: 0.95rem; font-weight: 700; color: var(--text-parchment-dark); transition: all 0.2s ease; }
-        .practice-item.completed .checkbox-text {
-            color: var(--text-parchment-sub);
-            text-decoration: line-through;
-            opacity: 0.5;
-        }
-
-        .stars-display { font-size: 0.75rem; color: #b58d22; margin-top: 2px; letter-spacing: 1px; }
-
-        .practice-actions { display: flex; align-items: center; gap: 0.25rem; }
-        .details-trigger { background: none; border: none; color: var(--text-parchment-sub); padding: 0.5rem; cursor: pointer; font-size: 1.1rem; }
-        .btn-delete-practice { background: none; border: none; padding: 0.5rem; cursor: pointer; font-size: 1rem; opacity: 0.7; transition: opacity 0.2s; }
-        .btn-delete-practice:hover { opacity: 1; }
-
-        .add-custom-container { 
-            margin-top: 1.25rem; 
-            background-color: rgba(44, 37, 25, 0.03); 
-            border: 1px dashed rgba(44, 37, 25, 0.2); 
-            padding: 0.85rem; 
-            border-radius: 12px; 
-        }
-        .input-group { display: flex; gap: 0.5rem; }
-        .input-custom, .select-custom {
-            width: 100%; background-color: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255,255,255,0.1);
-            padding: 0.75rem 1rem; border-radius: 8px; color: var(--text-primary); font-size: 0.9rem; outline: none;
-        }
-        .input-custom:focus, .select-custom:focus { border-color: var(--accent); }
-        
-        .parchment-zone .input-custom {
-            background-color: rgba(255, 255, 255, 0.6);
-            border: 1px solid var(--border-parchment);
-            color: var(--text-parchment-dark);
-        }
-        .parchment-zone .input-custom::placeholder { color: #8c806a; }
-        .parchment-zone .input-custom:focus { border-color: #b58d22; background-color: #ffffff; }
-        .parchment-zone .btn-add { 
-            background-color: #e2d4b5; 
-            border: 1px solid var(--border-parchment); 
-            color: var(--text-parchment-dark); 
-            padding: 0 1rem; border-radius: 8px; font-weight: 700; cursor: pointer; 
-        }
-
-        .footer-actions { 
-            position: absolute; bottom: 0; left: 0; width: 100%; 
-            background: linear-gradient(to top, var(--bg-main) 85%, transparent); 
-            padding: 1rem 1rem calc(1rem + env(safe-area-inset-bottom)) 1rem;
-            z-index: 5; display: flex; flex-direction: column; gap: 0.5rem;
-        }
-        .btn-salvar-tudo {
-            width: 100%;
-            background: linear-gradient(135deg, #c8971f 0%, var(--accent) 60%, #f5d98b 100%);
-            color: #1a1200;
-            border: none;
-            padding: 0.9rem;
-            border-radius: 12px;
-            font-size: 0.95rem;
-            font-weight: 800;
-            cursor: pointer;
-            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.35), 0 2px 6px rgba(0,0,0,0.4);
-            letter-spacing: 0.3px;
-            transition: opacity 0.2s ease, box-shadow 0.2s ease;
-        }
-        .btn-salvar-tudo:active { opacity: 0.85; }
-        .btn-salvar-tudo.success { background: var(--success); color: white; box-shadow: 0 4px 16px rgba(16,185,129,0.3); }
-
-        .btn-exame-consciencia {
-            width: 100%;
-            background-color: transparent;
-            color: var(--accent);
-            border: 1px solid rgba(212, 175, 55, 0.35);
-            padding: 0.75rem;
-            border-radius: 12px;
-            font-size: 0.88rem;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex; align-items: center; justify-content: center; gap: 6px;
-            transition: background 0.2s ease, border-color 0.2s ease;
-        }
-        .btn-exame-consciencia:active { background: var(--accent-dim); border-color: var(--accent); }
-
-        /* Menu Lateral (Drawer) */
-        .drawer-overlay { 
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0; 
-            background-color: rgba(0,0,0,0.7); z-index: 20; 
-            display: none; justify-content: flex-start;
-            opacity: 0; transition: opacity 0.3s ease;
-        }
-        .drawer-overlay.active { opacity: 1; }
-        .drawer-content { 
-            width: 85%; max-width: 350px; height: 100%; 
-            background-color: #14161d; border-right: 1px solid rgba(255,255,255,0.05); 
-            padding: 1.5rem; transform: translateX(-100%); 
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
-            display: flex; flex-direction: column; overflow-y: auto; 
-        }
-        .drawer-overlay.active .drawer-content { transform: translateX(0); }
-        .drawer-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.25rem;
-            padding: 1rem 1.1rem;
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.14), rgba(27, 30, 37, 0.55));
-            border: 1px solid rgba(212, 175, 55, 0.22);
-            border-left: 3px solid var(--accent);
-            border-radius: 14px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.28);
-        }
-        .drawer-brand { display: flex; align-items: center; gap: 0.75rem; }
-        .drawer-brand-icon {
-            width: 42px;
-            height: 42px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--accent-dim);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 12px;
-            color: var(--accent);
-            font-size: 1.15rem;
-            flex-shrink: 0;
-        }
-        .drawer-brand-text { display: flex; flex-direction: column; gap: 0.15rem; line-height: 1.1; }
-        .drawer-brand-title {
-            font-size: 1.35rem;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            color: var(--text-primary);
-        }
-        .drawer-brand-sub {
-            font-size: 0.72rem;
-            font-weight: 600;
-            color: var(--accent);
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-        }
-        .drawer-close {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 10px;
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            cursor: pointer;
-            flex-shrink: 0;
-            transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
-        }
-        .drawer-close:active { color: var(--accent); border-color: rgba(212, 175, 55, 0.4); background: var(--accent-dim); }
-
-        .chart-container {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: 1rem 1rem 0.75rem 0.5rem;
-            border-radius: 12px;
-            margin-bottom: 1rem;
-        }
-        .chart-title { font-size: 0.75rem; text-transform: uppercase; color: var(--text-secondary); font-weight: 700; margin-bottom: 0.85rem; letter-spacing: 0.5px; padding-left: 0.5rem; }
-        .chart-grid {
-            display: flex;
-            gap: 0.4rem;
-        }
-        .chart-y-axis {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 120px;
-            padding-bottom: 20px;
-        }
-        .chart-y-label {
-            font-size: 0.5rem;
-            color: rgba(255,255,255,0.25);
-            text-align: right;
-            line-height: 1;
-        }
-        .chart-plot {
-            flex: 1;
-            position: relative;
-        }
-        .chart-grid-lines {
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 100px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            pointer-events: none;
-        }
-        .chart-grid-line {
-            width: 100%;
-            border-top: 1px solid rgba(255,255,255,0.05);
-        }
-        .chart-bars {
-            display: flex;
-            justify-content: space-around;
-            align-items: flex-end;
-            height: 100px;
-            position: relative;
-            border-bottom: 1px solid rgba(255,255,255,0.12);
-            padding: 0 0.25rem;
-            gap: 0.3rem;
-        }
-        .chart-bar-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0;
-            flex: 1;
-            min-width: 0;
-            height: 100%;
-            justify-content: flex-end;
-        }
-        .chart-bar-pct {
-            font-size: 0.52rem;
-            color: var(--accent);
-            font-weight: 700;
-            min-height: 0.8rem;
-            line-height: 1;
-            margin-bottom: 2px;
-        }
-        .chart-bar-track {
-            width: 100%;
-            flex: 1;
-            display: flex;
-            align-items: flex-end;
-            background: transparent;
-            overflow: visible;
-        }
-        .chart-bar-fill {
-            width: 100%;
-            height: 0;
-            background: linear-gradient(180deg, #f5d98b 0%, var(--accent) 100%);
-            border-radius: 3px 3px 0 0;
-            transition: height 0.8s cubic-bezier(0.34, 1.1, 0.64, 1);
-        }
-        .chart-bar-fill.chart-bar-hoje {
-            background: linear-gradient(180deg, #ffe599 0%, #c8971f 100%);
-            box-shadow: 0 0 10px rgba(212, 175, 55, 0.45);
-        }
-        .chart-bar-fill.vazio {
-            background: rgba(255,255,255,0.07);
-            border-radius: 2px 2px 0 0;
-        }
-        .chart-x-labels {
-            display: flex;
-            justify-content: space-around;
-            padding: 0.35rem 0.25rem 0;
-            gap: 0.3rem;
-        }
-        .chart-label {
-            flex: 1;
-            font-size: 0.6rem;
-            color: var(--text-secondary);
-            font-weight: 600;
-            text-align: center;
-        }
-        .chart-label.chart-label-hoje { color: var(--accent); font-weight: 700; }
-
-        .agenda-section { display: flex; flex-direction: column; gap: 1.25rem; }
-        .reminder-card { background-color: var(--bg-card); border: 1px solid var(--border); padding: 0.85rem; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
-        .reminder-info h4 { font-size: 0.95rem; font-weight: 600; }
-        .reminder-info span { font-size: 0.75rem; color: var(--text-secondary); display: block; margin-top: 0.2rem;}
-        .reminder-tag { font-size: 0.7rem; background-color: var(--accent-dim); color: var(--accent); padding: 0.15rem 0.5rem; border-radius: 4px; font-weight: 600; margin-top: 0.25rem; display: inline-block; }
-        .btn-delete { background: none; border: none; cursor: pointer; font-size: 1rem; padding: 0.25rem; }
-
-        .discrete-cat-trigger { background: none; border: none; color: var(--text-secondary); font-size: 0.75rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 4px; padding: 0.2rem 0; margin-top: 0.4rem; }
-        .discrete-cat-trigger:hover { color: var(--accent); }
-        .discrete-cat-panel { display: none; margin-top: 0.5rem; padding: 0.75rem; background-color: rgba(0,0,0,0.2); border: 1px dashed rgba(255,255,255,0.05); border-radius: 8px; }
-        
-        .cat-edit-list { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px dashed rgba(255,255,255,0.05); }
-        .cat-edit-item { display: flex; gap: 0.4rem; align-items: center; }
-        .input-cat-edit { background-color: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255,255,255,0.05); padding: 0.35rem 0.5rem; border-radius: 6px; color: var(--text-primary); font-size: 0.8rem; flex-grow: 1; outline: none; }
-        .input-cat-edit:focus { border-color: var(--accent); }
-        .btn-cat-save { background: none; border: 1px solid rgba(255,255,255,0.1); color: var(--success); font-size: 0.75rem; padding: 0.35rem 0.5rem; border-radius: 6px; cursor: pointer; font-weight: 600; }
-
-        .filter-container { display: flex; gap: 0.4rem; overflow-x: auto; padding-bottom: 0.5rem; margin-bottom: 1rem; }
-        .filter-chip { background-color: var(--bg-card); border: 1px solid var(--border); color: var(--text-secondary); padding: 0.35rem 0.75rem; border-radius: 20px; font-size: 0.75rem; white-space: nowrap; cursor: pointer; }
-        .filter-chip.active { background-color: var(--accent); color: var(--bg-main); border-color: var(--accent); }
-
-        .bottom-sheet-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,0.6); z-index: 30; display: flex; align-items: flex-end; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
-        .bottom-sheet-overlay.active { opacity: 1; visibility: visible; }
-        .bottom-sheet { width: 100%; max-width: 410px; background-color: #171a21; border-top-left-radius: var(--radius); border-top-right-radius: var(--radius); padding: 1.5rem; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.1, 0.8, 0.3, 1); border-top: 1px solid rgba(255,255,255,0.05); max-height: 85vh; overflow-y: auto; }
-        .bottom-sheet-overlay.active .bottom-sheet { transform: translateY(0); }
-        .sheet-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; }
-        .sheet-header h2 { font-size: 1.2rem; color: var(--accent); }
-        .sheet-close { background: none; border: none; color: var(--text-secondary); font-size: 1.5rem; cursor: pointer; }
-
-        .liturgy-container { background-color: var(--bg-input); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 1rem; margin-bottom: 1.25rem; font-size: 0.9rem; }
-        .liturgy-title { font-weight: 700; color: var(--accent); margin-bottom: 0.4rem; display: flex; justify-content: space-between; font-size: 0.85rem; text-transform: uppercase;}
-        .liturgy-text { color: var(--text-primary); line-height: 1.4; margin-bottom: 1rem; font-style: normal; }
-        .liturgy-evangelho-texto {
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-            line-height: 1.55;
-            font-style: italic;
-        }
-        .liturgy-citation-badge { font-size: 0.75rem; color: var(--text-secondary); font-weight: 600; display: block; margin-bottom: 0.4rem; background-color: rgba(255,255,255,0.03); padding: 0.25rem 0.5rem; border-radius: 4px; border-left: 2px solid var(--accent); }
-        
-        .stars-container { display: flex; gap: 0.5rem; margin: 0.5rem 0 1.25rem 0; }
-        .star { font-size: 1.75rem; color: #3f3f46; cursor: pointer; }
-        .star.active { color: var(--accent); }
-        
-        .textarea-notes { width: 100%; height: 85px; background-color: var(--bg-input); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 0.75rem; color: var(--text-primary); font-size: 0.9rem; resize: none; outline: none; margin-top: 0.5rem; margin-bottom: 1rem; }
-        .btn-sheet-confirm { width: 100%; background-color: var(--bg-input); border: 1px solid rgba(255,255,255,0.05); color: var(--text-primary); padding: 0.85rem; border-radius: 10px; font-weight: 600; cursor: pointer; }
-        .btn-sheet-confirm:hover { border-color: var(--accent); color: var(--accent); }
-
-        .toast { position: fixed; bottom: 5rem; left: 50%; transform: translateX(-50%) translateY(20px); background-color: var(--success); color: white; padding: 0.75rem 1.5rem; border-radius: 30px; font-size: 0.9rem; font-weight: 600; opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 40; }
-        .toast.show { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
-        
-        .report-ranking-box { background-color: rgba(214, 175, 55, 0.05); border: 1px solid rgba(214, 175, 55, 0.2); border-left: 4px solid var(--accent); padding: 0.85rem; border-radius: 10px; margin-bottom: 1.5rem; }
-        .report-ranking-box h4 { color: var(--accent); font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.5rem; font-weight: 700; letter-spacing: 0.5px; }
-        .ranking-list { display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.85rem; color: var(--text-primary); list-style: none; }
-        .ranking-item { display: flex; justify-content: space-between; align-items: center; padding: 0.25rem 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
-        .ranking-item:last-child { border-bottom: none; }
-        .ranking-name { font-weight: 600; display: flex; align-items: center; gap: 6px; }
-        .ranking-pct { color: var(--success); font-weight: 700; font-size: 0.8rem; background-color: var(--success-dim); padding: 0.1rem 0.4rem; border-radius: 4px; }
-
-        /* Exame de Consciência Noturno */
-        .exame-categoria-titulo { font-size: 0.8rem; text-transform: uppercase; color: var(--accent); font-weight: 700; margin: 1rem 0 0.5rem 0; letter-spacing: 0.5px; border-bottom: 1px solid rgba(214, 175, 55, 0.15); padding-bottom: 2px;}
-        .exame-item { display: flex; align-items: start; gap: 10px; background-color: rgba(255,255,255,0.02); padding: 0.65rem; border-radius: 8px; margin-bottom: 0.5rem; border: 1px solid rgba(255,255,255,0.02); cursor: pointer; transition: background-color 0.2s; }
-        .exame-item input { margin-top: 3px; cursor: pointer; width: 16px; height: 16px; accent-color: #ef4444; }
-        .exame-item label { font-size: 0.85rem; color: var(--text-primary); line-height: 1.3; cursor: pointer; flex-grow:1; }
-        .exame-item.selecionado { background-color: rgba(239, 68, 68, 0.12); border-color: rgba(239, 68, 68, 0.3); }
-        .exame-aviso-privacidade { font-size: 0.75rem; color: var(--text-secondary); text-align: center; font-style: italic; margin-bottom: 1rem; line-height: 1.4; background-color: rgba(239, 68, 68, 0.05); padding: 0.5rem; border-radius: 6px; border: 1px dashed rgba(239, 68, 68, 0.2); }
-
-        .exame-questao-card { background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02)); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 1rem; box-shadow: 0 10px 30px rgba(0,0,0,0.18); margin-bottom: 1rem; }
-        .exame-pecado-titulo { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.18em; color: #fbbf24; font-weight: 700; margin-bottom: 0.75rem; }
-        .exame-pergunta-texto { font-size: 1rem; color: var(--text-primary); line-height: 1.6; margin-bottom: 1rem; }
-        .exame-respostas { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
-        .exame-resposta-btn { flex: 1 1 45%; min-width: 120px; padding: 0.85rem 1rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.12); font-weight: 700; cursor: pointer; transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease; }
-        .exame-resposta-btn:hover { transform: translateY(-1px); border-color: rgba(255,255,255,0.25); }
-        .exame-resposta-btn.sim { background-color: rgba(34,197,94,0.15); color: #bbf7d0; }
-        .exame-resposta-btn.nao { background-color: rgba(239,68,68,0.15); color: #fecaca; }
-        .exame-resposta-btn.sim:hover { background-color: rgba(34,197,94,0.22); }
-        .exame-resposta-btn.nao:hover { background-color: rgba(239,68,68,0.22); }
-
-        /* Diário Espiritual */
-        .diario-drawer-card {
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.12), rgba(27, 30, 37, 0.9));
-            border: 1px solid rgba(212, 175, 55, 0.25);
-            border-radius: 12px;
-            padding: 1rem;
-            margin-bottom: 1.25rem;
-        }
-        .diario-drawer-card p { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-bottom: 0.75rem; }
-        .btn-diario-abrir {
-            width: 100%;
-            background-color: #251e15;
-            color: var(--accent);
-            border: 1px solid rgba(214, 175, 55, 0.35);
-            padding: 0.75rem;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        .diario-tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
-        .diario-tab {
-            flex: 1;
-            background-color: var(--bg-input);
-            border: 1px solid rgba(255,255,255,0.05);
-            color: var(--text-secondary);
-            padding: 0.6rem;
-            border-radius: 10px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            cursor: pointer;
-        }
-        .diario-tab.active { background-color: var(--accent-dim); color: var(--accent); border-color: rgba(212, 175, 55, 0.4); }
-        .diario-painel { display: none; }
-        .diario-painel.active { display: block; }
-        .diario-data-label {
-            font-size: 0.85rem;
-            color: var(--accent);
-            font-weight: 700;
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .diario-nav-mes {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 0.85rem;
-        }
-        .diario-nav-mes h3 { font-size: 1rem; color: var(--text-primary); font-weight: 700; }
-        .btn-diario-nav {
-            background: var(--bg-input);
-            border: 1px solid rgba(255,255,255,0.08);
-            color: var(--accent);
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1.1rem;
-        }
-        .calendario-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 4px;
-            margin-bottom: 1rem;
-        }
-        .calendario-dia-semana {
-            font-size: 0.65rem;
-            text-align: center;
-            color: var(--text-secondary);
-            font-weight: 700;
-            padding: 0.25rem 0;
-        }
-        .calendario-dia {
-            aspect-ratio: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            background-color: rgba(255,255,255,0.02);
-            border: 1px solid transparent;
-            color: var(--text-secondary);
-            position: relative;
-        }
-        .calendario-dia.vazio { visibility: hidden; pointer-events: none; }
-        .calendario-dia.com-entrada::after {
-            content: '';
-            width: 5px;
-            height: 5px;
-            background-color: var(--accent);
-            border-radius: 50%;
-            position: absolute;
-            bottom: 4px;
-        }
-        .calendario-dia.hoje { border-color: rgba(212, 175, 55, 0.5); color: var(--accent); }
-        .calendario-dia.selecionado { background-color: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
-        .diario-leitura {
-            background-color: var(--bg-input);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 12px;
-            padding: 1rem;
-            min-height: 100px;
-            max-height: 200px;
-            overflow-y: auto;
-            font-size: 0.9rem;
-            line-height: 1.5;
-            color: var(--text-primary);
-            white-space: pre-wrap;
-        }
-        .diario-leitura.vazio { color: var(--text-secondary); font-style: italic; }
-        .btn-diario-hoje {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 0.75rem;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: underline;
-        }
-        .btn-diario-hoje:hover { color: var(--accent); }
-    </style>
+    <link rel="stylesheet" href= "style.css">
 </head>
 <body>
 
     <div class="mobile-container">
         <header>
-            <button class="menu-hamburger" onclick="toggleDrawer(true)">☰</button>
-            <h1><span class="logo-cuida">Cuida</span> <span class="logo-divider">✦</span> <span class="logo-ordem">Ordem</span></h1>
-            <div class="date-badge" id="current-date">--/--/----</div>
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <button type="button" class="menu-hamburger" aria-label="Abrir menu" onclick="toggleDrawer(true)">☰</button>
+            </div>
+            <h1 id="app-logo-trigger" onclick="registrarToqueLogoAdmin()"><span class="logo-cuidar">Cuidar</span> <span class="logo-divider">✦</span> <span class="logo-ordem">Ordem</span></h1>
+            <div style="display: flex; gap: 10px; align-items: center; margin-top: -4px;">
+                <div class="date-badge" id="current-date">--/--/----</div>
+                <button type="button" class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="Alternar tema">🌙</button>
+            </div>
         </header>
+
+        <div class="streak-banner hidden" id="streak-banner"></div>
 
         <section class="quote-container">
             <p class="quote-text" id="quote-text">"Carregando meditação diária..."</p>
@@ -679,21 +31,24 @@
         </section>
 
         <div class="parchment-zone" id="checklist-section">
-            <h3 class="section-title">Práticas de Hoje</h3>
-            <main class="checklist-container" id="checklist-container"></main>
+            <h3 class="section-title" style="justify-content: space-between;">
+                <span>Práticas de Hoje</span>
+                <span id="praticas-counter" style="font-size:0.7rem; background:rgba(44,37,25,0.1); padding:0.1rem 0.5rem; border-radius:20px; letter-spacing:0; font-weight:700; color:#7d6634;">0/0</span>
+            </h3>
+            <div class="checklist-container" id="checklist-container" role="list"></div>
 
             <section class="add-custom-container">
                 <h3 class="section-title" style="margin: 0 0 0.5rem 0; padding: 0;">Personalizar Rotina</h3>
                 <div class="input-group">
                     <input type="text" class="input-custom" id="input-new-practice" placeholder="Ex: Jejum, Visita ao Santíssimo...">
-                    <button class="btn-add" onclick="adicionarPraticaPersonalizada()">+ Add</button>
+                    <button type="button" class="btn-add" onclick="adicionarPraticaPersonalizada()">+ Add</button>
                 </div>
             </section>
         </div>
 
         <div class="footer-actions">
-            <button class="btn-exame-consciencia" onclick="abrirExameConsciencia()">Exame de Consciência</button>
-            <button class="btn-salvar-tudo" id="btn-save-all" onclick="salvarTudo()">Salvar Práticas</button>
+            <button type="button" class="btn-exame-consciencia" onclick="abrirExameConsciencia()">Exame de Consciência</button>
+            <button type="button" class="btn-salvar-tudo" id="btn-save-all" onclick="salvarTudo()">Salvar Práticas</button>
         </div>
     </div>
 
@@ -710,93 +65,269 @@
                 <button type="button" class="drawer-close" onclick="toggleDrawer(false)" aria-label="Fechar menu">✕</button>
             </div>
 
-            <div class="chart-container">
-                <div class="chart-title" id="chart-title">Desempenho Semanal</div>
-                <div class="chart-grid">
-                    <div class="chart-y-axis">
-                        <span class="chart-y-label">100%</span>
-                        <span class="chart-y-label">75%</span>
-                        <span class="chart-y-label">50%</span>
-                        <span class="chart-y-label">25%</span>
-                        <span class="chart-y-label">0%</span>
+            <!-- Grupo: Meu Progresso -->
+            <div class="drawer-group">
+                <label class="group-label">📈 Meu Progresso</label>
+                <div class="chart-container">
+                    <div class="chart-title" id="chart-title">Desempenho Semanal por Prática</div>
+                    <div class="practice-progress-list" id="practice-progress-list"></div>
+                </div>
+
+                <div class="stats-grid" id="stats-grid">
+                    <div class="stats-card"><div class="stats-card-valor" id="stats-dias-100">—</div><div class="stats-card-label">Dias 100%</div></div>
+                    <div class="stats-card"><div class="stats-card-valor" id="stats-media">—</div><div class="stats-card-label">Média Mensal</div></div>
+                    <div class="stats-card"><div class="stats-card-valor" id="stats-streak">—</div><div class="stats-card-label">Streak Atual</div></div>
+                </div>
+            </div>
+
+            <!-- Grupo: Vida Espiritual -->
+            <div class="drawer-group">
+                <label class="group-label">🕯️ Vida Espiritual</label>
+                <button type="button" class="btn-drawer-item" onclick="abrirDiarioEspiritual()">
+                    <span class="item-icon">📔</span>
+                    <div class="item-text">
+                        <span class="item-title">Diário Espiritual</span>
+                        <span class="item-sub">Notas e calendário de lembretes</span>
                     </div>
-                    <div class="chart-plot">
-                        <div class="chart-grid-lines">
-                            <div class="chart-grid-line"></div>
-                            <div class="chart-grid-line"></div>
-                            <div class="chart-grid-line"></div>
-                            <div class="chart-grid-line"></div>
-                            <div class="chart-grid-line"></div>
+                </button>
+                <button type="button" class="btn-drawer-item" onclick="mostrarMortificacaoDoDia()">
+                    <span class="item-icon">⚔️</span>
+                    <div class="item-text">
+                        <span class="item-title">Mortificação do Dia</span>
+                        <span class="item-sub">Pequenos sacrifícios diários</span>
+                    </div>
+                </button>
+                <button type="button" class="btn-drawer-item" onclick="mostrarFrasesAleatoriasSantos()">
+                    <span class="item-icon">📜</span>
+                    <div class="item-text">
+                        <span class="item-title">Frases dos Santos</span>
+                        <span class="item-sub">Meditações aleatórias</span>
+                    </div>
+                </button>
+            </div>
+
+            <!-- Grupo: Músicas -->
+            <div class="drawer-group">
+                <label class="group-label">🎵 Playlist</label>
+                <button type="button" class="btn-drawer-item" onclick="abrirPlaylists()">
+                    <span class="item-icon">🎵</span>
+                    <div class="item-text">
+                        <span class="item-title">Música</span>
+                        <span class="item-sub">Louvor e cânticos para ouvir</span>
+                    </div>
+                </button>
+                <button type="button" class="btn-drawer-item" onclick="abrirPregacoesPublico()">
+                    <span class="item-icon">🎙️</span>
+                    <div class="item-text">
+                        <span class="item-title">Pregações</span>
+                        <span class="item-sub">Playlists de pregações para ouvir</span>
+                    </div>
+                </button>
+            </div>
+
+            <!-- Grupo: Ferramentas & Agenda -->
+            <div class="drawer-group">
+                <label class="group-label">📅 Ferramentas</label>
+                <details class="drawer-details">
+                    <summary class="btn-drawer-item">
+                        <span class="item-icon">🔔</span>
+                        <div class="item-text">
+                            <span class="item-title">Lembretes & Agenda</span>
+                            <span class="item-sub">Agendar novos compromissos</span>
                         </div>
-                        <div class="chart-bars" id="chart-bars"></div>
-                        <div class="chart-x-labels" id="chart-x-labels"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="report-ranking-box">
-                <h4>Ranking semanal</h4>
-                <div class="ranking-list" id="ranking-list"></div>
-            </div>
-
-            <div class="diario-drawer-card">
-                <label class="section-title" style="margin:0 0 0.5rem 0; display:block;">Diário Espiritual</label>
-                <p>Registre suas reflexões diárias e consulte-as pelo calendário.</p>
-                <button class="btn-diario-abrir" onclick="abrirDiarioEspiritual()">Abrir Diario</button>
-            </div>
-
-            <div style="margin-bottom: 1rem;">
-                <label class="section-title" style="margin:0 0 0.5rem 0; display:block;">⚔️ Mortificação do Dia</label>
-                <div class="input-group" style="flex-direction: column; gap: 0.6rem; margin-bottom: 0.75rem;">
-                    <button type="button" class="btn-salvar-tudo" style="padding: 0.75rem; font-size: 0.9rem;" onclick="mostrarMortificacaoDoDia()">✝️ Ver Mortificação</button>
-                </div>
-            </div>
-
-            <div style="margin-bottom: 1rem;">
-                <label class="section-title" style="margin:0 0 0.5rem 0; display:block;">Frases Dos Santos</label>
-                <div class="input-group" style="flex-direction: column; gap: 0.6rem; margin-bottom: 0.75rem;">
-                    <button class="btn-salvar-tudo" style="padding: 0.75rem; font-size: 0.9rem;" onclick="mostrarFrasesAleatoriasSantos()">Ver Frases</button>
-                </div>
-            </div>
-
-            <div class="agenda-section" id="agenda-section">
-                <div>
-                    <label class="section-title" style="margin:0 0 0.5rem 0; display:block;">+ Criar Lembrete</label>
-                    <div class="input-group" style="flex-direction: column; gap: 0.5rem;">
-                        <input type="text" class="input-custom" id="input-reminder-title" placeholder="Título do compromisso">
-                        <div style="display: flex; gap: 0.5rem; width: 100%;">
-                            <input type="date" class="input-custom" id="input-reminder-date">
-                            <input type="time" class="input-custom" id="input-reminder-time" style="max-width: 100px;">
+                    </summary>
+                    <div class="agenda-section" id="agenda-section" style="padding: 0.5rem 0.2rem 1rem;">
+                        <div class="input-group" style="flex-direction: column; gap: 0.5rem; margin-bottom: 1rem;">
+                            <input type="text" class="input-custom" id="input-reminder-title" placeholder="Título">
+                            <div style="display: flex; gap: 0.5rem; width: 100%;">
+                                <input type="date" class="input-custom" id="input-reminder-date">
+                                <input type="time" class="input-custom" id="input-reminder-time" style="max-width: 90px;">
+                            </div>
+                            <select class="select-custom" id="select-reminder-cat"></select>
+                            <button type="button" class="btn-salvar-tudo" style="padding: 0.6rem; font-size: 0.85rem;" onclick="criarLembrete()">Agendar</button>
                         </div>
-                        <select class="select-custom" id="select-reminder-cat"></select>
-                        <button class="btn-salvar-tudo" style="padding: 0.65rem; font-size: 0.9rem;" onclick="criarLembrete()">Agendar</button>
-                    </div>
-                    <button class="discrete-cat-trigger" onclick="togglePainelCategoriaDiscreta()">⚙️ Configurar Categorias</button>
-                    <div class="discrete-cat-panel" id="discrete-cat-panel">
-                        <div class="input-group">
-                            <input type="text" class="input-custom" style="padding: 0.5rem; width: auto;" id="input-new-cat" placeholder="Nova Categoria">
-                            <button class="btn-add" style="padding: 0 0.5rem; font-size: 0.8rem;" onclick="criarCategoria()">Criar</button>
+
+                        <!-- Configuração de Categorias -->
+                        <button type="button" class="discrete-cat-trigger" onclick="togglePainelCategoriaDiscreta()">⚙️ Configurar Categorias</button>
+                        <div class="discrete-cat-panel" id="discrete-cat-panel" style="display:none; margin-bottom: 1rem;">
+                            <div class="input-group">
+                                <input type="text" class="input-custom" style="padding: 0.5rem; width: auto;" id="input-new-cat" placeholder="Nova">
+                                <button type="button" class="btn-add" style="padding: 0 0.5rem; font-size: 0.8rem;" onclick="criarCategoria()">Criar</button>
+                            </div>
+                            <div class="cat-edit-list" id="cat-edit-list"></div>
                         </div>
-                        <div class="cat-edit-list" id="cat-edit-list"></div>
+
+                        <!-- Filtro por Categoria -->
+                        <div style="margin-top: 0.5rem;">
+                            <label class="section-title" style="margin:0 0 0.5rem 0; font-size: 0.65rem; opacity: 0.7;">Filtrar por Categoria</label>
+                            <div class="filter-container" id="filter-container"></div>
+                        </div>
+
+                        <div id="reminders-list"></div>
                     </div>
-                </div>
-                <div>
-                    <label class="section-title" style="margin:0 0 0.5rem 0; display:block;">Filtrar Compromissos</label>
-                    <div class="filter-container" id="filter-container"></div>
-                </div>
-                <div>
-                    <label class="section-title" style="margin:0 0 0.5rem 0; display:block;">Compromissos Agendados</label>
-                    <div id="reminders-list"></div>
-                </div>
+                </details>
+            </div>
+
+            <!-- Rodapé do drawer -->
+            <div style="margin-top: auto; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.04);">
+                <details class="drawer-details">
+                    <summary class="btn-novidades-discreta">
+                        <span>💾</span>
+                        <span>Backup de Dados</span>
+                    </summary>
+                    <div style="padding-left: 1rem; border-left: 1px solid rgba(255,255,255,0.05); margin-left: 0.5rem; margin-top: 0.2rem; margin-bottom: 0.5rem;">
+                        <button type="button" class="btn-novidades-discreta" onclick="exportarBackup()">
+                            <span>📤</span>
+                            <span>Exportar Arquivo</span>
+                        </button>
+                        <button type="button" class="btn-novidades-discreta" onclick="importarBackup()">
+                            <span>📥</span>
+                            <span>Importar Arquivo</span>
+                        </button>
+                    </div>
+                </details>
+                <input type="file" id="input-backup-file" accept=".json" style="display:none" onchange="processarImportacao(event)">
+
+                <button type="button" class="btn-novidades-discreta" onclick="abrirNovidades()">
+                    <span>📋</span>
+                    <span>Novidades & Atualizações</span>
+                    <span class="novidades-badge" id="novidades-badge" style="display:none;">novo</span>
+                </button>
+                <button type="button" class="btn-novidades-discreta" onclick="abrirFeedback()">
+                    <span>💬</span>
+                    <span>Enviar Feedback</span>
+                </button>
+                <button type="button" class="btn-novidades-discreta" onclick="abrirDoacoes()" style="color: #f9a825;">
+                    <span>🙏</span>
+                    <span>Apoiar o Desenvolvimento</span>
+                </button>
             </div>
         </div>
     </div>
+
+    <!-- Modal de Novidades -->
+    <div class="bottom-sheet-overlay" id="novidades-overlay" onclick="fecharNovidades()">
+        <div class="bottom-sheet" onclick="event.stopPropagation()">
+            <div class="sheet-header">
+                <h2 style="color: var(--accent);">📋 Novidades</h2>
+                <button type="button" class="sheet-close" onclick="fecharNovidades()">✕</button>
+            </div>
+            <div id="novidades-conteudo">
+                <p class="novidades-loading">Carregando atualizações...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Feedback -->
+    <div class="bottom-sheet-overlay" id="feedback-overlay" onclick="fecharFeedback()">
+        <div class="bottom-sheet" onclick="event.stopPropagation()">
+            <div class="sheet-header">
+                <h2 style="color: var(--accent);">💬 Enviar Feedback</h2>
+                <button type="button" class="sheet-close" onclick="fecharFeedback()">✕</button>
+            </div>
+            <p style="font-size:0.82rem; color:var(--text-secondary); margin-bottom:1rem; line-height:1.5;">
+                Sua mensagem vai direto para o desenvolvedor. Sugestões, problemas ou elogios são bem-vindos!
+            </p>
+            <textarea
+                class="feedback-textarea"
+                id="feedback-texto"
+                placeholder="Escreva seu feedback aqui..."
+                maxlength="500"
+                oninput="atualizarContadorFeedback()"
+            ></textarea>
+            <div class="feedback-char-count"><span id="feedback-count">0</span>/500</div>
+            <button type="button" class="btn-salvar-tudo" id="btn-enviar-feedback" style="padding:0.75rem;" onclick="enviarFeedback()">
+                Enviar Feedback
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal de Doações -->
+    <div class="bottom-sheet-overlay" id="doacoes-overlay" onclick="fecharDoacoes()">
+        <div class="bottom-sheet" onclick="event.stopPropagation()">
+            <div class="sheet-header">
+                <h2 style="color: var(--accent);">🙏 Apoiar o Desenvolvimento</h2>
+                <button type="button" class="sheet-close" onclick="fecharDoacoes()">✕</button>
+            </div>
+
+            <p class="doacao-mensagem">
+                O Cuida Ordem é desenvolvido com dedicação e distribuído gratuitamente. Se o app tem sido útil na sua vida espiritual, considere fazer uma contribuição voluntária. Que Deus te abençoe! 🙏
+            </p>
+
+            <div class="doacao-valores">
+                <span class="doacao-valor-chip">R$ 5</span>
+                <span class="doacao-valor-chip">R$ 10</span>
+                <span class="doacao-valor-chip">R$ 20</span>
+                <span class="doacao-valor-chip">R$ 50</span>
+                <span class="doacao-valor-chip">Livre</span>
+            </div>
+
+            <div class="doacao-card">
+                <div class="doacao-pix-label">Chave PIX</div>
+                <div class="doacao-pix-chave" id="pix-chave-texto">cuidarordem@gmail.com</div>
+                <button type="button" class="btn-copiar-pix" id="btn-copiar-pix" onclick="copiarChavePix()">
+                    📋 Copiar Chave PIX
+                </button>
+            </div>
+
+            <p style="font-size:0.7rem; color:var(--text-secondary); text-align:center; line-height:1.5;">
+                Abra o app do seu banco, escolha pagar via PIX e cole a chave acima. Qualquer valor é muito bem-vindo!
+            </p>
+        </div>
+    </div>
+
+    <!-- Onboarding -->
+    <div class="onboarding-overlay" id="onboarding-overlay">
+        <div class="onboarding-sheet">
+            <div style="text-align:center; margin-bottom:0.5rem;">
+                <span style="font-size:2rem;">✦</span>
+                <h2 style="font-size:1.3rem; font-weight:800; color:var(--accent); margin-top:0.3rem;">Bem-vindo ao Cuidar Ordem</h2>
+                <p style="font-size:0.82rem; color:var(--text-secondary); margin-top:0.3rem;">Seu companheiro de vida espiritual</p>
+            </div>
+            <div class="onboarding-steps">
+                <div class="onboarding-step">
+                    <span class="onboarding-step-icon">✅</span>
+                    <div class="onboarding-step-text">
+                        <h4>Práticas Diárias</h4>
+                        <p>Marque suas práticas espirituais do dia e acompanhe seu desempenho semanal.</p>
+                    </div>
+                </div>
+                <div class="onboarding-step">
+                    <span class="onboarding-step-icon">📅</span>
+                    <div class="onboarding-step-text">
+                        <h4>Agenda & Lembretes</h4>
+                        <p>Agende compromissos espirituais com notificações no horário certo.</p>
+                    </div>
+                </div>
+                <div class="onboarding-step">
+                    <span class="onboarding-step-icon">📖</span>
+                    <div class="onboarding-step-text">
+                        <h4>Diário Espiritual</h4>
+                        <p>Registre suas reflexões e acompanhe sua jornada pelo calendário.</p>
+                    </div>
+                </div>
+                <div class="onboarding-step">
+                    <span class="onboarding-step-icon">☰</span>
+                    <div class="onboarding-step-text">
+                        <h4>Menu Lateral</h4>
+                        <p>Acesse o terço, liturgia diária, frases dos santos, mortificações e muito mais.</p>
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn-salvar-tudo" style="width:100%; padding:0.85rem;" onclick="fecharOnboarding()">
+                Começar minha jornada ✦
+            </button>
+        </div>
+    </div>
+
+    <!-- Celebração -->
+    <div class="celebracao-overlay" id="celebracao-overlay" style="display:none;"></div>
 
     <div class="bottom-sheet-overlay" id="sheet-overlay" onclick="fecharDetalhes()">
         <div class="bottom-sheet" onclick="event.stopPropagation()">
             <div class="sheet-header">
                 <h2 id="sheet-title">Detalhes</h2>
-                <button class="sheet-close" onclick="fecharDetalhes()">✕</button>
+                <button type="button" class="sheet-close" onclick="fecharDetalhes()">✕</button>
             </div>
             <div id="sheet-dynamic-content"></div>
             <label class="section-title" style="margin:0">Disposição Interior</label>
@@ -809,15 +340,94 @@
             </div>
             <label class="section-title" style="margin:0">Meditações / Diário Espiritual</label>
             <textarea class="textarea-notes" id="sheet-notes" placeholder="Digite suas reflexões aqui..."></textarea>
-            <button class="btn-sheet-confirm" onclick="confirmarDetalhesPratica()">Confirmar Detalhes</button>
+            <button type="button" class="btn-sheet-confirm" onclick="confirmarDetalhesPratica()">Confirmar Detalhes</button>
+        </div>
+    </div>
+
+    <div class="rosario-reader-overlay" id="rosario-reader-overlay">
+        <div class="rosario-reader-header">
+            <button type="button" class="rosario-reader-close" onclick="fecharTercoGuiado()" aria-label="Fechar">✕</button>
+            <div class="rosario-reader-font-controls">
+                <button type="button" class="prayer-reader-font-btn" onclick="ajustarFonteOracao(-1)" aria-label="Diminuir letra">A-</button>
+                <button type="button" class="prayer-reader-font-btn" onclick="ajustarFonteOracao(1)" aria-label="Aumentar letra">A+</button>
+            </div>
+        </div>
+        <div class="rosario-progress-track"><div class="rosario-progress-fill" id="rosario-progress-fill"></div></div>
+        <div class="rosario-reader-counter" id="rosario-reader-counter"></div>
+        <div class="rosario-reader-body" id="rosario-reader-body"></div>
+        <div class="rosario-reader-nav">
+            <button type="button" class="rosario-reader-nav-btn" id="rosario-reader-prev" onclick="navegarTercoGuiado(-1)">‹ Voltar</button>
+            <button type="button" class="rosario-reader-nav-btn principal" id="rosario-reader-next" onclick="navegarTercoGuiado(1)">Próxima ›</button>
+        </div>
+    </div>
+
+    <div class="admin-overlay" id="admin-login-overlay">
+        <div class="admin-header">
+            <span class="admin-header-title">🔒 Acesso Admin</span>
+            <button type="button" class="admin-close-btn" onclick="fecharLoginAdmin()">✕</button>
+        </div>
+        <div class="admin-body">
+            <div class="admin-login-box">
+                <input type="email" class="input-custom" id="admin-login-email" placeholder="E-mail" autocomplete="username">
+                <input type="password" class="input-custom" id="admin-login-senha" placeholder="Senha" autocomplete="current-password">
+                <button type="button" class="btn-salvar-tudo" style="width:100%;" onclick="fazerLoginAdmin()">Entrar</button>
+                <div class="admin-login-error" id="admin-login-error"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="admin-overlay" id="admin-panel-overlay">
+        <div class="admin-header">
+            <button type="button" class="admin-close-btn" onclick="fecharPainelAdmin()">✕</button>
+            <span class="admin-header-title">🔒 Painel Admin</span>
+            <button type="button" class="admin-logout-btn" onclick="sairAdmin()">Sair</button>
+        </div>
+        <div class="admin-tabs">
+            <button type="button" class="admin-tab-btn" data-tab="avisos" onclick="trocarAbaAdmin('avisos')">Avisos</button>
+            <button type="button" class="admin-tab-btn" data-tab="frases" onclick="trocarAbaAdmin('frases')">Frases dos Santos</button>
+            <button type="button" class="admin-tab-btn" data-tab="mortificacoes" onclick="trocarAbaAdmin('mortificacoes')">Mortificações</button>
+            <button type="button" class="admin-tab-btn" data-tab="pregacoes" onclick="trocarAbaAdmin('pregacoes')">Pregações</button>
+        </div>
+        <div class="admin-body" id="admin-body-content"></div>
+    </div>
+
+    <div class="book-reader-overlay" id="book-reader-overlay">
+        <div class="book-reader-header">
+            <button type="button" class="book-reader-close" onclick="fecharLivroEspiritual()" aria-label="Fechar">✕</button>
+            <div class="book-reader-title" id="book-reader-title"></div>
+            <button type="button" class="book-reader-delete" onclick="deletarLivroAtual()" aria-label="Excluir livro">🗑️</button>
+        </div>
+        <div class="book-reader-body" id="book-reader-body"></div>
+        <div class="book-reader-add">
+            <textarea class="input-custom" id="book-reader-new-quote" placeholder="Adicionar nova frase deste livro..."></textarea>
+            <button class="btn-salvar-tudo" style="width:100%; padding:0.6rem; font-size:0.8rem;" onclick="adicionarFraseAoLivro()">Salvar Frase</button>
+        </div>
+    </div>
+
+    <div class="prayer-reader-overlay" id="prayer-reader-overlay">
+        <div class="prayer-reader-header">
+            <button type="button" class="prayer-reader-close" onclick="fecharOracaoLeitura()" aria-label="Fechar">✕</button>
+            <div class="prayer-reader-font-controls">
+                <button type="button" class="prayer-reader-font-btn" onclick="ajustarFonteOracao(-1)" aria-label="Diminuir letra">A-</button>
+                <button type="button" class="prayer-reader-font-btn" onclick="ajustarFonteOracao(1)" aria-label="Aumentar letra">A+</button>
+            </div>
+        </div>
+        <div class="prayer-reader-counter" id="prayer-reader-counter"></div>
+        <div class="prayer-reader-body" id="prayer-reader-body">
+            <div class="prayer-reader-title" id="prayer-reader-title"></div>
+            <div class="prayer-reader-text" id="prayer-reader-text"></div>
+        </div>
+        <div class="prayer-reader-nav">
+            <button type="button" class="prayer-reader-nav-btn" id="prayer-reader-prev" onclick="navegarOracaoLeitura(-1)">‹ Anterior</button>
+            <button type="button" class="prayer-reader-nav-btn" id="prayer-reader-next" onclick="navegarOracaoLeitura(1)">Próxima ›</button>
         </div>
     </div>
 
     <div class="bottom-sheet-overlay" id="exame-overlay" onclick="fecharExameSemProcessar()">
-        <div class="bottom-sheet" onclick="event.stopPropagation()" style="background-color: #111318;">
+        <div class="bottom-sheet" onclick="event.stopPropagation()">
             <div class="sheet-header">
-                <h2 style="color: #ef4444;">Exame de Consciência</h2>
-                <button class="sheet-close" onclick="fecharExameSemProcessar()">✕</button>
+                <h2 style="color: #7c2d3e;">Exame de Consciência</h2>
+                <button type="button" class="sheet-close" onclick="fecharExameSemProcessar()">✕</button>
             </div>
             
             <div class="exame-aviso-privacidade">
@@ -826,22 +436,23 @@
 
             <div id="exame-perguntas-container" style="max-height: 480px; overflow-y: auto; padding-right: 4px;"></div>
 
-            <button class="btn-salvar-tudo" style="background-color: #ef4444; color: white; margin-top: 1.5rem;" onclick="processarExameVeredicto()">
+            <button type="button" class="btn-salvar-tudo" style="background-color: #7c2d3e; color: white; margin-top: 1.5rem;" onclick="processarExameVeredicto()">
                 Finalizar Exame & Deletar Registro
             </button>
         </div>
     </div>
 
     <div class="bottom-sheet-overlay" id="diario-overlay" onclick="fecharDiarioEspiritual()">
-        <div class="bottom-sheet" onclick="event.stopPropagation()" style="background-color: #14161d;">
+        <div class="bottom-sheet" onclick="event.stopPropagation()">
             <div class="sheet-header">
                 <h2>Diário Espiritual</h2>
-                <button class="sheet-close" onclick="fecharDiarioEspiritual()">✕</button>
+                <button type="button" class="sheet-close" onclick="fecharDiarioEspiritual()">✕</button>
             </div>
 
             <div class="diario-tabs">
                 <button type="button" class="diario-tab active" id="diario-tab-escrever" onclick="alternarAbaDiario('escrever')">✍️ Escrever</button>
                 <button type="button" class="diario-tab" id="diario-tab-calendario" onclick="alternarAbaDiario('calendario')">📅 Calendário</button>
+                <button type="button" class="diario-tab" id="diario-tab-compromissos" onclick="alternarAbaDiario('compromissos')">🔔 Compromissos</button>
             </div>
 
             <div class="diario-painel active" id="diario-painel-escrever">
@@ -850,7 +461,7 @@
                     <button type="button" class="btn-diario-hoje" onclick="irParaHojeDiario()">Ir para hoje</button>
                 </div>
                 <textarea class="textarea-notes" id="diario-texto" style="height: 160px; margin-bottom: 0.75rem;" placeholder="O que Deus falou ao seu coração hoje? Gratidões, luta interior, graças recebidas..."></textarea>
-                <button class="btn-salvar-tudo" style="padding: 0.75rem;" onclick="salvarEntradaDiario()">Salvar anotação do dia</button>
+                <button type="button" class="btn-salvar-tudo" style="padding: 0.75rem;" onclick="salvarEntradaDiario()">Salvar anotação do dia</button>
             </div>
 
             <div class="diario-painel" id="diario-painel-calendario">
@@ -859,21 +470,30 @@
                     <h3 id="diario-mes-titulo">Mês</h3>
                     <button type="button" class="btn-diario-nav" onclick="mudarMesDiario(1)">›</button>
                 </div>
+                <div class="diario-legenda">
+                    <div class="diario-legenda-item"><span class="legenda-dot" style="background:var(--accent)"></span> Anotação</div>
+                    <div class="diario-legenda-item"><span class="legenda-dot" style="background:#60a5fa"></span> Lembrete</div>
+                </div>
                 <div class="calendario-grid" id="diario-calendario-grid"></div>
                 <div class="diario-data-label" style="margin-top: 0;">
                     <span id="diario-data-leitura">Selecione um dia</span>
                     <button type="button" class="btn-diario-hoje" onclick="editarDiaSelecionadoDiario()" id="btn-editar-dia-diario" style="display: none;">Editar</button>
                 </div>
                 <div class="diario-leitura vazio" id="diario-leitura-conteudo">Toque em um dia marcado com ponto dourado para ler sua anotação.</div>
+                <div class="diario-lembretes-dia" id="diario-lembretes-dia" style="display:none;"></div>
+            </div>
+
+            <div class="diario-painel" id="diario-painel-compromissos">
+                <div id="diario-compromissos-list"></div>
             </div>
         </div>
     </div>
 
-    <div class="bottom-sheet-overlay" id="saint-overlay" onclick="fecharResumoSanto()">
+    <div class="bottom-sheet-overlay" id="saint-overlay" onclick="fecharSaintModal()">
         <div class="bottom-sheet" onclick="event.stopPropagation()">
             <div class="sheet-header">
                 <h2 id="saint-sheet-title">Vida do Santo</h2>
-                <button class="sheet-close" onclick="fecharResumoSanto()">✕</button>
+                <button type="button" class="sheet-close" onclick="fecharSaintModal()">✕</button>
             </div>
             <div id="saint-sheet-content" style="font-size: 0.95rem; line-height: 1.6; color: var(--text-primary);"></div>
         </div>
@@ -911,16 +531,6 @@
             const m = String(data.getMonth() + 1).padStart(2, '0');
             const d = String(data.getDate()).padStart(2, '0');
             return `${y}-${m}-${d}`;
-        }
-
-        function interpretarPermissaoNotificacao(perm) {
-            return Boolean(
-                perm?.display === 'granted' ||
-                perm?.granted === true ||
-                perm?.permission === 'granted' ||
-                perm?.ios?.display === 'granted' ||
-                perm?.ios?.granted === true
-            );
         }
 
         const nativeHttpPlugin = (typeof window.Capacitor !== 'undefined' && window.Capacitor.Plugins && window.Capacitor.Plugins.Http)
@@ -1035,6 +645,22 @@
             return (Math.abs(hash) % 2147483646) + 1;
         }
 
+        function toggleTheme() {
+            const body = document.body;
+            const btn = document.getElementById('theme-toggle');
+            const isLight = body.classList.toggle('light-theme');
+            
+            btn.innerText = isLight ? '☀️' : '🌙';
+            localStorage.setItem('cuida_ordem_theme', isLight ? 'light' : 'dark');
+        }
+
+        function carregarTemaPreferido() {
+            const salvo = localStorage.getItem('cuida_ordem_theme');
+            if (salvo === 'light') {
+                toggleTheme();
+            }
+        }
+
         async function agendarLembretesSalvos() {
             const localNotificationsPlugin = getLocalNotificationsPlugin();
             if (!localNotificationsPlugin || !isCapacitorNative()) return;
@@ -1076,7 +702,7 @@
                 await localNotificationsPlugin.schedule({
                     notifications: [{
                         id: extrairNotificacaoId(reminder.id),
-                        title: 'Lembrete Cuida Ordem',
+                        title: 'Lembrete Cuidar Ordem',
                         body: reminder.titulo,
                         schedule: {
                             at: scheduleDate,
@@ -1119,7 +745,8 @@
                 .replace(/&/g, '&amp;')
                 .replace(/</g, '&lt;')
                 .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;');
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
         }
 
         function formatarTextoEvangelho(texto) {
@@ -1438,6 +1065,159 @@
             luminosos: { nome: "Mistérios Luminosos (Quintas)", itens: ["1º Batismo no Jordão", "2º Bodas de Caná", "3º Anúncio do Reino", "4º Transfiguração", "5º Instituição da Eucaristia"] }
         };
 
+        // ── TERÇO GUIADO: textos completos (transcritos do livro "Sem Oração, Não Há Salvação" — Laços de Amor Mariano) ──
+        const ROSARIO_TEXTOS = {
+            sinalCruz: "Pelo sinal da Santa Cruz (†), livrai-nos Deus, nosso Senhor (†), dos nossos inimigos (†). Em nome do Pai, do Filho e do Espírito Santo. Amém.",
+            atoContricao: "Senhor meu Jesus Cristo, Deus e homem verdadeiro, Criador e Redentor meu: por serdes Vós quem sois, sumamente bom e digno de ser amado sobre todas as coisas, e porque Vos amo e estimo, pesa-me, Senhor, de todo o meu coração, de Vos ter ofendido; pesa-me também de ter perdido o céu e merecido o inferno; e proponho firmemente, ajudado com o auxílio de Vossa divina graça, emendar-me e nunca mais Vos tornar a ofender. Espero alcançar o perdão de minhas culpas pela Vossa infinita misericórdia. Amém.",
+            credo: "Creio em Deus Pai todo-poderoso, Criador do céu e da terra. E em Jesus Cristo, seu único Filho, Nosso Senhor, que foi concebido pelo poder do Espírito Santo, nasceu da Virgem Maria, padeceu sob Pôncio Pilatos, foi crucificado, morto e sepultado, desceu à mansão dos mortos, ressuscitou ao terceiro dia, subiu aos céus, está sentado à direita de Deus Pai todo-poderoso, donde há de vir a julgar os vivos e os mortos. Creio no Espírito Santo, na Santa Igreja Católica, na comunhão dos santos, na remissão dos pecados, na ressurreição da carne, na vida eterna. Amém.",
+            invocacaoEspiritoSanto: "Vinde Espírito Santo, vinde por meio da poderosa intercessão do Imaculado Coração de Maria, vossa amadíssima esposa. (3x)",
+            oracaoAnjoFatima: "Oração do Anjo de Fátima:\n\nMeu Deus, eu creio, adoro, espero e amo-Vos.\nPeço-Vos perdão pelos que não creem, não adoram, não esperam e não Vos amam. (3x).\n\nSantíssima Trindade, Pai, Filho, Espírito Santo, adoro-Vos profundamente e ofereço-Vos o preciosíssimo Corpo, Sangue, Alma e Divindade de Jesus Cristo, presente em todos os sacrários da terra, em reparação dos ultrajes, sacrilégios e indiferenças com que Ele mesmo é ofendido. E pelos méritos infinitos do Seu Santíssimo Coração e do Coração Imaculado de Maria, peço-Vos a conversão dos pobres pecadores.",
+            intencoes: [
+                "Em reparação, louvor, honra e glória à Santíssima Trindade.",
+                "Em agradecimento por todos os benefícios recebidos.",
+                "Pelas benditas almas do purgatório.",
+                "Pelo Papa e a Santa Mãe Igreja Católica. Por todos os bispos, sacerdotes religiosos e leigos comprometidos, e especialmente pelo sacerdote que temos decidido rezar.",
+                "Em expiação e reparação de todos os nossos pecados e os do mundo inteiro.",
+                "Pela conversão, cura e libertação dos pecadores e por nosso zelo apostólico.",
+                "Pelos desesperados, agonizantes, encarcerados e enfermos do corpo, alma e mente.",
+                "Para pedir as virtudes de humildade, pureza, obediência, fidelidade, oração, caridade, espírito de sacrifício e penitência.",
+                "Por todos os diretores e futuros diretores do nosso movimento.",
+                "Pela paz do mundo inteiro e em especial do nosso país.",
+                "Por todos os servidores públicos e governantes.",
+                "Para que as ideologias perversas e contrárias à nossa fé católica não entrem no mundo, no nosso país, nem em nossos missionários.",
+                "Pela perseverança daqueles que foram evangelizados por Laços de Amor Mariano, para que o Senhor lhes infunda zelo apostólico e suscite santas vocações.",
+                "Pelas intenções do Imaculado Coração de Maria e súplicas e intenções pessoais."
+            ],
+            paiNosso: "Pai Nosso que estais nos céus, santificado seja o vosso nome. Venha a nós o vosso reino, seja feita a vossa vontade, assim na terra como no céu. O pão nosso de cada dia nos dai hoje, perdoai as nossas ofensas, assim como nós perdoamos a quem nos tem ofendido. E não nos deixeis cair em tentação, mas livrai-nos do mal. Amém.",
+            aveMaria: "Ave Maria, cheia de graça, o Senhor é convosco, bendita sois vós entre as mulheres e bendito é o fruto do vosso ventre, Jesus. Santa Maria, Mãe de Deus, rogai por nós pecadores, agora e na hora de nossa morte. Amém.",
+            gloria: "Glória ao Pai, ao Filho e ao Espírito Santo, como era no princípio, agora e sempre. Amém.",
+            jaculatoriasPosDezena: [
+                "Glória ao Pai, ao Filho e ao Espírito Santo, como era no princípio, agora e sempre, Amém.",
+                "Maria Mãe da graça, Mãe de misericórdia, na vida e na morte amparai-nos nossa Mãe. Graças e louvores se dê a todo o momento, ao Santíssimo e Diviníssimo Sacramento.",
+                "Ó meu Jesus, perdoai-nos e livrai-nos do fogo do inferno, levai as almas todas para o céu e socorrei principalmente as que mais precisarem da vossa misericórdia.",
+                "O Rosário de Maria nos livre de todo mal, louvemos noite e dia a Rainha do Céu. Vinde Divina Vontade, vinde reinar nos corações de Laços de Amor Mariano e nos do mundo inteiro. Amém."
+            ],
+            peloPapa: "Pelo Papa e as indulgências do terço: 1 Pai Nosso, 1 Ave Maria e 1 Glória.",
+            almasPurgatorio: "V. Almas benditas do purgatório, quem as poderá aliviar?\nR. Que Deus as liberte das penas e as leve a descansar.\n\n1 Pai Nosso — 1 Ave Maria\n\nV. Dai-lhes Senhor o descanso eterno.\nR. E que a luz perpétua as ilumine.\nV. Descansem em paz. R. Amém.\n\nQue as almas dos fiéis defuntos pela misericórdia divina descansem em paz. Amém.",
+            salveRainha: "Salve Rainha, Mãe de misericórdia, vida, doçura e esperança nossa, salve! A Vós bradamos os degredados filhos de Eva. A Vós suspiramos, gemendo e chorando neste vale de lágrimas. Eia, pois advogada nossa, esses vossos olhos misericordiosos a nós volvei. E depois deste desterro, mostrai-nos Jesus, bendito fruto de vosso ventre. Ó clemente! Ó piedosa! Ó doce sempre Virgem Maria! Rogai por nós Santa Mãe de Deus. Para que sejamos dignos das promessas de Cristo. Amém.",
+            saoJose: [
+                "São José, que o teu poder se estenda sobre todas as nossas necessidades. Você pode fazer possível o que parece impossível. Protegei com paternal amor todas as nossas famílias e interesses. Amém.",
+                "São José, pai adotivo de Nosso Senhor Jesus Cristo e verdadeiro esposo da Santíssima Virgem Maria, rogai por nós e pelos agonizantes deste dia. Amém.",
+                "São José, varão prudente e justo, intercede por nós diante do Santo dos Santos, a Trindade Santíssima. Amém."
+            ],
+            saoMiguel: "São Miguel Arcanjo, defendei-nos no combate, sede o nosso refúgio contra as maldades e ciladas do demônio. Ordene-lhe Deus, instantemente o pedimos, e vós, príncipe da milícia celeste, pelo poder divino, precipitai no inferno a satanás e a todos os espíritos malignos, que andam pelo mundo para perder as almas. Amém.\n\nSão Miguel Arcanjo, com a tua luz, iluminai-nos.\nSão Miguel Arcanjo, com tuas asas, protegei-nos.\nSão Miguel Arcanjo, com a tua espada, defendei-nos.",
+            anjoDaGuarda: "Santo anjo do Senhor, meu zeloso guardador, se a ti me confiou a piedade divina. Sempre me rege, me guarde, me governe, me ilumine. Amém.",
+            bencaoFinal: "Convosco vou Virgem pura, e em vosso poder vou confiante, pois indo de ti amparado, minha alma estará segura. Doce Mãe, não fique distante, seu olhar de mim não tire. Venha comigo em todas as partes e nunca me deixe sozinho. E assim que me proteges tanto, como uma Mãe real, faz que me abençoe: o Pai, o Filho e o Espírito Santo. Amém."
+        };
+
+        function gerarPassosDoTerco() {
+            const mist = obterMisterioDoDia();
+            const passos = [];
+
+            passos.push({ badge: 'Início', titulo: 'Sinal da Cruz', texto: ROSARIO_TEXTOS.sinalCruz });
+            passos.push({ badge: 'Início', titulo: 'Ato de Contrição', texto: ROSARIO_TEXTOS.atoContricao });
+            passos.push({ badge: 'Início', titulo: 'Credo', texto: ROSARIO_TEXTOS.credo });
+            passos.push({ badge: 'Início', titulo: 'Intenções do Terço', lista: ROSARIO_TEXTOS.intencoes });
+            passos.push({ badge: 'Início', titulo: 'Oração do Anjo de Fátima', texto: ROSARIO_TEXTOS.oracaoAnjoFatima });
+            passos.push({ badge: 'Início', titulo: 'Invocação ao Espírito Santo (3x)', texto: ROSARIO_TEXTOS.invocacaoEspiritoSanto });
+
+            mist.itens.forEach((misterioTexto, idxMisterio) => {
+                const nomeMisterio = misterioTexto.replace(/^\d+º\s*/, '');
+                passos.push({ badge: `${idxMisterio + 1}º Mistério`, titulo: nomeMisterio, texto: "Contemple este mistério e prossiga com um Pai Nosso e dez Ave-Marias.", ehMisterio: true });
+                passos.push({ badge: 'Conta Grande', titulo: 'Pai Nosso', texto: ROSARIO_TEXTOS.paiNosso });
+                for (let i = 1; i <= 10; i++) {
+                    passos.push({ badge: `Ave Maria ${i} de 10`, titulo: `${idxMisterio + 1}ª Dezena`, texto: ROSARIO_TEXTOS.aveMaria });
+                }
+                passos.push({ badge: 'Ao final da dezena', titulo: 'Jaculatórias', lista: ROSARIO_TEXTOS.jaculatoriasPosDezena });
+            });
+
+            passos.push({ badge: 'Encerramento', titulo: 'Pelo Papa e as Indulgências do Terço', texto: ROSARIO_TEXTOS.peloPapa });
+            passos.push({ badge: 'Encerramento', titulo: 'Pelas Almas do Purgatório', texto: ROSARIO_TEXTOS.almasPurgatorio });
+            passos.push({ badge: 'Encerramento', titulo: 'Salve Rainha', texto: ROSARIO_TEXTOS.salveRainha });
+            ROSARIO_TEXTOS.saoJose.forEach(texto => {
+                passos.push({ badge: 'Outras Orações', titulo: 'São José', texto });
+            });
+            passos.push({ badge: 'Outras Orações', titulo: 'São Miguel Arcanjo', texto: ROSARIO_TEXTOS.saoMiguel });
+            passos.push({ badge: 'Outras Orações', titulo: 'Anjo da Guarda', texto: ROSARIO_TEXTOS.anjoDaGuarda });
+            passos.push({ badge: 'Bênção Final', titulo: 'Bênção', texto: ROSARIO_TEXTOS.bencaoFinal });
+
+            return passos;
+        }
+
+        let passosTercoAtual = [];
+        let passoTercoIndex = 0;
+
+        function iniciarTercoGuiado() {
+            passosTercoAtual = gerarPassosDoTerco();
+            passoTercoIndex = 0;
+            aplicarFonteOracao(obterFonteOracaoSalva());
+            renderizarPassoTerco();
+            document.getElementById('rosario-reader-overlay').classList.add('active');
+        }
+
+        function fecharTercoGuiado() {
+            document.getElementById('rosario-reader-overlay').classList.remove('active');
+        }
+
+        function renderizarPassoTerco() {
+            const total = passosTercoAtual.length;
+            const passo = passosTercoAtual[passoTercoIndex];
+            const corpo = document.getElementById('rosario-reader-body');
+
+            if (!passo) {
+                corpo.innerHTML = `
+                    <div class="rosario-reader-concluido">
+                        <div class="rosario-reader-concluido-icone">🙏</div>
+                        <div class="rosario-reader-title" style="margin-bottom:0.5rem;">Terço concluído!</div>
+                        <p class="rosario-reader-text" style="font-size:0.9rem;">Que Nossa Senhora interceda por todas as suas intenções.</p>
+                    </div>
+                `;
+                document.getElementById('rosario-reader-counter').innerText = `Concluído — ${total} de ${total}`;
+                document.getElementById('rosario-progress-fill').style.width = '100%';
+                document.getElementById('rosario-reader-prev').disabled = false;
+                const btnNext = document.getElementById('rosario-reader-next');
+                btnNext.innerText = 'Concluir ✓';
+                btnNext.onclick = concluirTercoGuiado;
+                return;
+            }
+
+            document.getElementById('rosario-reader-counter').innerText = `Passo ${passoTercoIndex + 1} de ${total}`;
+            document.getElementById('rosario-progress-fill').style.width = `${Math.round(((passoTercoIndex + 1) / total) * 100)}%`;
+
+            const conteudoTexto = passo.lista
+                ? `<ul>${passo.lista.map(item => `<li>${escaparHtml(item)}</li>`).join('')}</ul>`
+                : escaparHtml(passo.texto || '').replace(/\n/g, '<br><br>');
+
+            corpo.innerHTML = `
+                <div class="rosario-reader-badge">${escaparHtml(passo.badge)}</div>
+                <div class="rosario-reader-title">${escaparHtml(passo.titulo)}</div>
+                <div class="rosario-reader-text">${conteudoTexto}</div>
+            `;
+
+            const btnPrev = document.getElementById('rosario-reader-prev');
+            const btnNext = document.getElementById('rosario-reader-next');
+            btnPrev.disabled = passoTercoIndex === 0;
+            btnNext.disabled = false;
+            btnNext.innerText = (passoTercoIndex === total - 1) ? 'Finalizar ›' : 'Próxima ›';
+            btnNext.onclick = () => navegarTercoGuiado(1);
+        }
+
+        function navegarTercoGuiado(delta) {
+            const novoIndex = passoTercoIndex + delta;
+            if (novoIndex < 0 || novoIndex > passosTercoAtual.length) return;
+            passoTercoIndex = novoIndex;
+            renderizarPassoTerco();
+        }
+
+        function concluirTercoGuiado() {
+            const pratica = praticasDoDia.find(p => p.id === 'terco');
+            if (pratica && !pratica.feita) {
+                alternarStatusPratica('terco');
+            }
+            fecharTercoGuiado();
+            fecharDetalhes();
+        }
+
         const perguntasExamePecados = {
             Soberba: [
                 "Hoje procurei me colocar acima dos outros ou me senti melhor por ter certas qualidades?",
@@ -1520,8 +1300,8 @@
                     <div class="exame-pecado-titulo">${questaoAtual.pecado} · Pergunta ${progresso} de ${total}</div>
                     <p class="exame-pergunta-texto">${questaoAtual.pergunta}</p>
                     <div class="exame-respostas">
-                        <button class="exame-resposta-btn sim" onclick="registrarRespostaExame(true)">SIM</button>
-                        <button class="exame-resposta-btn nao" onclick="registrarRespostaExame(false)">NÃO</button>
+                        <button type="button" class="exame-resposta-btn sim" onclick="registrarRespostaExame(true)">SIM</button>
+                        <button type="button" class="exame-resposta-btn nao" onclick="registrarRespostaExame(false)">NÃO</button>
                     </div>
                 </div>
             `;
@@ -1596,6 +1376,8 @@
         let historicoSemanal = {};
         let historicoDetalhado = {};
         let diarioEspiritual = {};
+        let bibliotecaEspiritual = [];
+        let meusLivrosEspirituais = [];
         let diarioDiaAtivo = '';
         let diarioMesVisualizado = new Date();
         let diarioDiaSelecionadoCalendario = null;
@@ -1617,6 +1399,8 @@
             localStorage.setItem('cuida_ordem_historico', JSON.stringify(historicoSemanal));
             localStorage.setItem('cuida_ordem_historico_detalhado', JSON.stringify(historicoDetalhado));
             localStorage.setItem('cuida_ordem_diario', JSON.stringify(diarioEspiritual));
+            localStorage.setItem('cuida_ordem_biblioteca', JSON.stringify(bibliotecaEspiritual));
+            localStorage.setItem('cuida_ordem_livros', JSON.stringify(meusLivrosEspirituais));
             localStorage.setItem('cuida_ordem_praticas_date', hoje);
             localStorage.setItem('cuida_ordem_last_date', hoje);
         }
@@ -1686,6 +1470,8 @@
                 const hist = localStorage.getItem('cuida_ordem_historico');
                 const histDet = localStorage.getItem('cuida_ordem_historico_detalhado');
                 const diario = localStorage.getItem('cuida_ordem_diario');
+                const bib = localStorage.getItem('cuida_ordem_biblioteca');
+                const livros = localStorage.getItem('cuida_ordem_livros');
                 
                 if (salvas) praticasDoDia = JSON.parse(salvas);
                 if (lemb) lembretes = JSON.parse(lemb);
@@ -1693,6 +1479,14 @@
                 if (hist) historicoSemanal = JSON.parse(hist);
                 if (histDet) historicoDetalhado = JSON.parse(histDet);
                 if (diario) diarioEspiritual = JSON.parse(diario);
+                if (bib) {
+                    bibliotecaEspiritual = JSON.parse(bib);
+                    // Migração: Se houver frases mas não houver lista de livros, popula a lista
+                    if (!livros) {
+                        meusLivrosEspirituais = [...new Set(bibliotecaEspiritual.map(i => i.livro))];
+                    }
+                }
+                if (livros) meusLivrosEspirituais = JSON.parse(livros);
             } catch (e) {
                 console.warn('Erro ao carregar dados do dispositivo. Dados podem estar corrompidos.', e);
             }
@@ -1756,66 +1550,37 @@
         }
 
         function renderizarDesempenhoSemanal() {
-            const hojeStr = formatarDataLocal(new Date());
-            const hojePct = historicoSemanal[hojeStr] ?? 0;
+            const listaContainer = document.getElementById('practice-progress-list');
+            if (listaContainer) {
+                const desempenhos = praticasDoDia.map(pratica => ({
+                    ...pratica,
+                    percentual: calcularTaxaConclusao7Dias(pratica.id)
+                }));
 
-            const titulo = document.getElementById('chart-title');
-            if (titulo) titulo.innerText = `Desempenho Semanal · Hoje ${hojePct}%`;
-
-            const barras = document.getElementById('chart-bars');
-            const xLabels = document.getElementById('chart-x-labels');
-            if (barras) {
-                const dias = obterDiasSemanaAtual();
-                barras.innerHTML = dias.map(({ data, label }) => {
-                    const valor = historicoSemanal[data] ?? 0;
-                    const ehHoje = data === hojeStr;
-                    const destaque = ehHoje ? ' chart-bar-hoje' : '';
-                    return `
-                        <div class="chart-bar-wrapper">
-                            <span class="chart-bar-pct">${valor > 0 ? valor + '%' : ''}</span>
-                            <div class="chart-bar-track">
-                                <div class="chart-bar-fill${destaque}${valor === 0 ? ' vazio' : ''}" data-altura="${valor === 0 ? 3 : valor}"></div>
+                listaContainer.innerHTML = desempenhos.length
+                    ? desempenhos.map(pratica => `
+                        <div class="practice-progress-item">
+                            <div class="practice-progress-header">
+                                <span class="practice-progress-name">${obterNomeExibicaoRanking(pratica)}</span>
+                                <span class="practice-progress-pct">${pratica.percentual}%</span>
+                            </div>
+                            <div class="practice-progress-track">
+                                <div class="practice-progress-fill" data-largura="${pratica.percentual}"></div>
                             </div>
                         </div>
-                    `;
-                }).join('');
-                if (xLabels) {
-                    xLabels.innerHTML = dias.map(({ data, label }) => {
-                        const ehHoje = data === hojeStr;
-                        return `<span class="chart-label${ehHoje ? ' chart-label-hoje' : ''}">${label}</span>`;
-                    }).join('');
-                }
-                animarBarrasDesempenho();
-            }
-
-            const rankingContainer = document.getElementById('ranking-list');
-            if (rankingContainer) {
-                const ranking = [...praticasDoDia]
-                    .map(pratica => ({
-                        ...pratica,
-                        percentual: calcularTaxaConclusao7Dias(pratica.id)
-                    }))
-                    .sort((a, b) => b.percentual - a.percentual || b.nome.localeCompare(a.nome))
-                    .slice(0, 4);
-
-                const medalhas = ['🥇', '🥈', '🥉', '🏅'];
-                rankingContainer.innerHTML = ranking.length
-                    ? ranking.map((pratica, index) => `
-                        <div class="ranking-item">
-                            <span class="ranking-name">${medalhas[index] || '🏅'} ${obterNomeExibicaoRanking(pratica)}</span>
-                            <span class="ranking-pct">${pratica.percentual}%</span>
-                        </div>
                     `).join('')
-                    : '<p style="font-size:0.8rem;color:var(--text-secondary);">Marque práticas para ver o ranking.</p>';
+                    : '<p style="font-size:0.8rem;color:var(--text-secondary);">Marque práticas para ver seu desempenho semanal.</p>';
+
+                animarBarrasDesempenho();
             }
         }
 
         function animarBarrasDesempenho() {
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
-                    document.querySelectorAll('#chart-bars .chart-bar-fill').forEach(barra => {
-                        const altura = Math.min(100, Math.max(0, parseInt(barra.dataset.altura, 10) || 0));
-                        barra.style.height = altura > 0 ? `${altura}%` : '0';
+                    document.querySelectorAll('#practice-progress-list .practice-progress-fill').forEach(barra => {
+                        const largura = Math.min(100, Math.max(0, parseInt(barra.dataset.largura, 10) || 0));
+                        barra.style.width = `${largura}%`;
                     });
                 });
             });
@@ -1828,6 +1593,7 @@
 
         async function inicializarApp() {
             carregarDoDispositivo();
+            carregarTemaPreferido();
             const hoje = new Date();
             document.getElementById('current-date').innerText = hoje.toLocaleDateString('pt-BR');
             const dadosFrase = frasesEspirituaisTop[hoje.getDay() % frasesEspirituaisTop.length];
@@ -1842,6 +1608,9 @@
 
             inicializarNotificacoesNativas();
             carregarLiturgiaDoDia();
+            setTimeout(verificarAvisosNaoLidos, 2500);
+            atualizarStreakBanner();
+            verificarOnboarding();
 
             document.addEventListener('visibilitychange', () => {
                 if (document.visibilityState === 'visible') verificarViradaDoDia(true);
@@ -1866,12 +1635,35 @@
                         <div class="practice-text-container"><span class="checkbox-text">${escaparHtml(pratica.nome)}</span>${estrelasHTML}</div>
                     </div>
                     <div class="practice-actions">
-                        <button class="details-trigger" onclick="abrirDetalhes('${pratica.id}')">${(pratica.estrelas > 0 || pratica.notas) ? '📝' : '⚙️'}</button>
+                        <button type="button" class="details-trigger" onclick="abrirDetalhes('${pratica.id}')">${(pratica.estrelas > 0 || pratica.notas) ? '📝' : '⚙️'}</button>
                         ${botaoDeletarHTML}
                     </div>
                 `;
                 container.appendChild(itemDiv);
             });
+
+            // Atualiza contador de progresso
+            const counter = document.getElementById('praticas-counter');
+            if (counter) {
+                const total = praticasDoDia.length;
+                const feitas = praticasDoDia.filter(p => p.feita).length;
+                counter.textContent = `${feitas}/${total}`;
+                const completo = feitas === total && total > 0;
+                counter.style.color = completo ? '#10b981' : '#7d6634';
+                counter.style.background = completo ? 'rgba(16,185,129,0.15)' : 'rgba(44,37,25,0.1)';
+
+                // Dispara celebração quando completa todas pela primeira vez
+                if (completo) {
+                    const hoje = formatarDataLocal(new Date());
+                    const chave = `cuida_ordem_celebrado_${hoje}`;
+                    if (!localStorage.getItem(chave)) {
+                        localStorage.setItem(chave, '1');
+                        setTimeout(dispararCelebracao, 300);
+                    }
+                    atualizarStreakBanner();
+                }
+            }
+
             salvarNoDispositivo();
         }
 
@@ -1951,9 +1743,12 @@
         function alternarAbaDiario(aba) {
             document.getElementById('diario-tab-escrever').classList.toggle('active', aba === 'escrever');
             document.getElementById('diario-tab-calendario').classList.toggle('active', aba === 'calendario');
+            document.getElementById('diario-tab-compromissos').classList.toggle('active', aba === 'compromissos');
             document.getElementById('diario-painel-escrever').classList.toggle('active', aba === 'escrever');
             document.getElementById('diario-painel-calendario').classList.toggle('active', aba === 'calendario');
+            document.getElementById('diario-painel-compromissos').classList.toggle('active', aba === 'compromissos');
             if (aba === 'calendario') renderizarCalendarioDiario();
+            if (aba === 'compromissos') renderizarCompromissosDiario();
         }
 
         function irParaHojeDiario() {
@@ -1998,6 +1793,52 @@
             renderizarCalendarioDiario();
         }
 
+        function renderizarCompromissosDiario() {
+            const c = document.getElementById('diario-compromissos-list');
+            if (!c) return;
+
+            if (lembretes.length === 0) {
+                c.innerHTML = '<p style="font-size:0.85rem; color:var(--text-secondary); text-align:center; padding:2rem 1rem;">Nenhum compromisso agendado.</p>';
+                return;
+            }
+
+            // Agrupar por data
+            const agrupados = {};
+            [...lembretes]
+                .sort((a, b) => a.data.localeCompare(b.data) || a.hora.localeCompare(b.hora))
+                .forEach(l => {
+                    if (!agrupados[l.data]) agrupados[l.data] = [];
+                    agrupados[l.data].push(l);
+                });
+
+            const hojeStr = formatarDataLocal(new Date());
+
+            c.innerHTML = Object.entries(agrupados).map(([data, itens]) => {
+                const [ano, mes, dia] = data.split('-');
+                const dataObj = new Date(Number(ano), Number(mes) - 1, Number(dia));
+                const nomeDia = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'][dataObj.getDay()];
+                const isHoje = data === hojeStr;
+                const isPast = data < hojeStr;
+
+                return `
+                    <div style="margin-bottom:1rem;">
+                        <div style="font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:1px;
+                            color:${isHoje ? 'var(--accent)' : isPast ? 'rgba(255,255,255,0.25)' : 'var(--text-secondary)'};
+                            margin-bottom:0.4rem; display:flex; align-items:center; gap:0.4rem;">
+                            ${isHoje ? '● ' : ''}${nomeDia}, ${dia}/${mes}/${ano}${isHoje ? ' — Hoje' : ''}
+                        </div>
+                        ${itens.map(l => `
+                            <div class="diario-lembrete-item" style="${isPast ? 'opacity:0.45;' : ''}">
+                                <span class="diario-lembrete-hora">🕐 ${l.hora}</span>
+                                <span class="diario-lembrete-titulo">${escaparHtml(l.titulo)}</span>
+                                <span class="diario-lembrete-tag">${escaparHtml(l.categoria)}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }).join('');
+        }
+
         function renderizarCalendarioDiario() {
             const grid = document.getElementById('diario-calendario-grid');
             const titulo = document.getElementById('diario-mes-titulo');
@@ -2020,6 +1861,8 @@
                 const dataStr = formatarDataLocal(new Date(ano, mes, dia));
                 const classes = ['calendario-dia'];
                 if (temEntradaDiario(dataStr)) classes.push('com-entrada');
+                const temLembrete = lembretes.some(l => l.data === dataStr);
+                if (temLembrete) classes.push('com-lembrete');
                 if (dataStr === hojeStr) classes.push('hoje');
                 if (dataStr === diarioDiaSelecionadoCalendario) classes.push('selecionado');
                 html += `<div class="${classes.join(' ')}" onclick="selecionarDiaDiario('${dataStr}')">${dia}</div>`;
@@ -2037,6 +1880,7 @@
             const label = document.getElementById('diario-data-leitura');
             const conteudo = document.getElementById('diario-leitura-conteudo');
             const btnEditar = document.getElementById('btn-editar-dia-diario');
+            const lembretesDia = document.getElementById('diario-lembretes-dia');
             if (!label || !conteudo) return;
 
             label.innerText = formatarDataDiarioLegivel(dataStr);
@@ -2049,6 +1893,25 @@
                 conteudo.classList.add('vazio');
                 conteudo.innerText = 'Nenhuma anotação neste dia. Use "Editar" para escrever.';
                 if (btnEditar) btnEditar.style.display = 'inline';
+            }
+
+            // Exibir lembretes do dia selecionado
+            if (lembretesDia) {
+                const lembretesNoDia = lembretes.filter(l => l.data === dataStr);
+                if (lembretesNoDia.length > 0) {
+                    lembretesNoDia.sort((a, b) => a.hora.localeCompare(b.hora));
+                    lembretesDia.style.display = 'flex';
+                    lembretesDia.innerHTML = lembretesNoDia.map(l => `
+                        <div class="diario-lembrete-item">
+                            <span class="diario-lembrete-hora">🕐 ${l.hora}</span>
+                            <span class="diario-lembrete-titulo">${escaparHtml(l.titulo)}</span>
+                            <span class="diario-lembrete-tag">${escaparHtml(l.categoria)}</span>
+                        </div>
+                    `).join('');
+                } else {
+                    lembretesDia.style.display = 'none';
+                    lembretesDia.innerHTML = '';
+                }
             }
         }
 
@@ -2065,6 +1928,8 @@
             const drawer = document.getElementById('drawer-overlay');
             if (abrir) {
                 renderizarDesempenhoSemanal();
+                atualizarComponentesAgenda();
+                atualizarEstatisticasMensais();
                 drawer.style.display = 'flex';
                 setTimeout(() => {
                     drawer.classList.add('active');
@@ -2149,12 +2014,213 @@
             lembretes.forEach(l => {
                 if (l.data === dt && l.hora === hr && !l.notificado) {
                     l.notificado = true; salvarNoDispositivo();
-                    new Notification(`Cuida Ordem`, { body: `Hora de: ${l.titulo}` });
+                    new Notification(`Cuidar Ordem`, { body: `Hora de: ${l.titulo}` });
                 }
             });
         }
 
         /* DETALHES DINÂMICOS */
+        const oracoesDoConsagrado = [
+            {
+                titulo: "Para Pedir o Amor de Jesus Cristo",
+                corpo: `
+                    <p>"Não espere alcançar misericórdia de Deus quem ofende a sua Mãe bendita". Para alcançar da tua misericórdia uma verdadeira devoção para tua Santíssima Mãe e difundir essa devoção por toda a Terra, concede-me amar-te ardentemente e aceita para isso a súplica inflamada que te dirijo como Santo Agostinho e teus verdadeiros amigos:</p>
+                    <p>"Tu és, ó Cristo, meu Pai Santo, meu Deus Misericordioso, meu Rei Poderoso, meu Bom Pastor, meu Único Mestre, minha Melhor Ajuda, meu Amado Formosíssimo, meu Pão Vivo, meu Sacerdote pela Eternidade, meu Guia para Pátria, minha Luz Verdadeira, minha Doçura Santa, meu Caminho Reto, minha Sabedoria Preclara, minha Humilde Simplicidade, minha Concórdia Pacífica, minha Proteção Total, minha Rica Herança, minha Salvação Eterna...</p>
+                    <p>Cristo Jesus, Senhor amabilíssimo! Por que terei desejado durante a vida algo fora de Ti, meu Jesus e meu Deus? Aonde me achava quando não pensava em Ti? Desejos todos de meu coração, inflamem-se e transbordem-se desde agora para o Senhor Jesus; corram que muitos têm se retrasado, apressem-se para a meta, busquem a quem busca.</p>
+                    <p>Ó Jesus! Anátema quem não te ame! Transborde de amargura quem não te queira! Doce Jesus, te todo bom coração disposto ao louvor, te deleite em Ti, se admire ante a Ti! Deus de meu coração! Desfaleça o bater do meu coração! Vive Senhor em mim, acenda-se em meu peito a viva chama do teu amor, converta-se em incêndio, arda sempre no altar do meu coração, queime em minhas entranhas, incendeie o íntimo da minha alma e que no dia da minha morte compareça eu consumado em tua presença. Amém".</p>
+                `
+            },
+            {
+                titulo: "Consagração de Si Mesmo a Jesus Cristo Sabedoria Encarnada por Meio de Maria",
+                corpo: `
+                    <p>Ó Jesus! Sabedoria eterna e encarnada, adoro-vos na glória do Pai, durante a eternidade e no seio virginal de Maria no tempo de vossa Encarnação.</p>
+                    <p>Vos agradeço por ter vindo ao mundo – homem entre os homens e servidor do Pai – para libertar-me da escravidão do pecado.</p>
+                    <p>Vos louvo e glorifico por terdes vivido em obediência amorosa à Maria, para tornar-me fiel discípulo vosso.</p>
+                    <p>Desgraçadamente não tenho guardado as promessas e compromissos do meu batismo, não mereço ser chamado filho de Deus.</p>
+                    <p>É por esta razão que recorro à misericordiosa intercessão de vossa Mãe, esperando obter por sua ajuda o perdão dos meus pecados e uma contínua união convosco, Sabedoria Encarnada.</p>
+                    <p>Saúdo-vos, pois, ó Maria Imaculada, templo vivente de Deus: Em vós colocou sua morada a Sabedoria Eterna, para receber a adoração dos anjos e dos homens. Saúdo-vos, ó Rainha do Céu e da Terra, a vós estão sujeitas todas as criaturas. Saúdo-vos, refúgio seguro dos pecadores, todos experimentam tua grande misericórdia.</p>
+                    <p>Aceita os desejos que tenho da Divina Sabedoria e minha consagração total: Consciente da minha vocação Cristã, renovo hoje, em vossas mãos, meus compromissos batismais.</p>
+                    <p>Renuncio a Satanás, a suas pompas e suas obras e me consagro a Jesus Cristo para levar minha cruz com Ele, na fidelidade de cada dia à vontade do Pai.</p>
+                    <p>Em presença de toda a Igreja, reconheço-vos agora por minha Mãe e Soberana. Entrego-vos e consagro minha pessoa, minha vida e o valor de minhas boas obras passadas, presentes e futuras. Dispõe de mim e de tudo que me pertence para a maior glória de Deus no tempo e na eternidade.</p>
+                    <p>Mãe do Senhor, aceita minha oblação e apresenta-a a vosso Filho; se Ele me redimiu com vossa colaboração, deve também agora receber da vossa mão o dom total de mim mesmo. Que eu viva plenamente esta consagração para prolongar em mim a amorosa obediência de vosso Filho e dar resposta vital à missão que Deus vos confiou na história da salvação.</p>
+                    <p>Mãe de misericórdia, alcança-me a verdadeira sabedoria de Deus e faze-me plenamente disponível a vossa ação maternal.</p>
+                    <p>Ó Virgem fiel, tornai-me um autêntico discípulo de vosso Filho, a Sabedoria Encarnada. Convosco, Mãe e modelo da minha vida, chegarei à perfeita maturidade de Jesus Cristo, na terra, e a glória do Céu. Amém.</p>
+                `
+            },
+            {
+                titulo: "Oração de Confiança",
+                corpo: `
+                    <p>Aceita querida Mãe e Rainha minha, toda minha pessoa e quanto com a graça do teu querido Filho consegui fazer de bom.</p>
+                    <p>Eu mesmo não sou capaz de conservá-lo, dadas as minhas debilidades e inconstância, e a forma que me combatem continuamente meus inimigos espirituais!</p>
+                    <p>Vejo todos os dias cair por terra os cedros do Líbano, e se converter em aves noturnas as águias que voavam em torno do sol.</p>
+                    <p>Mil justos caem à minha esquerda, dez mil à minha direita... (Sal. 91,7). Mas eu confio em ti, minha poderosa e mais que poderosa Mãe:</p>
+                    <p>Segura-me, que não caia; conserva meus bens, que não me saqueiem; protege em mim a vida divina.</p>
+                    <p>Defende quem a ti se tem consagrado! Eu te conheço bem e em ti confio: és a Virgem fiel a Deus e aos homens, que não deixas perder nada de quanto a ti se confia; és a Virgem poderosa: ninguém poderá fazer-te dano nem prejudicar tampouco aos que tu amas. Amém.</p>
+                `
+            },
+            {
+                titulo: "Oração a Jesus Cristo",
+                corpo: `
+                    <p>Obrigado Senhor Jesus Cristo por ter me concedido a graça de me consagrar a Maria.</p>
+                    <p>Ela será meu socorro que, levantando-me da minha própria miséria, me introduzirá mais e mais profundamente na tua amizade.</p>
+                    <p>Ai, Senhor, débil como sou, sem ela já teria naufragado em meus pecados. Sim, Maria me faz falta ante a Ti e em todas as partes.</p>
+                    <p>Com ela, então, me livrarei do pecado e de suas consequências e poderei dialogar contigo e te agradar em tudo. Aceitar radicalmente teu Evangelho, irradiar teu amor e salvação aos meus irmãos. Como quisera, ó Jesus, publicar ante todas as criaturas tua grande misericórdia a meu favor! E fazer que todo mundo reconheça, que a não ser por Maria, faz tempo estaria eu condenado e te agradecer dignamente este favor!</p>
+                    <p>Maria está comigo! Que tesouro tão precioso! Que alegria tão imensa!</p>
+                    <p>Mas Senhor, amor com amor se paga: que ingratidão a minha se não me consagrar a Ela totalmente.</p>
+                    <p>Salvador meu amabilíssimo, antes morrer que viver sem Ela, mil e mil vezes como João ante a Cruz (Jo 19, 27) tenho aceitado a Maria como teu dom mais precioso e quantas vezes tenho me consagrado a Ela, mas ainda com tanta imperfeição!</p>
+                    <p>Por isso quero agora, com a maturidade e disponibilidade que esperas de mim, consagrar-me a Ela novamente.</p>
+                    <p>Arranca de meu ser quanto não pertença a tão Augusta Rainha, pois se não é digno dela tampouco é digno de Ti! Amém.</p>
+                `
+            },
+            {
+                titulo: "Ao Espírito Santo",
+                corpo: `
+                    <p>Ó Espírito Santo, ajuda-me a cumprir meus compromissos, concede-me todas as graças; planta e cultiva em mim a árvore da vida verdadeira, que é a amabilíssima Maria, para que cresça e dê flores e frutos abundantes.</p>
+                    <p>Ó Espírito Santo, concede-me amar e venerar a Maria, tua esposa fidelíssima, apoiar-me em seu amparo maternal e recorrer a Ela confiadamente em toda circunstância. Forma com ela em mim a Jesus Cristo, até a plena maturidade espiritual (Ef. 4,13). Amém.</p>
+                `
+            },
+            {
+                titulo: "Para Maria",
+                corpo: `
+                    <p>Ó Maria, filha predileta do Pai, Mãe Admirável do Filho, Esposa Fidelíssima do Espírito Santo!</p>
+                    <p>Tu és minha Mãe espiritual, minha admirável mestra e soberana, meu gozo, minha coroa, meu coração e minha alma.</p>
+                    <p>Tu és toda minha por bondade do Senhor e eu te pertenço por justiça.</p>
+                    <p>Mas, ainda não sou teu quanto devo: Por isso hoje me consagro a Ti em disponibilidade plena e eterna, comprometendo-me a arrancar de mim tudo o que desagrade a meu Deus e a plantar, levantar e produzir tudo o que Tu quiseres.</p>
+                    <p>Que a luz da tua fé dissipe as trevas do meu espírito, que tua humildade profunda substitua meu orgulho, que tua contemplação contenha minha louca fantasia, que tua visão não interrompida de Deus encha com sua presença minha memória, que o fogo da tua ardente caridade incendeie a tibieza e frieza do meu peito, que meus pecados cedam passo a tuas virtudes e o fulgor da tua graça me acompanhe ao encontro com Deus.</p>
+                    <p>Minha Mãe amabilíssima, alcança-me a graça de não ter mais espírito que o teu para conhecer a Jesus e seu Evangelho; mais alma que a tua para louvar e glorificar ao Senhor; mais coração que o teu para amar a Deus como tu o amas.</p>
+                    <p>Não te peço visões, nem revelações, nem gostos, nem consolos ainda espirituais.</p>
+                    <p>Para ti, o ver claro sem trevas nem dúvidas; para ti, o saborear o gozo pleno; para ti, o triunfar junto a teu Filho; para ti, dominar céus e terras e humilhar os poderes do maligno; para ti, difundir como tu queiras os dons do Altíssimo.</p>
+                    <p>Esta é tua melhor parte, que não te será nunca arrebatada e enche de gozo meu coração.</p>
+                    <p>Para mim somente gozar-me em tua alegria, seguir-te em teu caminho, acreditar confiante somente em Deus, sofrer com alegria perto de Cristo, morrer ao egoísmo cada dia, colaborar contigo para salvar ao mundo.</p>
+                    <p>Peço-te somente poder dizer três vezes Amém, em todos os momentos da minha vida: Amém a quanto fizestes neste mundo, Amém a quanto hoje fazes no céu, Amém a quanto agora fazes na minha alma, para que nela Cristo seja glorificado em plenitude, no tempo e na eternidade.</p>
+                `
+            },
+            {
+                titulo: "Vinde, Espírito Criador",
+                corpo: `
+                    <p>Vinde, Espírito Criador,<br>Nossas almas visita<br>E Tua graça infinita<br>Infunde ao coração.</p>
+                    <p>Tu és o advogado,<br>Dom de Deus, viva fonte,<br>Fogo e amor ardente<br>E espiritual unção.</p>
+                    <p>Fonte de sete Dons,<br>Mão de Deus aberta,<br>Do Pai rica oferta,<br>Hálito inspirador.<br>Infundi-nos teu lume<br>E com Tua viva chama<br>O coração inflama,<br>Dai-lhe força e vigor.</p>
+                    <p>Afasta o inimigo<br>Dai-nos paz e vitória,<br>Guia-nos à glória,<br>Divino defensor.</p>
+                    <p>Fazei-nos te conhecer,<br>Espírito Divino,<br>Viver em Ti, Deus Trino,<br>E desfrutar do Teu Amor. Amém.</p>
+                `
+            },
+            {
+                titulo: "Ó Santa Maria",
+                corpo: `
+                    <p>Ó Santa Maria<br>De mares estrela,<br>Virgem de Deus Mãe<br>E do Céu porta.</p>
+                    <p>Retomando o Ave<br>Que Gabriel te dera,<br>A paz corrobora<br>Troca o nome de Eva.</p>
+                    <p>Ao cego ilumina<br>E liberta ao cativo,<br>Afasta os males<br>Dá bens Divinos.</p>
+                    <p>Faz ver que és Mãe,<br>Por Ti nossas preces<br>Receba aquele que é teu<br>E ser nosso ele quer.<br>Bendita Senhora<br>A mais doce e boa:<br>Apagando o pecado<br>Adoça as penas.</p>
+                    <p>Dai-nos vida santa<br>E reto caminho<br>Para que no céu<br>Olhemos teu Filho.</p>
+                    <p>Glória ao Pai Eterno,<br>Glória a Jesus Cristo,<br>Glória ao Santo Espírito,<br>E Glória aos três. Amém.</p>
+                `
+            },
+            {
+                titulo: "Magnificat",
+                corpo: `
+                    <p>Minha alma glorifica ao Senhor, meu espírito exulta de alegria em Deus, meu Salvador, porque olhou para sua pobre serva.</p>
+                    <p>Por isto, desde agora, me proclamarão bem-aventurada todas as gerações, porque realizou em mim maravilhas aquele que é poderoso e cujo nome é Santo. Sua misericórdia se estende de geração em geração, sobre os que o temem.</p>
+                    <p>Manifestou o poder do seu braço: desconcertou os corações dos soberbos. Derrubou do trono os poderosos e exaltou os humildes. Saciou de bens os indigentes e despediu de mãos vazias os ricos.</p>
+                    <p>Acolheu a Israel, seu servo, lembrado da sua misericórdia, conforme prometera a nossos pais, em favor de Abraão e sua posteridade, para sempre. Amém.</p>
+                `
+            },
+            {
+                titulo: "Coroinha da Santíssima Virgem",
+                corpo: `
+                    <p><span class="prayer-versicle">V. Concedei-me que vos louve, Virgem Santíssima.<br>R. Dai-me valor contra os vossos inimigos.</span></p>
+                    <div class="prayer-coroa-heading">1. Coroa de Excelência</div>
+                    <p>Pai Nosso. Ave Maria.</p>
+                    <p>Sois Bem-Aventurada, Virgem Maria, que levastes em vosso seio o Senhor, Criador do mundo: destes à luz a quem vos formou e sois Virgem perpétua.<br><span class="prayer-versicle">V. Alegrai-vos, Virgem Maria. R. Alegrai-vos mil vezes.</span> Ave Maria.</p>
+                    <p>Ó Santa e Imaculada Virgindade, não sei com que louvores vos possa exaltar: pois quem os céus não podem conter, vós o levastes em vosso seio.<br><span class="prayer-versicle">V. Alegrai-vos, Virgem Maria. R. Alegrai-vos mil vezes.</span> Ave Maria.</p>
+                    <p>Sois toda formosa, Virgem Maria: e não há mancha em vós.<br><span class="prayer-versicle">V. Alegrai-vos, Virgem Maria. R. Alegrai-vos mil vezes.</span> Ave Maria.</p>
+                    <p>Possuís, ó Virgem Santíssima, tantos privilégios, quantas são as estrelas no céu.<br><span class="prayer-versicle">V. Alegrai-vos, Virgem Maria. R. Alegrai-vos mil vezes.</span> Glória ao Pai.</p>
+                    <div class="prayer-coroa-heading">2. Coroa de Poder</div>
+                    <p>Pai Nosso. Ave Maria.</p>
+                    <p>Glória a vós, imperatriz do céu: conduzi-nos convosco aos gozos do paraíso.<br><span class="prayer-versicle">V. Alegrai-vos, Virgem Maria. R. Alegrai-vos mil vezes.</span> Ave Maria.</p>
+                    <p>Glória a vós, tesoureira das graças do Senhor: dai-nos parte em vosso tesouro.<br><span class="prayer-versicle">V. Alegrai-vos, Virgem Maria. R. Alegrai-vos mil vezes.</span> Ave Maria.</p>
+                    <p>Glória a vós, medianeira entre Deus e os homens; tornai-nos propício o Todo Poderoso.<br><span class="prayer-versicle">V. Alegrai-vos, Virgem Maria. R. Alegrai-vos mil vezes.</span> Ave Maria.</p>
+                    <p>Glória a vós, que esmagais as heresias e o demônio: sede nossa bondosa guia.<br><span class="prayer-versicle">V. Alegrai-vos, Virgem Maria. R. Alegrai-vos mil vezes.</span> Glória ao Pai.</p>
+                    <div class="prayer-coroa-heading">3. Coroa de Bondade</div>
+                    <p>Pai Nosso. Ave Maria.</p>
+                    <p>Glória a vós, refúgio dos pecadores; intercedei por nós junto ao Senhor.<br><span class="prayer-versicle">V. Alegrai-vos, Virgem Maria. R. Alegrai-vos mil vezes.</span> Ave Maria.</p>
+                    <p>Glória a vós, Mãe dos órfãos: fazei que nos seja propício o Pai Todo Poderoso.<br><span class="prayer-versicle">V. Alegrai-vos, Virgem Maria. R. Alegrai-vos mil vezes.</span> Ave Maria.</p>
+                    <p>Glória a vós, alegria dos justos: conduzi-nos convosco às alegrias do céu.<br><span class="prayer-versicle">V. Alegrai-vos, Virgem Maria. R. Alegrai-vos mil vezes.</span> Ave Maria.</p>
+                    <p>Glória a vós, nossa auxiliadora, muito pressurosa na vida e na morte: conduzi-nos convosco ao Reino dos Céus.<br><span class="prayer-versicle">V. Alegrai-vos, Virgem Maria. R. Alegrai-vos mil vezes.</span> Glória ao Pai.</p>
+                `
+            },
+            {
+                titulo: "Oremos (Oração Final)",
+                corpo: `
+                    <p>Ave Maria, filha de Deus Pai, mãe de Deus Filho, esposa do Espírito Santo, templo augusto da Santíssima Trindade.</p>
+                    <p>Ave Maria, Senhora minha, meu tesouro, minha beleza, Rainha do meu coração. Mãe, vida, doçura e esperança, minha queridíssima – ainda mais – meu coração e minha alma.</p>
+                    <p>Sou todo teu, ó Virgem Benditíssima, e tudo o que é meu é teu. More em mim tua alma para engrandecer o Senhor, more em mim teu espírito para rejubilar em Deus.</p>
+                    <p>Ó Virgem fidelíssima, coloca-te como um selo sobre meu coração, para que em ti e por ti permaneça fiel ao Senhor.</p>
+                    <p>Concede-me por tua bondade a graça de que me encontre no número dos que amas, ensinas, diriges, nutres e proteges como filho.</p>
+                    <p>Fazei que por teu amor despreze todas as consolações da terra e aspire só às celestes, até que pelo Espírito Santo, teu esposo fidelíssimo, e por ti, esposa sua fidelíssima, seja formado em mim Jesus Cristo, teu Filho, para a glória do Pai celeste. Amém.</p>
+                `
+            }
+        ];
+
+        function montarOracoesConsagradoHtml() {
+            return oracoesDoConsagrado.map((oracao, index) => `
+                <div class="prayer-list-item" onclick="abrirOracaoLeitura(${index})">
+                    <span class="prayer-list-item-title">${index + 1}. ${oracao.titulo}</span>
+                    <span class="prayer-list-item-arrow">›</span>
+                </div>
+            `).join('');
+        }
+
+        let oracaoLeituraAtualIndex = 0;
+        const PRAYER_FONT_MIN = 0.85;
+        const PRAYER_FONT_MAX = 1.45;
+        const PRAYER_FONT_STEP = 0.1;
+
+        function obterFonteOracaoSalva() {
+            const salvo = parseFloat(localStorage.getItem('cuida_ordem_fonte_oracao'));
+            return Number.isFinite(salvo) ? salvo : 1.05;
+        }
+
+        function aplicarFonteOracao(tamanho) {
+            document.documentElement.style.setProperty('--prayer-font-size', `${tamanho}rem`);
+            localStorage.setItem('cuida_ordem_fonte_oracao', tamanho);
+        }
+
+        function ajustarFonteOracao(direcao) {
+            let atual = obterFonteOracaoSalva();
+            atual = Math.round(Math.min(PRAYER_FONT_MAX, Math.max(PRAYER_FONT_MIN, atual + direcao * PRAYER_FONT_STEP)) * 100) / 100;
+            aplicarFonteOracao(atual);
+        }
+
+        function renderizarOracaoLeitura() {
+            const oracao = oracoesDoConsagrado[oracaoLeituraAtualIndex];
+            if (!oracao) return;
+            document.getElementById('prayer-reader-title').innerText = oracao.titulo;
+            document.getElementById('prayer-reader-text').innerHTML = oracao.corpo;
+            document.getElementById('prayer-reader-counter').innerText = `${oracaoLeituraAtualIndex + 1} de ${oracoesDoConsagrado.length}`;
+            document.getElementById('prayer-reader-prev').disabled = oracaoLeituraAtualIndex === 0;
+            document.getElementById('prayer-reader-next').disabled = oracaoLeituraAtualIndex === oracoesDoConsagrado.length - 1;
+            document.getElementById('prayer-reader-body').scrollTop = 0;
+        }
+
+        function abrirOracaoLeitura(index) {
+            oracaoLeituraAtualIndex = index;
+            aplicarFonteOracao(obterFonteOracaoSalva());
+            renderizarOracaoLeitura();
+            document.getElementById('prayer-reader-overlay').classList.add('active');
+        }
+
+        function fecharOracaoLeitura() {
+            document.getElementById('prayer-reader-overlay').classList.remove('active');
+        }
+
+        function navegarOracaoLeitura(delta) {
+            const novoIndex = oracaoLeituraAtualIndex + delta;
+            if (novoIndex < 0 || novoIndex >= oracoesDoConsagrado.length) return;
+            oracaoLeituraAtualIndex = novoIndex;
+            renderizarOracaoLeitura();
+        }
+
         async function abrirDetalhes(id) {
             const pr = praticasDoDia.find(p => p.id === id); if (!pr) return; praticaEmEdicaoId = id;
             document.getElementById('sheet-title').innerText = pr.nome;
@@ -2164,10 +2230,29 @@
             
             if (id === 'eucaristia') {
                 const s = frasesEucaristicasAleatorias[Math.floor(Math.random() * frasesEucaristicasAleatorias.length)];
-                dc.innerHTML = `<div class="liturgy-container"><div class="liturgy-title">Meditação</div><p class="liturgy-text">"${s.frase}"</p></div>`;
+                dc.innerHTML = `
+                    <div class="instruction-box">
+                        <strong>Instrução:</strong> O card Eucaristia refere-se à Santa Missa que você participou neste dia e ao seu tempo de Adoração Eucarística.
+                    </div>
+                    <div class="liturgy-container">
+                        <div class="liturgy-title">Meditação</div>
+                        <p class="liturgy-text">"${s.frase}"</p>
+                    </div>`;
             } else if (id === 'terco') {
                 const m = obterMisterioDoDia();
-                dc.innerHTML = `<div class="liturgy-container"><div class="liturgy-title">${m.nome}</div>${m.itens.map(i=>`<p class="liturgy-text" style="margin-bottom:4px;">• ${i}</p>`).join('')}</div>`;
+                dc.innerHTML = `
+                    <div class="instruction-box">
+                        <strong>Guia de Oração:</strong> Toque em "Iniciar Terço Guiado" para rezar passo a passo — com os mistérios de hoje e as Ave-Marias contadas uma a uma.
+                    </div>
+
+                    <div class="liturgy-container">
+                        <div class="liturgy-title">${m.nome}</div>
+                        ${m.itens.map(i => `<p class="liturgy-text" style="margin-bottom:4px; font-weight:600;">• ${i}</p>`).join('')}
+                    </div>
+
+                    <button type="button" class="btn-salvar-tudo" style="width:100%; padding:0.85rem; font-size:0.9rem;" onclick="iniciarTercoGuiado()">▶ Iniciar Terço Guiado</button>
+
+                    <div style="margin-bottom: 1.5rem;"></div>`;
             } else if (id === 'lectio_divina') {
                 dc.innerHTML = '<div style="text-align:center; padding: 2rem; color: var(--text-secondary);">⏳ Carregando liturgia do dia...</div>';
                 document.getElementById('sheet-overlay').classList.add('active');
@@ -2175,6 +2260,14 @@
                 await carregarLiturgiaDoDia();
                 const leituraDoDia = leituraDoDiaCarregada;
                 dc.innerHTML = `
+                    <div class="instruction-box">
+                        <strong>Lectio Divina:</strong> É a leitura orante das Sagradas Escrituras, um diálogo íntimo onde Deus fala e nós escutamos. 
+                        Ela é fundamental para o crescimento espiritual, pois alimenta a alma com a Verdade divina e nos conforma à vontade do Senhor.
+                        <br><br>
+                        <em style="font-size: 0.85rem; opacity: 0.9; display: block; text-align: center;">
+                            "Ignorar as Escrituras é ignorar o próprio Cristo." — São Jerônimo
+                        </em>
+                    </div>
                     <div class="liturgy-container">
                         <div class="liturgy-title" style="margin-bottom: 0.75rem;">Liturgia da Palavra${leituraDoDia.dia ? ' - ' + leituraDoDia.dia : ''}</div>
                         ${leituraDoDia.fromAPI === false ? '<div style="font-size:0.8rem; color:#fbbf24; margin-bottom:0.75rem; border:1px solid rgba(251,191,36,0.2); padding:0.75rem; border-radius:8px; background:rgba(251,191,36,0.08);">⚠️ Não foi possível obter a liturgia do dia pela API. Usando leitura local de fallback.</div>' : ''}
@@ -2185,6 +2278,63 @@
                         
                         <div class="liturgy-title" style="margin-top: 1.25rem; font-size: 0.8rem;">Texto do Evangelho</div>
                         <p class="liturgy-text liturgy-evangelho-texto" style="margin-top: 0.4rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.5rem;">${escaparHtml(sanitizarTextoEvangelho(leituraDoDia.evangelhoTexto))}</p>
+                    </div>
+                `;
+            } else if (id === 'intimidade') {
+                dc.innerHTML = `
+                    <div class="instruction-box">
+                        <strong>Instrução:</strong> A prática de Intimidade é o seu momento particular com o Senhor. Separe um tempo do seu dia para ficar a sós com Jesus, em silêncio, cultivando uma amizade pessoal com Ele.
+                    </div>
+                `;
+            } else if (id === 'leitura_espiritual') {
+                dc.innerHTML = `
+                    <div class="instruction-box">
+                        <strong>Biblioteca Espiritual:</strong> Guarde aqui frases dos livros que você está lendo.
+                    </div>
+                    <div class="add-custom-container" style="margin: 0 0 1rem 0; background: rgba(212,175,55,0.05); border-color: rgba(212,175,55,0.2); padding: 0.75rem;">
+                        <label class="section-title" style="margin: 0 0 0.5rem 0; padding: 0; font-size: 0.65rem;">Novo Livro na Estante</label>
+                        <div class="input-group">
+                            <input type="text" class="input-custom" id="lib-new-book" placeholder="Título do Livro / Autor" style="background: var(--bg-main);">
+                            <button type="button" class="btn-add" style="padding: 0 0.75rem;" onclick="adicionarNovoLivro()">+ Add</button>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 0.75rem;">
+                        <input type="text" class="input-custom" id="lib-search" placeholder="🔍 Buscar por livro ou trecho da frase..." style="font-size:0.8rem; padding: 0.5rem 0.75rem;" oninput="renderizarBibliotecaEspiritual(this.value)">
+                    </div>
+                    <div class="book-grid" id="spiritual-library-list"></div>
+                `;
+                renderizarBibliotecaEspiritual();
+            } else if (id === 'oracoes_consagrado') {
+                dc.innerHTML = `
+                    <div class="instruction-box">
+                        <strong>Orações do Consagrado:</strong> Este card refere-se às orações indicadas por <strong>São Luís Maria Grignion de Montfort</strong> no <em>Tratado da Verdadeira Devoção</em>, próprias para quem vivencia a consagração total a Jesus por Maria.
+                    </div>
+                    <div class="liturgy-container" style="margin-top: 0.75rem;">
+                        <div class="liturgy-title">📖 Sobre as Orações</div>
+                        <p class="liturgy-text">São Luís de Montfort propôs um conjunto de orações e atos de devoção mariana para os consagrados, a serem rezados diariamente como renovação da entrega total a Jesus por meio de Maria. .</p>
+                    </div>
+                    <div class="liturgy-container" style="margin-top: 0.75rem;">
+                        <div class="liturgy-title">🎥 Assista e Reze Junto</div>
+                        <p class="liturgy-text" style="margin-bottom: 0.75rem;">Aqui nesse link você pode encontrar essas orações:</p>
+                        <a href="https://www.youtube.com/watch?v=EVSZu5-NUIc&t=114s"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           style="display:flex; align-items:center; gap:0.75rem;
+                                  background:rgba(255,0,0,0.08); border:1px solid rgba(255,0,0,0.2);
+                                  border-radius:10px; padding:0.85rem 1rem; text-decoration:none;
+                                  color:var(--text-primary); transition: background 0.2s;"
+                           onclick="abrirLinkExterno('https://www.youtube.com/watch?v=EVSZu5-NUIc&t=114s')">
+                            <span style="font-size:1.8rem; flex-shrink:0;">▶️</span>
+                            <div>
+                                <div style="font-size:0.85rem; font-weight:700; margin-bottom:0.15rem;">Orações do Consagrado</div>
+                                <div style="font-size:0.72rem; color:var(--text-secondary);">YouTube · Lazos de Amor Mariano</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="liturgy-container" style="margin-top: 0.75rem;">
+                        <div class="liturgy-title">📿 Texto Completo das Orações</div>
+                        <p class="liturgy-text" style="margin-bottom: 0.75rem;">Toque em cada oração para abrir e rezar diretamente pelo app.</p>
+                        ${montarOracoesConsagradoHtml()}
                     </div>
                 `;
             }
@@ -2302,46 +2452,180 @@
             return frasesDeSantos[nome] || [];
         }
 
-        function mostrarMortificacaoDoDia() {
-            const mortificacoes = [
-                "Coma Separado",
-                "Mantenha Postura Ereta Quando Sentar",
-                "Não Coma Doces Hoje",
-                "Faça Uma Prática de Joelhos",
-                "Segundo Heroico — Levante-se prontamente sem demorar ao acordar e tenha diligência ao realizar suas obrigações diárias",
-                "Espere Um Momento Antes de Começar a Comer",
-                "Coma Com a Mão Não Dominante (a esquerda se você for destro)",
-                "Não Use Redes Sociais Para se Distrair Hoje",
-                "Procure o Silêncio Hoje"
-            ];
-            const escolhida = mortificacoes[Math.floor(Math.random() * mortificacoes.length)];
+        // Fallback local das mortificações
+        const mortificacoesLocais = [
+            "Coma Separado",
+            "Mantenha Postura Ereta Quando Sentar",
+            "Não Coma Doces Hoje",
+            "Faça Uma Prática de Joelhos",
+            "Segundo Heroico — Levante-se prontamente sem demorar ao acordar e tenha diligência ao realizar suas obrigações diárias",
+            "Espere Um Momento Antes de Começar a Comer",
+            "Coma Com a Mão Não Dominante (a esquerda se você for destro)",
+            "Não Use Redes Sociais Para se Distrair Hoje",
+            "Procure o Silêncio Hoje"
+        ];
 
+        async function buscarMortificacaoSupabase() {
+            const total = 9;
+            const url = `${SUPABASE_URL}/rest/v1/mortificacoes?select=descricao&limit=1&offset=${Math.floor(Math.random() * total)}`;
+            const headers = {
+                'apikey': SUPABASE_ANON_KEY,
+                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                'Content-Type': 'application/json'
+            };
+
+            // Capacitor HTTP (Android nativo)
+            if (isCapacitorNative() && nativeHttpPlugin) {
+                try {
+                    const response = await nativeHttpPlugin.get({ url, headers, connectTimeout: 6000, readTimeout: 6000 });
+                    const data = typeof response.data === 'string' ? JSON.parse(response.data) : response.data;
+                    if (Array.isArray(data) && data.length > 0) return data[0].descricao;
+                } catch (e) {
+                    console.warn('Capacitor HTTP mortificacoes falhou:', e);
+                }
+            }
+
+            // Fallback fetch normal
+            try {
+                const res = await fetch(url, { headers });
+                if (res.ok) {
+                    const data = await res.json();
+                    if (Array.isArray(data) && data.length > 0) return data[0].descricao;
+                }
+            } catch (e) {
+                console.warn('Fetch mortificacoes falhou:', e);
+            }
+
+            return null;
+        }
+
+        // ── PLAYLISTS DE MÚSICA ────────────────────────────────────────────
+        // Para trocar: substitua playlistId (o valor depois de "list=" no link
+        // da playlist do YouTube) e titulo de cada item abaixo.
+        const playlistsMusicais = [
+            { titulo: "Músicas Católicas em Português", playlistId: "PLNIXiswCDbys" },
+            { titulo: "Músicas Católicas em Espanhol", playlistId: "PLG0PIeG8NrrA" }
+        ];
+
+        function abrirPlaylists() {
+            toggleDrawer(false);
+            document.getElementById('saint-sheet-title').innerText = '🎵 Playlists';
+            document.getElementById('saint-sheet-content').innerHTML = playlistsMusicais.map(playlist => {
+                const urlCompleta = `https://www.youtube.com/playlist?list=${playlist.playlistId}`;
+                return `
+                    <div class="playlist-block">
+                        <div class="playlist-block-title">🎵 ${playlist.titulo}</div>
+                        <div class="playlist-iframe-wrap">
+                            <iframe src="https://www.youtube.com/embed/videoseries?list=${playlist.playlistId}"
+                                title="${playlist.titulo}"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen loading="lazy"></iframe>
+                        </div>
+                        <button type="button" class="playlist-open-btn" onclick="abrirLinkExterno('${urlCompleta}')">
+                            ▶ Abrir no YouTube
+                        </button>
+                    </div>
+                `;
+            }).join('');
+            document.getElementById('saint-overlay').classList.add('active');
+        }
+
+        async function mostrarMortificacaoDoDia() {
+            toggleDrawer(false); 
+            // Abre modal com loading
             document.getElementById('saint-sheet-title').innerText = '⚔️ Mortificação do Dia';
+            document.getElementById('saint-sheet-content').innerHTML = `
+                <section class="quote-container" style="margin: 0;">
+                    <p class="quote-text" style="font-style:italic; opacity:0.5; font-size:0.85rem;">Buscando mortificação...</p>
+                </section>
+            `;
+            document.getElementById('saint-overlay').classList.add('active');
+
+            // Busca do Supabase
+            let escolhida = await buscarMortificacaoSupabase();
+
+            // Fallback local
+            if (!escolhida) {
+                escolhida = mortificacoesLocais[Math.floor(Math.random() * mortificacoesLocais.length)];
+            }
+
             document.getElementById('saint-sheet-content').innerHTML = `
                 <section class="quote-container" style="margin: 0;">
                     <p class="quote-text" style="font-style: normal; font-weight: 600; font-size: 1rem;">${escaparHtml(escolhida)}</p>
                     <div class="quote-author">Mortificação Diária</div>
                 </section>
             `;
-            document.getElementById('saint-overlay').classList.add('active');
         }
 
-        function mostrarFrasesAleatoriasSantos() {
-            const nomes = Object.keys(frasesDeSantos);
-            if (!nomes.length) return;
-            const nomeAleatorio = nomes[Math.floor(Math.random() * nomes.length)];
-            const frases = frasesDeSantos[nomeAleatorio];
-            if (!frases.length) return;
-            const fraseAleatoria = frases[Math.floor(Math.random() * frases.length)];
+        async function buscarFraseSupabase() {
+            const url = `${SUPABASE_URL}/rest/v1/frases_santos?select=frase,autor&limit=1&offset=${Math.floor(Math.random() * 100)}`;
+            const headers = {
+                'apikey': SUPABASE_ANON_KEY,
+                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                'Content-Type': 'application/json'
+            };
 
+            // Tenta Capacitor HTTP primeiro (Android nativo, sem CORS)
+            if (isCapacitorNative() && nativeHttpPlugin) {
+                try {
+                    const response = await nativeHttpPlugin.get({ url, headers, connectTimeout: 6000, readTimeout: 6000 });
+                    const data = typeof response.data === 'string' ? JSON.parse(response.data) : response.data;
+                    if (Array.isArray(data) && data.length > 0) return data[0];
+                } catch (e) {
+                    console.warn('Capacitor HTTP frases_santos falhou:', e);
+                }
+            }
+
+            // Fallback: fetch normal (web)
+            try {
+                const res = await fetch(url, { headers });
+                if (res.ok) {
+                    const data = await res.json();
+                    if (Array.isArray(data) && data.length > 0) return data[0];
+                }
+            } catch (e) {
+                console.warn('Fetch frases_santos falhou:', e);
+            }
+
+            return null;
+        }
+
+        function fraseSantosLocalFallback() {
+            const nomes = Object.keys(frasesDeSantos);
+            if (!nomes.length) return null;
+            const nome = nomes[Math.floor(Math.random() * nomes.length)];
+            const frases = frasesDeSantos[nome];
+            if (!frases.length) return null;
+            return { frase: frases[Math.floor(Math.random() * frases.length)], autor: nome };
+        }
+
+        async function mostrarFrasesAleatoriasSantos() {
+            toggleDrawer(false); 
+            // Abre o modal imediatamente com loading
             document.getElementById('saint-sheet-title').innerText = 'Frases dos Santos';
             document.getElementById('saint-sheet-content').innerHTML = `
                 <section class="quote-container" style="margin: 0;">
-                    <p class="quote-text">"${fraseAleatoria}"</p>
-                    <div class="quote-author">${nomeAleatorio}</div>
+                    <p class="quote-text" style="font-style:italic; opacity:0.5; font-size:0.85rem;">Buscando frase...</p>
                 </section>
             `;
             document.getElementById('saint-overlay').classList.add('active');
+
+            // Busca do Supabase
+            let resultado = await buscarFraseSupabase();
+
+            // Fallback local se falhar
+            if (!resultado) resultado = fraseSantosLocalFallback();
+            if (!resultado) return;
+
+            document.getElementById('saint-sheet-content').innerHTML = `
+                <section class="quote-container" style="margin: 0;">
+                    <p class="quote-text">"${escaparHtml(resultado.frase)}"</p>
+                    <div class="quote-author">— ${escaparHtml(resultado.autor)}</div>
+                </section>
+                <button type="button" class="btn-novidades-discreta" style="justify-content:center; margin-top:0.75rem; opacity:1; color:var(--text-secondary);" onclick="compartilharFrase('${resultado.frase.replace(/'/g,"\\'")}','${resultado.autor.replace(/'/g,"\\'")}')">
+                    📤 Compartilhar frase
+                </button>
+            `;
         }
 
         function extrairNomeSantoDoTexto(texto) {
@@ -2370,11 +2654,12 @@
         }
 
         async function mostrarResumoSanto() {
-            const nomeDigitado = document.getElementById('input-saint-name').value.trim();
+            const inputSaint = document.getElementById('input-saint-name');
+            const nomeDigitado = inputSaint ? inputSaint.value.trim() : "";
             const titulo = document.getElementById('saint-sheet-title');
             const conteudo = document.getElementById('saint-sheet-content');
 
-            if (!nomeDigitado) {
+            if (!nomeDigitado && inputSaint) {
                 titulo.innerText = 'Resumo do Santo';
                 conteudo.innerHTML = `
                     <p>Digite o nome do santo de devoção no campo acima para ver o resumo.</p>
@@ -2414,7 +2699,7 @@
             `;
         }
 
-        function fecharResumoSanto() { document.getElementById('saint-overlay').classList.remove('active'); }
+        function fecharSaintModal() { document.getElementById('saint-overlay').classList.remove('active'); }
         
         function definirNota(v) { atualizarEstrelasInterface(v); const pr = praticasDoDia.find(p => p.id === praticaEmEdicaoId); if(pr) pr.temporaryStars = v; }
         
@@ -2503,6 +2788,895 @@
             }, 3000);
         }
         
+        // ── SUPABASE — NOVIDADES & ATUALIZAÇÕES ─────────────────────────────
+        const SUPABASE_URL = 'https://qsdmfayaygufcbglchzi.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFzZG1mYXlheWd1ZmNiZ2xjaHppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1NjQ2MzEsImV4cCI6MjA5NTE0MDYzMX0.YQgqzWAP81QVN3JjOO3hAEYxLntynvPHQitwQO1J7ZM';
+
+        // Busca via REST direto — compatível com Capacitor (sem CORS nativo)
+        async function buscarAvisosREST() {
+            const url = `${SUPABASE_URL}/rest/v1/avisos?select=id,titulo,mensagem,created_at&order=created_at.desc&limit=20`;
+            const headers = {
+                'apikey': SUPABASE_ANON_KEY,
+                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                'Content-Type': 'application/json'
+            };
+
+            // Tenta primeiro via Capacitor HTTP (Android nativo, sem CORS)
+            if (isCapacitorNative() && nativeHttpPlugin) {
+                try {
+                    const response = await nativeHttpPlugin.get({ url, headers, connectTimeout: 8000, readTimeout: 8000 });
+                    const data = typeof response.data === 'string' ? JSON.parse(response.data) : response.data;
+                    return Array.isArray(data) ? data : null;
+                } catch (e) {
+                    console.warn('Capacitor HTTP falhou para Supabase:', e);
+                }
+            }
+
+            // Fallback: fetch normal (web/PWA)
+            try {
+                const res = await fetch(url, { headers });
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                return await res.json();
+            } catch (e) {
+                console.warn('Fetch Supabase falhou:', e);
+                return null;
+            }
+        }
+
+        async function verificarAvisosNaoLidos() {
+            const data = await buscarAvisosREST();
+            if (!data || data.length === 0) return;
+            const ultimaLeitura = localStorage.getItem('cuida_ordem_avisos_lida') || '1970-01-01';
+            const temNovo = data.some(a => a.created_at > ultimaLeitura);
+            const badge = document.getElementById('novidades-badge');
+            if (badge && temNovo) badge.style.display = 'inline';
+        }
+
+        async function abrirNovidades() {
+            toggleDrawer(false);
+            document.getElementById('novidades-overlay').classList.add('active');
+            localStorage.setItem('cuida_ordem_avisos_lida', new Date().toISOString());
+            const badge = document.getElementById('novidades-badge');
+            if (badge) badge.style.display = 'none';
+
+            const container = document.getElementById('novidades-conteudo');
+            container.innerHTML = '<p class="novidades-loading">Carregando atualizações...</p>';
+
+            const avisos = await buscarAvisosREST();
+
+            if (!avisos) {
+                container.innerHTML = '<p class="novidades-empty">Não foi possível carregar. Verifique sua conexão.</p>';
+                return;
+            }
+            if (avisos.length === 0) {
+                container.innerHTML = '<p class="novidades-empty">Nenhuma atualização disponível ainda.</p>';
+                return;
+            }
+
+            container.innerHTML = `<div class="novidades-lista">${
+                avisos.map(a => {
+                    const dataObj = new Date(a.created_at);
+                    const dataFormatada = dataObj.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' });
+                    return `
+                        <div class="novidades-item">
+                            <div class="novidades-item-topo">
+                                <span class="novidades-item-titulo">${escaparHtml(a.titulo)}</span>
+                                <span class="novidades-item-data">${dataFormatada}</span>
+                            </div>
+                            <p class="novidades-item-texto">${escaparHtml(a.mensagem)}</p>
+                        </div>`;
+                }).join('')
+            }</div>`;
+        }
+
+        function fecharNovidades() {
+            document.getElementById('novidades-overlay').classList.remove('active');
+        }
+
+        // ── ADMIN: GATILHO SECRETO (7 toques no logo) ───────────────────────
+        let contadorToquesLogo = 0;
+        let timeoutToquesLogo = null;
+
+        function registrarToqueLogoAdmin() {
+            contadorToquesLogo++;
+            clearTimeout(timeoutToquesLogo);
+            timeoutToquesLogo = setTimeout(() => { contadorToquesLogo = 0; }, 2500);
+
+            if (contadorToquesLogo >= 7) {
+                contadorToquesLogo = 0;
+                clearTimeout(timeoutToquesLogo);
+                if (sessaoAdminValida()) {
+                    abrirPainelAdmin();
+                } else {
+                    document.getElementById('admin-login-email').value = '';
+                    document.getElementById('admin-login-senha').value = '';
+                    document.getElementById('admin-login-error').innerText = '';
+                    document.getElementById('admin-login-overlay').classList.add('active');
+                }
+            }
+        }
+
+        function fecharLoginAdmin() {
+            document.getElementById('admin-login-overlay').classList.remove('active');
+        }
+
+        // ── ADMIN: SESSÃO (Supabase Auth) ───────────────────────────────────
+        function carregarSessaoAdmin() {
+            try {
+                const salva = localStorage.getItem('cuida_ordem_admin_sessao');
+                return salva ? JSON.parse(salva) : null;
+            } catch (e) { return null; }
+        }
+
+        function sessaoAdminValida() {
+            const sessao = carregarSessaoAdmin();
+            return !!(sessao && sessao.access_token && sessao.expires_at > Date.now());
+        }
+
+        async function fazerLoginAdmin() {
+            const email = document.getElementById('admin-login-email').value.trim();
+            const senha = document.getElementById('admin-login-senha').value;
+            const erroEl = document.getElementById('admin-login-error');
+            erroEl.innerText = '';
+
+            if (!email || !senha) { erroEl.innerText = 'Preencha e-mail e senha.'; return; }
+
+            const url = `${SUPABASE_URL}/auth/v1/token?grant_type=password`;
+            const headers = { 'apikey': SUPABASE_ANON_KEY, 'Content-Type': 'application/json' };
+            const body = JSON.stringify({ email, password: senha });
+            let data = null;
+            let obtidoViaNativo = false;
+
+            if (isCapacitorNative() && nativeHttpPlugin) {
+                try {
+                    const response = await nativeHttpPlugin.post({ url, headers, data: body, connectTimeout: 8000, readTimeout: 8000 });
+                    data = typeof response.data === 'string' ? JSON.parse(response.data) : response.data;
+                    obtidoViaNativo = true;
+                } catch (e) {
+                    console.warn('Capacitor HTTP login falhou, tentando fetch:', e);
+                }
+            }
+
+            if (!obtidoViaNativo) {
+                try {
+                    const res = await fetch(url, { method: 'POST', headers, body });
+                    data = await res.json().catch(() => null);
+                } catch (e) {
+                    erroEl.innerText = 'Erro de conexão. Tente novamente.';
+                    return;
+                }
+            }
+
+            if (!data || !data.access_token) {
+                erroEl.innerText = 'E-mail ou senha inválidos.';
+                return;
+            }
+            const sessao = {
+                access_token: data.access_token,
+                refresh_token: data.refresh_token,
+                expires_at: Date.now() + (data.expires_in * 1000)
+            };
+            localStorage.setItem('cuida_ordem_admin_sessao', JSON.stringify(sessao));
+            fecharLoginAdmin();
+            abrirPainelAdmin();
+        }
+
+        function sairAdmin() {
+            if (!confirm('Sair do painel admin?')) return;
+            localStorage.removeItem('cuida_ordem_admin_sessao');
+            fecharPainelAdmin();
+        }
+
+        // Helper: chamada autenticada ao Supabase REST (usa o token do admin).
+        // Tenta o plugin HTTP nativo primeiro (necessário no Android/Capacitor), com fallback pra fetch.
+        async function chamarSupabaseAdmin(caminho, opcoes = {}) {
+            const sessao = carregarSessaoAdmin();
+            if (!sessao || !sessaoAdminValida()) {
+                alert('Sua sessão expirou. Faça login novamente.');
+                sairAdmin();
+                throw new Error('Sessão admin inválida');
+            }
+            const metodo = (opcoes.method || 'GET').toUpperCase();
+            const headers = Object.assign({
+                'apikey': SUPABASE_ANON_KEY,
+                'Authorization': `Bearer ${sessao.access_token}`,
+                'Content-Type': 'application/json'
+            }, opcoes.headers || {});
+            const url = `${SUPABASE_URL}/rest/v1/${caminho}`;
+
+            if (isCapacitorNative() && nativeHttpPlugin) {
+                try {
+                    let response;
+                    if (metodo === 'GET') {
+                        response = await nativeHttpPlugin.get({ url, headers, connectTimeout: 8000, readTimeout: 8000 });
+                    } else if (metodo === 'POST') {
+                        response = await nativeHttpPlugin.post({ url, headers, data: opcoes.body, connectTimeout: 8000, readTimeout: 8000 });
+                    } else if (metodo === 'DELETE') {
+                        response = await nativeHttpPlugin.delete({ url, headers, connectTimeout: 8000, readTimeout: 8000 });
+                    }
+                    if (response && response.status >= 200 && response.status < 300) {
+                        const dados = response.data;
+                        return (typeof dados === 'string' && dados) ? JSON.parse(dados) : (dados || null);
+                    }
+                    throw new Error(`Status ${response ? response.status : '?'}`);
+                } catch (e) {
+                    console.warn('Capacitor HTTP admin falhou, tentando fetch:', e);
+                }
+            }
+
+            const res = await fetch(url, { method: metodo, headers, body: opcoes.body });
+            if (!res.ok) {
+                const texto = await res.text();
+                throw new Error(`Erro Supabase (${res.status}): ${texto}`);
+            }
+            const textoResposta = await res.text();
+            return textoResposta ? JSON.parse(textoResposta) : null;
+        }
+
+        // ── ADMIN: PAINEL ────────────────────────────────────────────────────
+        let abaAdminAtual = 'avisos';
+
+        function abrirPainelAdmin() {
+            toggleDrawer(false);
+            document.getElementById('admin-panel-overlay').classList.add('active');
+            trocarAbaAdmin('avisos');
+        }
+
+        function fecharPainelAdmin() {
+            document.getElementById('admin-panel-overlay').classList.remove('active');
+        }
+
+        function trocarAbaAdmin(aba) {
+            abaAdminAtual = aba;
+            document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.tab === aba);
+            });
+            const configs = {
+                avisos: {
+                    tabela: 'avisos', campos: [{ id: 'titulo', label: 'Título', tipo: 'input' }, { id: 'mensagem', label: 'Mensagem', tipo: 'textarea' }],
+                    renderItem: item => `<strong>${escaparHtml(item.titulo)}</strong><small>${escaparHtml(item.mensagem)}</small>`
+                },
+                frases: {
+                    tabela: 'frases_santos', campos: [{ id: 'frase', label: 'Frase', tipo: 'textarea' }, { id: 'autor', label: 'Autor (ex: São Josemaria Escrivá)', tipo: 'input' }],
+                    renderItem: item => `"${escaparHtml(item.frase)}"<small>— ${escaparHtml(item.autor)}</small>`
+                },
+                mortificacoes: {
+                    tabela: 'mortificacoes', campos: [{ id: 'descricao', label: 'Descrição da mortificação', tipo: 'textarea' }],
+                    renderItem: item => `${escaparHtml(item.descricao)}`
+                },
+                pregacoes: {
+                    tabela: 'pregacoes', campos: [{ id: 'titulo', label: 'Título da playlist', tipo: 'input' }, { id: 'youtube_url', label: 'Link da playlist do YouTube', tipo: 'input' }],
+                    renderItem: item => `<strong>${escaparHtml(item.titulo)}</strong><small>${escaparHtml(item.youtube_url)}</small>`
+                }
+            };
+            renderizarAbaAdmin(configs[aba]);
+        }
+
+        async function renderizarAbaAdmin(config) {
+            const container = document.getElementById('admin-body-content');
+            container.innerHTML = `
+                <div class="admin-add-form">
+                    ${config.campos.map(c => c.tipo === 'textarea'
+                        ? `<textarea class="input-custom" id="admin-campo-${c.id}" placeholder="${c.label}"></textarea>`
+                        : `<input type="text" class="input-custom" id="admin-campo-${c.id}" placeholder="${c.label}">`
+                    ).join('')}
+                    <button type="button" class="btn-salvar-tudo" style="width:100%;" onclick='salvarItemAdmin(${JSON.stringify(config.tabela)}, ${JSON.stringify(config.campos.map(c => c.id))})'>+ Adicionar</button>
+                </div>
+                <div id="admin-lista-itens"><p class="admin-loading-msg">Carregando...</p></div>
+            `;
+
+            try {
+                const itens = await chamarSupabaseAdmin(`${config.tabela}?select=*&order=created_at.desc&limit=100`);
+                const listaEl = document.getElementById('admin-lista-itens');
+                listaEl.innerHTML = (itens && itens.length)
+                    ? itens.map(item => `
+                        <div class="admin-list-item">
+                            <div class="admin-list-item-text">${config.renderItem(item)}</div>
+                            <button class="admin-list-item-delete" onclick='apagarItemAdmin(${JSON.stringify(config.tabela)}, ${item.id})' title="Excluir">🗑️</button>
+                        </div>
+                    `).join('')
+                    : '<p class="admin-loading-msg">Nenhum item cadastrado ainda.</p>';
+            } catch (e) {
+                document.getElementById('admin-lista-itens').innerHTML = `<p class="admin-loading-msg">Erro ao carregar: ${escaparHtml(e.message)}</p>`;
+            }
+        }
+
+        async function salvarItemAdmin(tabela, idsCampos) {
+            const payload = {};
+            for (const id of idsCampos) {
+                const el = document.getElementById(`admin-campo-${id}`);
+                payload[id] = el ? el.value.trim() : '';
+            }
+            if (Object.values(payload).some(v => !v)) { alert('Preencha todos os campos.'); return; }
+
+            try {
+                await chamarSupabaseAdmin(tabela, {
+                    method: 'POST',
+                    headers: { 'Prefer': 'return=minimal' },
+                    body: JSON.stringify(payload)
+                });
+                trocarAbaAdmin(abaAdminAtual);
+            } catch (e) {
+                alert(`Erro ao salvar: ${e.message}`);
+            }
+        }
+
+        async function apagarItemAdmin(tabela, id) {
+            if (!confirm('Excluir este item? Essa ação não pode ser desfeita.')) return;
+            try {
+                await chamarSupabaseAdmin(`${tabela}?id=eq.${id}`, {
+                    method: 'DELETE',
+                    headers: { 'Prefer': 'return=minimal' }
+                });
+                trocarAbaAdmin(abaAdminAtual);
+            } catch (e) {
+                alert(`Erro ao excluir: ${e.message}`);
+            }
+        }
+
+        // ── PREGAÇÕES: LEITURA PÚBLICA (mesmo estilo das Playlists de Música) ──
+        function extrairIdPlaylistYoutube(url) {
+            const match = String(url || '').match(/[?&]list=([^&]+)/);
+            return match ? match[1] : null;
+        }
+
+        async function abrirPregacoesPublico() {
+            toggleDrawer(false);
+            document.getElementById('saint-sheet-title').innerText = '🎙️ Pregações';
+            const conteudoEl = document.getElementById('saint-sheet-content');
+            conteudoEl.innerHTML = '<p class="admin-loading-msg">Carregando playlists...</p>';
+            document.getElementById('saint-overlay').classList.add('active');
+
+            try {
+                const url = `${SUPABASE_URL}/rest/v1/pregacoes?select=titulo,youtube_url&order=created_at.desc`;
+                const headers = { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` };
+                let pregacoes = null;
+                if (isCapacitorNative() && nativeHttpPlugin) {
+                    try {
+                        const response = await nativeHttpPlugin.get({ url, headers, connectTimeout: 8000, readTimeout: 8000 });
+                        pregacoes = typeof response.data === 'string' ? JSON.parse(response.data) : response.data;
+                    } catch (e) { console.warn('Capacitor HTTP pregacoes falhou:', e); }
+                }
+                if (!pregacoes) {
+                    const res = await fetch(url, { headers });
+                    pregacoes = res.ok ? await res.json() : null;
+                }
+
+                if (!pregacoes || pregacoes.length === 0) {
+                    conteudoEl.innerHTML = '<p class="admin-loading-msg">Nenhuma pregação disponível ainda.</p>';
+                    return;
+                }
+
+                conteudoEl.innerHTML = pregacoes.map(p => {
+                    const playlistId = extrairIdPlaylistYoutube(p.youtube_url);
+                    if (!playlistId) return '';
+                    return `
+                        <div class="playlist-block">
+                            <div class="playlist-block-title">🎙️ ${escaparHtml(p.titulo)}</div>
+                            <div class="playlist-iframe-wrap">
+                                <iframe src="https://www.youtube.com/embed/videoseries?list=${playlistId}"
+                                    title="${escaparHtml(p.titulo)}"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen loading="lazy"></iframe>
+                            </div>
+                            <button type="button" class="playlist-open-btn" onclick="abrirLinkExterno('${p.youtube_url}')">
+                                ▶ Abrir no YouTube
+                            </button>
+                        </div>
+                    `;
+                }).join('');
+            } catch (e) {
+                conteudoEl.innerHTML = '<p class="admin-loading-msg">Não foi possível carregar. Verifique sua conexão.</p>';
+            }
+        }
+
+        // ── FEEDBACK ─────────────────────────────────────────────────────────
+        function abrirFeedback() {
+            toggleDrawer(false);
+            document.getElementById('feedback-texto').value = '';
+            document.getElementById('feedback-count').textContent = '0';
+            const btn = document.getElementById('btn-enviar-feedback');
+            btn.innerHTML = 'Enviar Feedback';
+            btn.disabled = false;
+            document.getElementById('feedback-overlay').classList.add('active');
+        }
+
+        function fecharFeedback() {
+            document.getElementById('feedback-overlay').classList.remove('active');
+        }
+
+        function atualizarContadorFeedback() {
+            const len = document.getElementById('feedback-texto').value.length;
+            document.getElementById('feedback-count').textContent = len;
+        }
+
+        async function enviarFeedback() {
+            const texto = document.getElementById('feedback-texto').value.trim();
+            if (!texto) {
+                alert('Por favor escreva algo antes de enviar.');
+                return;
+            }
+
+            const btn = document.getElementById('btn-enviar-feedback');
+            btn.disabled = true;
+            btn.innerHTML = 'Enviando...';
+
+            const url = `${SUPABASE_URL}/rest/v1/feedbacks`;
+            const headers = {
+                'apikey': SUPABASE_ANON_KEY,
+                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                'Content-Type': 'application/json',
+                'Prefer': 'return=minimal'
+            };
+            const body = JSON.stringify({ mensagem: texto });
+
+            let sucesso = false;
+
+            // Tenta Capacitor HTTP primeiro (Android nativo)
+            if (isCapacitorNative() && nativeHttpPlugin) {
+                try {
+                    const response = await nativeHttpPlugin.post({ url, headers, data: body, connectTimeout: 8000, readTimeout: 8000 });
+                    sucesso = response.status >= 200 && response.status < 300;
+                } catch (e) {
+                    console.warn('Capacitor HTTP POST feedback falhou:', e);
+                }
+            }
+
+            // Fallback: fetch normal
+            if (!sucesso) {
+                try {
+                    const res = await fetch(url, { method: 'POST', headers, body });
+                    sucesso = res.ok;
+                } catch (e) {
+                    console.warn('Fetch POST feedback falhou:', e);
+                }
+            }
+
+            if (sucesso) {
+                btn.innerHTML = '✓ Enviado! Obrigado!';
+                setTimeout(() => fecharFeedback(), 2000);
+            } else {
+                btn.disabled = false;
+                btn.innerHTML = 'Enviar Feedback';
+                alert('Não foi possível enviar. Verifique sua conexão e tente novamente.');
+            }
+        }
+
+        // ── DOAÇÕES ──────────────────────────────────────────────────────────
+        function abrirDoacoes() {
+            toggleDrawer(false);
+            const btn = document.getElementById('btn-copiar-pix');
+            if (btn) { btn.innerHTML = '📋 Copiar Chave PIX'; btn.style.background = 'linear-gradient(135deg, #d4af37, #b8960c)'; }
+            document.getElementById('doacoes-overlay').classList.add('active');
+        }
+
+        function fecharDoacoes() {
+            document.getElementById('doacoes-overlay').classList.remove('active');
+        }
+
+        function copiarChavePix() {
+            const chave = 'cuidarordem@gmail.com';
+            const btn = document.getElementById('btn-copiar-pix');
+
+            // Tenta clipboard API nativa
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(chave).then(() => {
+                    confirmarCopiado(btn);
+                }).catch(() => copiarFallback(chave, btn));
+            } else {
+                copiarFallback(chave, btn);
+            }
+        }
+
+        function copiarFallback(texto, btn) {
+            try {
+                const el = document.createElement('textarea');
+                el.value = texto;
+                el.style.position = 'fixed';
+                el.style.opacity = '0';
+                document.body.appendChild(el);
+                el.focus();
+                el.select();
+                document.execCommand('copy');
+                document.body.removeChild(el);
+                confirmarCopiado(btn);
+            } catch (e) {
+                alert('Não foi possível copiar automaticamente.\nChave PIX: ' + texto);
+            }
+        }
+
+        function confirmarCopiado(btn) {
+            if (!btn) return;
+            btn.innerHTML = '✓ Chave Copiada!';
+            btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+            setTimeout(() => {
+                btn.innerHTML = '📋 Copiar Chave PIX';
+                btn.style.background = 'linear-gradient(135deg, #d4af37, #b8960c)';
+            }, 3000);
+        }
+
+        // ── STREAK ───────────────────────────────────────────────────────────
+        function calcularStreak() {
+            let streak = 0;
+            const hoje = new Date();
+            for (let i = 0; i < 365; i++) {
+                const d = new Date(hoje);
+                d.setDate(hoje.getDate() - i);
+                const dataStr = formatarDataLocal(d);
+                const pct = historicoSemanal[dataStr];
+                if (pct === undefined && i === 0) continue; // hoje ainda não salvo
+                if (!pct || pct < 50) break;
+                streak++;
+            }
+            return streak;
+        }
+
+        function atualizarStreakBanner() {
+            const streak = calcularStreak();
+            const banner = document.getElementById('streak-banner');
+            if (!banner) return;
+            if (streak >= 2) {
+                const emoji = streak >= 30 ? '🏆' : streak >= 14 ? '⚡' : streak >= 7 ? '🔥' : '✨';
+                banner.innerHTML = `${emoji} ${streak} dias seguidos — continue assim!`;
+                banner.classList.remove('hidden');
+            } else {
+                banner.classList.add('hidden');
+            }
+        }
+
+        // ── CELEBRAÇÃO ────────────────────────────────────────────────────────
+        function dispararCelebracao() {
+            const overlay = document.getElementById('celebracao-overlay');
+            if (!overlay) return;
+            overlay.style.display = 'block';
+            overlay.innerHTML = '';
+
+            const cores = ['#d4af37','#f5d98b','#10b981','#ffffff','#f59e0b'];
+            for (let i = 0; i < 60; i++) {
+                const p = document.createElement('div');
+                p.className = 'confete-particle';
+                p.style.left = Math.random() * 100 + 'vw';
+                p.style.background = cores[Math.floor(Math.random() * cores.length)];
+                p.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+                p.style.animationDelay = (Math.random() * 0.8) + 's';
+                p.style.width = p.style.height = (6 + Math.random() * 8) + 'px';
+                overlay.appendChild(p);
+            }
+
+            const msg = document.createElement('div');
+            msg.className = 'celebracao-msg';
+            msg.innerHTML = `<h2>🎉</h2><p>Todas as práticas concluídas!</p>`;
+            overlay.appendChild(msg);
+
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                overlay.innerHTML = '';
+            }, 3500);
+        }
+
+        // ── ONBOARDING ────────────────────────────────────────────────────────
+        function verificarOnboarding() {
+            const visto = localStorage.getItem('cuida_ordem_onboarding_visto');
+            if (!visto) {
+                setTimeout(() => {
+                    document.getElementById('onboarding-overlay').classList.add('active');
+                }, 800);
+            }
+        }
+
+        function fecharOnboarding() {
+            localStorage.setItem('cuida_ordem_onboarding_visto', '1');
+            document.getElementById('onboarding-overlay').classList.remove('active');
+        }
+
+        // ── ESTATÍSTICAS MENSAIS ───────────────────────────────────────────────
+        function atualizarEstatisticasMensais() {
+            const hoje = new Date();
+            const ano = hoje.getFullYear();
+            const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+            const prefixo = `${ano}-${mes}`;
+
+            const diasDoMes = Object.entries(historicoSemanal)
+                .filter(([data]) => data.startsWith(prefixo));
+
+            const totalDias = diasDoMes.length;
+            const dias100 = diasDoMes.filter(([, pct]) => pct >= 100).length;
+            const media = totalDias > 0
+                ? Math.round(diasDoMes.reduce((s, [, pct]) => s + pct, 0) / totalDias)
+                : 0;
+            const streak = calcularStreak();
+
+            const el = (id) => document.getElementById(id);
+            if (el('stats-dias-100')) el('stats-dias-100').textContent = dias100;
+            if (el('stats-media')) el('stats-media').textContent = media + '%';
+            if (el('stats-streak')) el('stats-streak').textContent = streak + '🔥';
+            if (el('stats-total-dias')) el('stats-total-dias').textContent = totalDias;
+        }
+
+        // ── BACKUP ─────────────────────────────────────────────────────────────
+        function exportarBackup() {
+            const dados = {
+                versao: '1.0',
+                exportado_em: new Date().toISOString(),
+                praticas: JSON.parse(localStorage.getItem('cuida_ordem_praticas') || '[]'),
+                lembretes: JSON.parse(localStorage.getItem('cuida_ordem_lembretes') || '[]'),
+                categorias: JSON.parse(localStorage.getItem('cuida_ordem_categorias') || '[]'),
+                historico: JSON.parse(localStorage.getItem('cuida_ordem_historico') || '{}'),
+                historico_detalhado: JSON.parse(localStorage.getItem('cuida_ordem_historico_detalhado') || '{}'),
+                diario: JSON.parse(localStorage.getItem('cuida_ordem_diario') || '{}'),
+            };
+
+            const blob = new Blob([JSON.stringify(dados, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `cuida_ordem_backup_${formatarDataLocal(new Date())}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+
+            const toast = document.getElementById('toast-feedback');
+            if (toast) { toast.innerText = '✓ Backup exportado!'; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2500); }
+        }
+
+        function importarBackup() {
+            document.getElementById('input-backup-file').click();
+        }
+
+        function processarImportacao(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const dados = JSON.parse(e.target.result);
+                    if (!dados.versao) throw new Error('Arquivo inválido');
+
+                    if (!confirm('Isso substituirá todos os seus dados atuais. Continuar?')) return;
+
+                    if (dados.praticas) localStorage.setItem('cuida_ordem_praticas', JSON.stringify(dados.praticas));
+                    if (dados.lembretes) localStorage.setItem('cuida_ordem_lembretes', JSON.stringify(dados.lembretes));
+                    if (dados.categorias) localStorage.setItem('cuida_ordem_categorias', JSON.stringify(dados.categorias));
+                    if (dados.historico) localStorage.setItem('cuida_ordem_historico', JSON.stringify(dados.historico));
+                    if (dados.historico_detalhado) localStorage.setItem('cuida_ordem_historico_detalhado', JSON.stringify(dados.historico_detalhado));
+                    if (dados.diario) localStorage.setItem('cuida_ordem_diario', JSON.stringify(dados.diario));
+
+                    alert('Backup importado com sucesso! O app será recarregado.');
+                    location.reload();
+                } catch (err) {
+                    alert('Arquivo inválido ou corrompido. Verifique o arquivo e tente novamente.');
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+
+        // ── COMPARTILHAR FRASE ────────────────────────────────────────────────
+        async function compartilharFrase(frase, autor) {
+            const texto = `"${frase}" — ${autor}\n\nCuidar Ordem App`;
+            try {
+                if (navigator.share) {
+                    await navigator.share({ text: texto });
+                } else {
+                    await navigator.clipboard.writeText(texto);
+                    const toast = document.getElementById('toast-feedback');
+                    if (toast) { toast.innerText = '📋 Frase copiada!'; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2500); }
+                }
+            } catch (e) {
+                console.warn('Compartilhar falhou:', e);
+            }
+        }
+
+        // ── LINK EXTERNO (compatível com Capacitor) ───────────────────────────
+        function abrirLinkExterno(url) {
+            try {
+                // Capacitor Browser plugin se disponível
+                if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Browser) {
+                    window.Capacitor.Plugins.Browser.open({ url });
+                } else {
+                    window.open(url, '_blank');
+                }
+            } catch (e) {
+                window.open(url, '_blank');
+            }
+        }
+
+        // ── BIBLIOTECA ESPIRITUAL ──────────────────────────────────────────
+        const CORES_CAPA_LIVRO = [
+            'linear-gradient(160deg, #7c2d3e, #5a1f2c)',
+            'linear-gradient(160deg, #2d5a4a, #1e3d33)',
+            'linear-gradient(160deg, #2d4a5a, #1e333d)',
+            'linear-gradient(160deg, #5a4a2d, #3d331e)',
+            'linear-gradient(160deg, #4a2d5a, #331e3d)',
+            'linear-gradient(160deg, #5a3d2d, #3d2a1e)'
+        ];
+
+        let livroEmLeituraIndex = null;
+
+        function normalizarBusca(texto) {
+            return String(texto || '')
+                .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                .toLowerCase().trim();
+        }
+
+        function destacarTexto(texto, termo) {
+            const seguro = escaparHtml(texto);
+            if (!termo) return seguro;
+            const termoEscapadoRegex = termo.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            try {
+                const regex = new RegExp(`(${termoEscapadoRegex})`, 'ig');
+                return seguro.replace(regex, '<mark>$1</mark>');
+            } catch (e) {
+                return seguro;
+            }
+        }
+
+        function renderizarBibliotecaEspiritual(filtroOverride) {
+            const container = document.getElementById('spiritual-library-list');
+            if (!container) return;
+
+            const searchInput = document.getElementById('lib-search');
+            const filtro = (filtroOverride !== undefined) ? filtroOverride : (searchInput ? searchInput.value : '');
+            const termos = normalizarBusca(filtro);
+
+            if (meusLivrosEspirituais.length === 0) {
+                container.className = 'book-grid';
+                container.innerHTML = '<p class="book-empty-msg">Sua biblioteca está vazia. Adicione seu primeiro livro acima!</p>';
+                return;
+            }
+
+            // ── Sem busca: mostra a estante normal (capas de livro) ──
+            if (termos === '') {
+                container.className = 'book-grid';
+                container.innerHTML = [...meusLivrosEspirituais]
+                    .map((titulo, indexMestre) => ({ titulo, indexMestre }))
+                    .sort((a, b) => a.titulo.localeCompare(b.titulo))
+                    .map(({ titulo, indexMestre }) => {
+                        const qtdFrases = bibliotecaEspiritual.filter(f => f.livro === titulo).length;
+                        const cor = CORES_CAPA_LIVRO[indexMestre % CORES_CAPA_LIVRO.length];
+                        return `
+                            <div class="book-cover" style="background:${cor};" onclick="abrirLivroEspiritual(${indexMestre})">
+                                <span class="book-cover-count">${qtdFrases}</span>
+                                <span class="book-cover-title">${escaparHtml(titulo)}</span>
+                            </div>
+                        `;
+                    }).join('');
+                return;
+            }
+
+            // ── Com busca: lista só as frases que batem, de qualquer livro ──
+            container.className = 'quote-results-list';
+            const resultados = bibliotecaEspiritual
+                .map((item, originalIdx) => ({ ...item, originalIdx }))
+                .filter(item => normalizarBusca(item.frase).includes(termos) || normalizarBusca(item.livro).includes(termos));
+
+            container.innerHTML = resultados.length
+                ? resultados.map(item => `
+                    <div class="quote-result-item" onclick="abrirFraseNoLivro(${item.originalIdx})">
+                        <p class="quote-result-text">"${destacarTexto(item.frase, filtro.trim())}"</p>
+                        <div class="quote-result-book">📖 ${escaparHtml(item.livro)} ›</div>
+                    </div>
+                `).join('')
+                : '<p class="book-empty-msg">Nenhuma frase encontrada.</p>';
+        }
+
+        function adicionarNovoLivro() {
+            const input = document.getElementById('lib-new-book');
+            const titulo = input.value.trim();
+            if (!titulo) return;
+            if (meusLivrosEspirituais.includes(titulo)) { alert("Este livro já está na sua biblioteca."); return; }
+            meusLivrosEspirituais.push(titulo);
+            input.value = '';
+            salvarNoDispositivo();
+            renderizarBibliotecaEspiritual();
+        }
+
+        let fraseFocoOriginalIdx = null;
+
+        function abrirLivroEspiritual(indexMestre) {
+            livroEmLeituraIndex = indexMestre;
+            fraseFocoOriginalIdx = null;
+            renderizarLivroEmLeitura();
+            document.getElementById('book-reader-overlay').classList.add('active');
+        }
+
+        function abrirFraseNoLivro(originalIdx) {
+            const item = bibliotecaEspiritual[originalIdx];
+            if (!item) return;
+            const indexMestre = meusLivrosEspirituais.indexOf(item.livro);
+            if (indexMestre === -1) return;
+            livroEmLeituraIndex = indexMestre;
+            fraseFocoOriginalIdx = originalIdx;
+            renderizarLivroEmLeitura();
+            document.getElementById('book-reader-overlay').classList.add('active');
+            requestAnimationFrame(() => {
+                const alvo = document.querySelector(`.book-quote-item[data-original-idx="${originalIdx}"]`);
+                if (alvo) {
+                    alvo.scrollIntoView({ block: 'center' });
+                    alvo.classList.add('flash');
+                }
+            });
+        }
+
+        function fecharLivroEspiritual() {
+            document.getElementById('book-reader-overlay').classList.remove('active');
+            livroEmLeituraIndex = null;
+            fraseFocoOriginalIdx = null;
+        }
+
+        function renderizarLivroEmLeitura() {
+            const titulo = meusLivrosEspirituais[livroEmLeituraIndex];
+            if (titulo === undefined) { fecharLivroEspiritual(); return; }
+
+            document.getElementById('book-reader-title').innerText = titulo;
+
+            const searchInput = document.getElementById('lib-search');
+            const termoDestaque = searchInput ? searchInput.value.trim() : '';
+
+            const frasesDoLivro = bibliotecaEspiritual
+                .map((item, originalIdx) => ({ ...item, originalIdx }))
+                .filter(f => f.livro === titulo)
+                .reverse();
+
+            const corpo = document.getElementById('book-reader-body');
+            corpo.innerHTML = frasesDoLivro.length
+                ? frasesDoLivro.map(item => `
+                    <div class="book-quote-item" data-original-idx="${item.originalIdx}">
+                        <p class="book-quote-text">"${destacarTexto(item.frase, termoDestaque)}"</p>
+                        <div class="book-quote-actions">
+                            <button onclick="editarFraseBiblioteca(${item.originalIdx})" title="Editar">✏️</button>
+                            <button onclick="deletarFraseBiblioteca(${item.originalIdx})" title="Excluir">✕</button>
+                        </div>
+                    </div>
+                `).join('')
+                : '<p class="book-empty-msg" style="padding:1rem 0;">Nenhuma frase salva ainda deste livro.</p>';
+        }
+
+        function adicionarFraseAoLivro() {
+            const titulo = meusLivrosEspirituais[livroEmLeituraIndex];
+            if (titulo === undefined) return;
+            const area = document.getElementById('book-reader-new-quote');
+            const frase = area.value.trim();
+            if (!frase) return;
+            bibliotecaEspiritual.push({ livro: titulo, frase, data: new Date().toISOString() });
+            area.value = '';
+            salvarNoDispositivo();
+            renderizarLivroEmLeitura();
+            renderizarBibliotecaEspiritual();
+        }
+
+        function deletarLivroAtual() {
+            const titulo = meusLivrosEspirituais[livroEmLeituraIndex];
+            if (titulo === undefined) return;
+            if (confirm(`Remover o livro "${titulo}" e todas as suas frases salvas?`)) {
+                meusLivrosEspirituais = meusLivrosEspirituais.filter(l => l !== titulo);
+                bibliotecaEspiritual = bibliotecaEspiritual.filter(f => f.livro !== titulo);
+                salvarNoDispositivo();
+                fecharLivroEspiritual();
+                renderizarBibliotecaEspiritual();
+            }
+        }
+
+        function editarFraseBiblioteca(index) {
+            const item = bibliotecaEspiritual[index];
+            if (!item) return;
+            const novaFrase = prompt(`Editar frase do livro "${item.livro}":`, item.frase);
+            if (novaFrase !== null && novaFrase.trim() !== "") {
+                bibliotecaEspiritual[index].frase = novaFrase.trim();
+                salvarNoDispositivo();
+                if (livroEmLeituraIndex !== null) renderizarLivroEmLeitura();
+                renderizarBibliotecaEspiritual();
+            }
+        }
+        function deletarFraseBiblioteca(index) {
+            if (confirm("Remover esta frase da sua biblioteca espiritual?")) {
+                bibliotecaEspiritual.splice(index, 1);
+                salvarNoDispositivo();
+                if (livroEmLeituraIndex !== null) renderizarLivroEmLeitura();
+                renderizarBibliotecaEspiritual();
+            }
+        }
+
+        // ────────────────────────────────────────────────────────────────────────
         window.onload = inicializarApp;
 
         // Registrar Service Worker (PWA)
